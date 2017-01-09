@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LandViewController">
+            <connections>
+                <outlet property="mobileLab" destination="NaC-pv-SNc" id="F4Y-sS-Q8H"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="2.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="2Yg-Wd-E4O">
+                    <rect key="frame" x="147" y="129" width="80" height="80"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="80" id="105-og-B0H"/>
+                        <constraint firstAttribute="height" constant="80" id="hwv-cn-aun"/>
+                    </constraints>
+                </imageView>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入你的手机号" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NaC-pv-SNc">
+                    <rect key="frame" x="0.0" y="246" width="375" height="47"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="47" id="1JH-Qh-hG6"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" keyboardType="namePhonePad"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="9F4-5r-K06"/>
+                    </connections>
+                </textField>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MaW-Mf-ahA">
+                    <rect key="frame" x="156" y="344" width="52" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="42" id="bLI-B0-rzN"/>
+                        <constraint firstAttribute="width" constant="308" id="npK-O5-vok"/>
+                    </constraints>
+                    <state key="normal" title="登录" backgroundImage="界面底部大按钮_ct@2x.png">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="land:" destination="-1" eventType="touchUpInside" id="ZTq-ru-iU0"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g3Q-nx-Enf">
+                    <rect key="frame" x="124" y="408" width="101" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="119" id="BkI-ia-N3h"/>
+                        <constraint firstAttribute="height" constant="36" id="CMg-ka-rsx"/>
+                    </constraints>
+                    <state key="normal" image="注册按钮_ct@2x.png">
+                        <color key="titleColor" red="0.98823529409999999" green="0.43137254899999999" blue="0.52549019610000003" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="regist:" destination="-1" eventType="touchUpInside" id="NxX-0i-T7o"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="2Yg-Wd-E4O" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="129" id="5GQ-Hi-pGo"/>
+                <constraint firstItem="MaW-Mf-ahA" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="BgO-BT-aNo"/>
+                <constraint firstItem="g3Q-nx-Enf" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="QBc-tk-ZPs"/>
+                <constraint firstItem="MaW-Mf-ahA" firstAttribute="top" secondItem="NaC-pv-SNc" secondAttribute="bottom" constant="41" id="XIy-VI-phl"/>
+                <constraint firstItem="NaC-pv-SNc" firstAttribute="top" secondItem="2Yg-Wd-E4O" secondAttribute="bottom" constant="37" id="bwc-VG-59c"/>
+                <constraint firstItem="2Yg-Wd-E4O" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="fsU-08-UIx"/>
+                <constraint firstItem="NaC-pv-SNc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="mEr-wL-JJd"/>
+                <constraint firstItem="g3Q-nx-Enf" firstAttribute="top" secondItem="MaW-Mf-ahA" secondAttribute="bottom" constant="32" id="mUQ-m1-Hqv"/>
+                <constraint firstAttribute="trailing" secondItem="NaC-pv-SNc" secondAttribute="trailing" id="tLT-au-PNu"/>
+                <constraint firstItem="NaC-pv-SNc" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="w6t-in-djf"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <point key="canvasLocation" x="339.5" y="302.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="2.jpg" width="640" height="960"/>
+        <image name="注册按钮_ct@2x.png" width="16" height="16"/>
+        <image name="界面底部大按钮_ct@2x.png" width="16" height="16"/>
+    </resources>
+</document>
