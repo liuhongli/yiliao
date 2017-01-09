@@ -10,7 +10,7 @@
 #import "RegistTableViewCell.h"
 #import "ThreeDetailController.h"
 
-@interface TwoViewController ()<UITableViewDataSource,UITableViewDelegate>{
+@interface TwoViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>{
     
     NSArray *titleArray;
     NSArray *imageSArray;
@@ -33,7 +33,7 @@
     imageSArray = @[@"首页_常规调查icon_dj",@"首页_运动调查icon_dj",@"首页_膳食调查icon_dj",@"首页_个人信息icon_dj",@"首页_分析结果icon_dj"];
     [self initTableView];
 }
-
+#pragma mark -------------------UITableView and delegate-------------------
 - (void)initTableView {
     _myTabV = [[UITableView alloc] initWithFrame:    CGRectMake(0, 0, kScreenWidth, kScreenHeight) style:UITableViewStyleGrouped];
     _myTabV.delegate = self;
@@ -63,7 +63,7 @@
             cell = [[NSBundle mainBundle] loadNibNamed:@"RegistTableViewCell" owner:self options:nil].lastObject;
         }
         cell.nameLab.text = questionSArray[indexPath.row];
-        
+        cell.wTF.delegate = self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return cell;
@@ -165,6 +165,12 @@
     
         [self.navigationController pushViewController:detailVC animated:YES];
     
+}
+#pragma mark -------------------textField delegat-------------------
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    
+    return NO;
 }
 
 - (void)didReceiveMemoryWarning {
