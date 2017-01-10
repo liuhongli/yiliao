@@ -9,5 +9,5 @@
 #import "BaseViewController.h"
 
 @interface FoodViewController : BaseViewController
-
+@property(nonatomic,assign)NSInteger comeType; //1早餐 2中 3晚 4加餐
 @end

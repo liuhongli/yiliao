@@ -11,5 +11,6 @@
 @interface BaseViewController : UIViewController
 
 
-- (CGSize)countHeight:(NSString *)context font:(float)num  witd:(float)witd;
+- (CGSize)countHeight:(NSString *)context font:(float)num  witd:(float)witd;//计算label高度
+- (UIImage*) createImageWithColor: (UIColor*) color;//颜色转图片
 @end

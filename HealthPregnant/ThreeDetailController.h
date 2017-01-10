@@ -9,5 +9,6 @@
 #import "BaseViewController.h"
 
 @interface ThreeDetailController : BaseViewController
+@property(nonatomic,assign)NSInteger comeType; //1睡眠时间 2职业 3运动
 
 @end

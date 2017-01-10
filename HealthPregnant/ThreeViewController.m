@@ -9,6 +9,7 @@
 #import "ThreeViewController.h"
 #import "ToLunchTableViewCell.h"
 #import "EatTableViewCell.h"
+#import "FoodViewController.h"
 
 @interface ThreeViewController ()<UITableViewDataSource,UITableViewDelegate>{
     
@@ -144,26 +145,35 @@
 }
 
 - (void)didcliK:(UIButton *)button {
+    FoodViewController *foodVC = [[FoodViewController alloc] init];
     
-       
     switch (button.tag) {
         case 10:
         {
-            
+            foodVC.comeType = 0;
         }
             break;
             
         case 11:
         {
-            
+            foodVC.comeType = 1;
         }
             break;
+        case 12:
+        {
+            foodVC.comeType = 2;
+        }
+            break;
+
             
-        default:
+        default:{
+            foodVC.comeType = 3;
+        }
             break;
     }
     
-   
+    [self.navigationController pushViewController:foodVC animated:YES];
+
 }
 
 - (void)didReceiveMemoryWarning {

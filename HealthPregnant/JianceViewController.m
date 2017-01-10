@@ -17,12 +17,18 @@
 #define myDistance  20 //间距
 
 
-@interface JianceViewController ()<UITableViewDataSource,UITableViewDelegate,TZImagePickerControllerDelegate>{
+@interface JianceViewController ()<UITableViewDataSource,UITableViewDelegate,TZImagePickerControllerDelegate,UITextFieldDelegate,UIPickerViewDataSource,UIPickerViewDelegate>{
     
     NSArray *titleArray;
     NSArray *imageSArray;
     NSArray *questionSArray;
     UIImageView *SIMAGE;
+    
+    NSInteger seleImage;//b超 血常规 尿常规
+    NSMutableDictionary *imageDic;//图片存储
+    UIView *j_actionV;//宫高选择
+    NSDictionary *dataDic;//数据
+
     
 }
 @property (retain, nonatomic)UITableView *myTabV;
@@ -39,7 +45,12 @@
     questionSArray = @[@"血压",@"宫高"];
     titleArray = @[@"B超",@"血常规",@"尿常规"];
     imageSArray = @[@"首页_常规调查icon_dj",@"首页_运动调查icon_dj",@"首页_膳食调查icon_dj"];
+    imageDic = [NSMutableDictionary dictionary];
+    
+    NSArray *result = [[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] objectForKey:@"result"];
+    dataDic = result[6];
     [self initTableView];
+    
 }
 
 - (void)initTableView {
@@ -82,7 +93,8 @@
             cell = [[NSBundle mainBundle] loadNibNamed:@"RegistTableViewCell" owner:self options:nil].lastObject;
         }
         cell.nameLab.text = questionSArray[indexPath.row];
-        
+        cell.wTF.tag = 800 + indexPath.row;
+        cell.wTF.delegate = self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return cell;
@@ -111,6 +123,7 @@
             [cell.contentView addSubview:button];
             
             UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake((button.width-50)/2, 20, 50, 50)];
+            imageV.tag = 1000+i;
             imageV.layer.cornerRadius = 25;
             imageV.clipsToBounds = YES;
             imageV.image = [UIImage imageNamed:imageSArray[i]];
@@ -133,9 +146,9 @@
         SIMAGE.contentMode = UIViewContentModeScaleAspectFit;
         [cell.contentView addSubview:SIMAGE];
         
-        UIButton *selePho = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth-30, 0.6*(kScreenWidth-30))];
-        [selePho addTarget:self action:@selector(selePhoto) forControlEvents:UIControlEventTouchUpInside];
-        [SIMAGE addSubview:selePho];
+//        UIButton *selePho = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth-30, 0.6*(kScreenWidth-30))];
+//        [selePho addTarget:self action:@selector(selePhoto) forControlEvents:UIControlEventTouchUpInside];
+//        [SIMAGE addSubview:selePho];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
@@ -165,22 +178,30 @@
 
 - (void)didcliK:(UIButton *)button {
     
+    [self selePhoto];
+    
+
     switch (button.tag) {
         case 10:
         {
-            
+            seleImage = 1000;
         }
             break;
             
         case 11:
         {
-            
+            seleImage = 1001;
         }
             break;
             
-        default:
+        default:{
+            
+            seleImage = 1002;
+        }
             break;
     }
+    
+        SIMAGE.image = [imageDic objectForKey:[NSString stringWithFormat:@"%ld",seleImage]];
     
 }
 - (void)selePhoto {
@@ -202,15 +223,129 @@
     NSLog(@"cancel");
 }
 
-/// User finish picking photo，if assets are not empty, user picking original photo.
-/// 用户选择好了图片，如果assets非空，则用户选择了原图。
-- (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray *)photos sourceAssets:(NSArray *)assets{
-    if (assets.count > 0) {
-        SIMAGE.image = photos[0];
-        
-
-    }
+- (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray<UIImage *> *)photos sourceAssets:(NSArray *)assets {
+    
 }
+- (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray<UIImage *> *)photos sourceAssets:(NSArray *)assets infos:(NSArray<NSDictionary *> *)infos {
+    if (photos.count < 1) {
+        return;
+    }
+    UIImageView *imageV = [self.view viewWithTag:seleImage];
+    imageV.image = photos[0];
+    SIMAGE.image = photos[0];
+    [imageDic setObject:photos[0] forKey:[NSString stringWithFormat:@"%ld",seleImage]];
+
+    
+}
+
+#pragma mark -------------------textField delegat-------------------
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+   
+    [textField canResignFirstResponder];
+    
+    if (textField.tag == 1000) {
+        j_actionV.hidden = YES;
+        
+    }else if (textField.tag == 1001){
+       
+        [self seleJob];
+        
+    }
+    return NO;
+}
+
+
+#pragma mark -------------------选择职业-------------------
+- (void)seleJob {
+    if (j_actionV == nil) {
+        
+        j_actionV = [[UIView alloc]initWithFrame:CGRectMake(0,kScreenHeight-260,kScreenWidth, 260)];
+        UIToolbar   *pickerDateToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 44)];
+        
+        [pickerDateToolbar setBackgroundImage:[self createImageWithColor:BaseColor] forToolbarPosition:0 barMetrics:0];
+        pickerDateToolbar.tintColor = BaseColor;
+        [pickerDateToolbar sizeToFit];
+        
+        NSMutableArray *barItems = [[NSMutableArray alloc] init];
+        
+        //
+        UIBarButtonItem *cancelBtn = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(toolBarCanelClick)];
+        
+        [cancelBtn setTintColor:[UIColor whiteColor]];
+        [barItems addObject:cancelBtn];
+        //
+        UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+        [barItems addObject:flexSpace];
+        
+        //
+        UIBarButtonItem *doneBtn = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(toolBarDoneClick)];
+        
+        [doneBtn setTintColor:[UIColor whiteColor]];
+        [barItems addObject:doneBtn];
+        
+        [pickerDateToolbar setItems:barItems animated:YES];
+        [j_actionV addSubview:pickerDateToolbar];
+        
+        
+        UIPickerView *pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 44, kScreenWidth, 216)];
+        pickerView.showsSelectionIndicator = YES;
+        pickerView.dataSource = self;
+        pickerView.delegate = self;
+        
+        [pickerView selectRow:1 inComponent:0 animated:YES];
+        
+        [j_actionV addSubview:pickerView];
+        
+        [self.view addSubview:j_actionV];
+    }
+    
+    j_actionV.hidden = NO;
+    
+}
+
+-(void)toolBarCanelClick{
+    
+    j_actionV.hidden = YES;
+    
+}
+-(void)toolBarDoneClick{
+    
+    j_actionV.hidden = YES;
+    
+    
+}
+
+
+//组件数
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+//每个组件的行数
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return 51;
+}
+
+//初始化每个组件每一行数据
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    
+    NSString *captionS = [NSString stringWithFormat:@"%ld",row];
+    return captionS;
+}
+
+//选中picker cell,save ArrayIndex
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    NSString *captionS = [NSString stringWithFormat:@"%ld",row];
+    
+    UITextField *textF = [self.view viewWithTag:801];
+    textF.text = captionS;
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
