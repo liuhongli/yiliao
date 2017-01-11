@@ -13,7 +13,7 @@
 #import "JianceViewController.h"
 #import "HabitViewController.h"
 
-@interface OneViewController () <UITableViewDataSource,UITableViewDelegate>{
+@interface OneViewController () <UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>{
     
     NSArray *titleArray;
     NSArray *imageSArray;
@@ -68,6 +68,8 @@
     }
         
         cell.nameLab.text = questionSArray[indexPath.row];
+        cell.wTF.delegate = self;
+        cell.wTF.tag = 1000 + indexPath.row;
          cell.selectionStyle = UITableViewCellSelectionStyleNone;
    
         return cell;
@@ -151,8 +153,6 @@
     switch (button.tag) {
         case 10:
         {
-//            SickViewController *sicVC = [[SickViewController alloc] init];
-//            [self.navigationController pushViewController:sicVC animated:NO];
             
             HabitViewController *jianceVC = [[HabitViewController alloc] init];
             jianceVC.title = @"主诉病症";
@@ -206,6 +206,21 @@
     }
     
 }
+
+#pragma mark -------------------textField delegat-------------------
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    if (textField.tag == 1000) {
+        
+    }else if (textField.tag == 1001){
+        
+    }else if (textField.tag == 1002){
+        
+    }
+
+    return NO;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

@@ -109,7 +109,11 @@
         cell.textLabel.font = [UIFont systemFontOfSize:FontApp];
         cell.textLabel.numberOfLines = 0;
         cell.textLabel.lineBreakMode = NSLineBreakByCharWrapping;
-        
+        UIView *sepV = [[UIView alloc]initWithFrame:CGRectMake(cell.width-0.5, 0, 0.5, cell.height)];
+        sepV.backgroundColor = [UIColor grayColor];
+        sepV.alpha = 0.6;
+        [cell.contentView addSubview:sepV];
+
         if (leftSelected == indexPath.row ) {
            
             cell.backgroundColor = [UIColor colorWithHexString:@"FF8698" alpha:1];
@@ -137,22 +141,13 @@
         cell.tintColor = [UIColor colorWithHexString:@"FF8698" alpha:1];
 
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
 
         return cell;
     }
     
 }
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    if(scrollView == self.leftTableView) return;
-    
-    NSIndexPath *HeaderViewIndex = [[self.rightTableView indexPathsForVisibleRows] firstObject];
-    
-    NSIndexPath *ToIndex = [NSIndexPath indexPathForRow:HeaderViewIndex.section inSection:0];
-    
-    [self.leftTableView selectRowAtIndexPath:ToIndex animated:YES scrollPosition:UITableViewScrollPositionMiddle];
-    
-}
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -184,7 +179,7 @@
 
         rightSelected =indexPath.row;
 
-        MKPAlertView *alertView = [[MKPAlertView alloc]initWithTitle:@"自定义UIAlertView" message:@"欢迎留言评论" sureBtn:@"确认" cancleBtn:@"取消"];
+        MKPAlertView *alertView = [[MKPAlertView alloc]initWithTitle:@"自定义UIAlertView" type:2 sureBtn:@"确认" cancleBtn:@"取消"];
         alertView.resultIndex = ^(NSString * str)
         {
             // 回调 -- 处理

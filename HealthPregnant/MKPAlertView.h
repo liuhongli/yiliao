@@ -14,8 +14,10 @@ typedef void(^AlertResult)(NSString  *inputWhat);
 
 /**  */
 @property(nonatomic,copy) AlertResult resultIndex;
+@property(nonatomic,assign) NSInteger comeType;// 1两个框   其他:默认单个
 
-- (instancetype)initWithTitle:(NSString *)title message:(NSString *)message sureBtn:(NSString *)sureTitle cancleBtn:(NSString *)cancleTitle;
+
+- (instancetype)initWithTitle:(NSString *)title type:(NSInteger)type sureBtn:(NSString *)sureTitle cancleBtn:(NSString *)cancleTitle;
 
 -(void)showMKPAlertView;
 

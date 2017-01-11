@@ -29,13 +29,17 @@
 @property(nonatomic,retain) UIView *lineView;
 /** 竖线 */
 @property(nonatomic,retain) UIView *verLineView;
+/** 输入框1 */
 @property(nonatomic,retain) UITextField *inputtF;
+/** 输入框2 */
+@property(nonatomic,retain) UITextField *inputtF2;
 @end
 
 @implementation MKPAlertView
 
--(instancetype)initWithTitle:(NSString *)title message:(NSString *)message sureBtn:(NSString *)sureTitle cancleBtn:(NSString *)cancleTitle
+-(instancetype)initWithTitle:(NSString *)title type:(NSInteger)type sureBtn:(NSString *)sureTitle cancleBtn:(NSString *)cancleTitle
 {
+    
     if(self == [super init])
     {
         self.frame = [UIScreen mainScreen].bounds;
@@ -45,7 +49,7 @@
         self.alertView.layer.cornerRadius = 5.0;
         self.alertView.frame = CGRectMake(0, 0, AlertW, 100);
         self.alertView.layer.position = self.center;
-        
+        self.comeType = type;
         if(title)
         {
             self.titleLbl = [self GetAdaptiveLable:CGRectMake(2*MKPSpace, 2*MKPSpace, AlertW-4*MKPSpace, 20) AndText:title andIsTitle:YES];
@@ -62,20 +66,44 @@
             self.contV = [[UIView alloc] init];
             
             self.contV.frame = self.titleLbl?CGRectMake(0, CGRectGetMaxY(self.titleLbl.frame)+MKPSpace, AlertW,60):CGRectMake(0, 2*MKPSpace,  AlertW, 60);
+        
+        UILabel *leftflab = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, 80, 40)];
+        leftflab.textAlignment = NSTextAlignmentRight;
+               
+        UILabel *rightlab = [[UILabel alloc] initWithFrame:CGRectMake(AlertW-80, 10, 80, 40)];
+        rightlab.textAlignment = NSTextAlignmentLeft;
        
+        if (_comeType == 1) {
+            self.inputtF = [[UITextField alloc] initWithFrame:CGRectMake(AlertW/2-50, 15, 45, 30)];
+            [self.inputtF becomeFirstResponder];
+            self.inputtF.textAlignment = NSTextAlignmentCenter;
+            self.inputtF.keyboardType = UIKeyboardTypeNumberPad;
+            self.inputtF.borderStyle = UITextBorderStyleRoundedRect;
+
+            self.inputtF2 = [[UITextField alloc] initWithFrame:CGRectMake(AlertW/2+5, 15, 45, 30)];
+            [self.inputtF2 becomeFirstResponder];
+            self.inputtF2.textAlignment = NSTextAlignmentCenter;
+            self.inputtF2.keyboardType = UIKeyboardTypeNumberPad;
+            self.inputtF2.borderStyle = UITextBorderStyleRoundedRect;
+            [self.contV addSubview:self.inputtF2];
+
+            leftflab.text = @"血压";
+            rightlab.text = @"mmHg";
+
+        }else{
+            
         self.inputtF = [[UITextField alloc] initWithFrame:CGRectMake(AlertW/2-50, 15, 100, 30)];
         [self.inputtF becomeFirstResponder];
         self.inputtF.textAlignment = NSTextAlignmentCenter;
         self.inputtF.keyboardType = UIKeyboardTypeNumberPad;
         self.inputtF.borderStyle = UITextBorderStyleRoundedRect;
-        
-        UILabel *leftflab = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, 80, 40)];
-        leftflab.textAlignment = NSTextAlignmentRight;
+       
         leftflab.text = @"重量";
-        
-        UILabel *rightlab = [[UILabel alloc] initWithFrame:CGRectMake(AlertW-80, 10, 80, 40)];
-        rightlab.textAlignment = NSTextAlignmentLeft;
         rightlab.text = @"克";
+
+       
+        }
+        
         [self.contV addSubview:self.inputtF];
         [self.contV addSubview:leftflab];
         [self.contV addSubview:rightlab];

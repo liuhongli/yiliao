@@ -10,7 +10,7 @@
 #import "RegistTableViewCell.h"
 #import "TZImagePickerController.h"
 #import "UIImageView+WebCache.h"
-
+#import "MKPAlertView.h"
 
 #define myWithd 90
 #define myheight 90
@@ -146,9 +146,6 @@
         SIMAGE.contentMode = UIViewContentModeScaleAspectFit;
         [cell.contentView addSubview:SIMAGE];
         
-//        UIButton *selePho = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth-30, 0.6*(kScreenWidth-30))];
-//        [selePho addTarget:self action:@selector(selePhoto) forControlEvents:UIControlEventTouchUpInside];
-//        [SIMAGE addSubview:selePho];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
@@ -244,17 +241,35 @@
    
     [textField canResignFirstResponder];
     
-    if (textField.tag == 1000) {
+    if (textField.tag == 800) {
         j_actionV.hidden = YES;
         
-    }else if (textField.tag == 1001){
+        [self seleXue];
+        
+    }else if (textField.tag == 801){
        
         [self seleJob];
         
     }
     return NO;
 }
+- (void)seleXue {
+    
+    MKPAlertView *alertView = [[MKPAlertView alloc]initWithTitle:@"自定义UIAlertView" type:1 sureBtn:@"确认" cancleBtn:@"取消"];
+    alertView.comeType = 1;
+    
+    alertView.resultIndex = ^(NSString * str)
+    {
+        // 回调 -- 处理
+        NSLog(@"%@",str);
+        
+        
+        
+        
+    };
+    [alertView showMKPAlertView];
 
+}
 
 #pragma mark -------------------选择职业-------------------
 - (void)seleJob {
@@ -292,7 +307,7 @@
         pickerView.showsSelectionIndicator = YES;
         pickerView.dataSource = self;
         pickerView.delegate = self;
-        
+        pickerView.backgroundColor = [UIColor whiteColor];
         [pickerView selectRow:1 inComponent:0 animated:YES];
         
         [j_actionV addSubview:pickerView];
