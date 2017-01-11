@@ -60,7 +60,6 @@ alpha:a])
 #define kStatusViewHeight 216 // 发消息的时候弹出的下面视图的高度
 #define kEnglishKeyboardHeight 216 //英文键盘输入高度
 #define kChineseKeyboardHeight 252 //中文键盘输入高度
-#define baseColor [UIColor colorWithRed:103.0/255 green:0.0/255 blue:131.0/255 alpha:1]
 #define kContentWidth 218
 #define titleSColor  rgb(69, 188, 185, 1)
 //获取物理屏幕的尺寸

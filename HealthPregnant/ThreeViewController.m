@@ -10,6 +10,7 @@
 #import "ToLunchTableViewCell.h"
 #import "EatTableViewCell.h"
 #import "FoodViewController.h"
+#import "FoodDetailViewController.h"
 
 @interface ThreeViewController ()<UITableViewDataSource,UITableViewDelegate>{
     
@@ -106,7 +107,7 @@
                 
                 cell = [[NSBundle mainBundle] loadNibNamed:@"ToLunchTableViewCell" owner:self options:nil].lastObject;
             }
-            
+            cell.subLab.text = [NSString stringWithFormat:@"查看全部 >"];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             return cell;
@@ -143,7 +144,16 @@
     }
     return 60;
 }
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 1) {
+        if (indexPath.row == 0) {
+            
+        }else{
+            FoodDetailViewController *VC = [[FoodDetailViewController alloc] init];
+            [self.navigationController pushViewController:VC animated:YES];
+        }
+    }
+}
 - (void)didcliK:(UIButton *)button {
     FoodViewController *foodVC = [[FoodViewController alloc] init];
     

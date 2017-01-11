@@ -8,8 +8,9 @@
 
 #import "ThreeDetailController.h"
 #import "ToLunchTableViewCell.h"
-#import "EatTableViewCell.h"
+#import "ThreeTableViewCell.h"
 #import "FoodViewController.h"
+#import "FoodDetailViewController.h"
 
 @interface ThreeDetailController ()<UITableViewDelegate,UITableViewDataSource,UIPickerViewDelegate,UIPickerViewDataSource>{
     
@@ -71,7 +72,7 @@
             
             cell = [tableView dequeueReusableCellWithIdentifier:cellIndefier];
         }
-        cell.contentView.backgroundColor = [UIColor lightGrayColor];
+        cell.contentView.backgroundColor = [UIColor colorWithHexString:@"D6D6D6"];
         
         switch (_comeType) {
             case 0: {
@@ -104,11 +105,11 @@
     }else{
         
         static NSString *cellIndefier = @"cell1";
-        EatTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIndefier];
+        ThreeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIndefier];
         
         if (!cell) {
 
-            [tableView registerNib:[UINib nibWithNibName:@"EatTableViewCell" bundle:nil] forCellReuseIdentifier:cellIndefier];
+            [tableView registerNib:[UINib nibWithNibName:@"ThreeTableViewCell" bundle:nil] forCellReuseIdentifier:cellIndefier];
 
             cell = [tableView dequeueReusableCellWithIdentifier:cellIndefier];
         }
@@ -129,7 +130,10 @@
     
     if (indexPath.row == 0) {
         [self seleDataSource];
-    };
+    }else{
+        
+
+    }
     
     
 }

@@ -47,7 +47,7 @@
     UIButton *buton  = [[UIButton alloc] initWithFrame:CGRectMake(10, 20, kScreenWidth-20, 40)];
     [buton setTitle:@"提交" forState:UIControlStateNormal];
     [buton addTarget:self action:@selector(postInfo) forControlEvents:UIControlEventTouchUpInside];
-    [buton setBackgroundColor:xuanRGB];
+    [buton setBackgroundColor:BaseColor];
     [view addSubview:buton];
     table.tableFooterView = view;
 

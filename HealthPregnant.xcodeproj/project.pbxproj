@@ -14,6 +14,9 @@
 		F24785B11CBCD18B00E83946 /* JianceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F24785B01CBCD18B00E83946 /* JianceViewController.m */; };
 		F24785B31CBCD31600E83946 /* JianceContView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F24785B21CBCD31600E83946 /* JianceContView.xib */; };
 		F24785B91CBCF73A00E83946 /* HabitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F24785B81CBCF73A00E83946 /* HabitViewController.m */; };
+		F24C826A1E2482F100B13989 /* ThreeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F24C82681E2482F100B13989 /* ThreeTableViewCell.m */; };
+		F24C826B1E2482F100B13989 /* ThreeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F24C82691E2482F100B13989 /* ThreeTableViewCell.xib */; };
+		F24C826E1E248A1700B13989 /* FoodDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F24C826D1E248A1700B13989 /* FoodDetailViewController.m */; };
 		F25B85E81CD8A586004432BC /* ThreeDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = F25B85E61CD8A586004432BC /* ThreeDetailController.m */; };
 		F25B85E91CD8A586004432BC /* ThreeDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F25B85E71CD8A586004432BC /* ThreeDetailController.xib */; };
 		F26A76E01E1CDCBC00DE4C75 /* MLeakedObjectProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = F26A76CA1E1CDCBC00DE4C75 /* MLeakedObjectProxy.m */; };
@@ -427,6 +430,11 @@
 		F24785B21CBCD31600E83946 /* JianceContView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JianceContView.xib; sourceTree = "<group>"; };
 		F24785B71CBCF73A00E83946 /* HabitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HabitViewController.h; sourceTree = "<group>"; };
 		F24785B81CBCF73A00E83946 /* HabitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HabitViewController.m; sourceTree = "<group>"; };
+		F24C82671E2482F100B13989 /* ThreeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreeTableViewCell.h; sourceTree = "<group>"; };
+		F24C82681E2482F100B13989 /* ThreeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThreeTableViewCell.m; sourceTree = "<group>"; };
+		F24C82691E2482F100B13989 /* ThreeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ThreeTableViewCell.xib; sourceTree = "<group>"; };
+		F24C826C1E248A1700B13989 /* FoodDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoodDetailViewController.h; sourceTree = "<group>"; };
+		F24C826D1E248A1700B13989 /* FoodDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoodDetailViewController.m; sourceTree = "<group>"; };
 		F25B85E51CD8A586004432BC /* ThreeDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreeDetailController.h; sourceTree = "<group>"; };
 		F25B85E61CD8A586004432BC /* ThreeDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThreeDetailController.m; sourceTree = "<group>"; };
 		F25B85E71CD8A586004432BC /* ThreeDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ThreeDetailController.xib; sourceTree = "<group>"; };
@@ -965,6 +973,8 @@
 				F25B85E71CD8A586004432BC /* ThreeDetailController.xib */,
 				F20DB7371DFE7FB5001C0AF0 /* FoodViewController.h */,
 				F20DB7381DFE7FB5001C0AF0 /* FoodViewController.m */,
+				F24C826C1E248A1700B13989 /* FoodDetailViewController.h */,
+				F24C826D1E248A1700B13989 /* FoodDetailViewController.m */,
 			);
 			name = C;
 			sourceTree = "<group>";
@@ -982,6 +992,9 @@
 				F2D8B61A1CBCC5AD00028D71 /* EatTableViewCell.h */,
 				F2D8B61B1CBCC5AD00028D71 /* EatTableViewCell.m */,
 				F2D8B61C1CBCC5AD00028D71 /* EatTableViewCell.xib */,
+				F24C82671E2482F100B13989 /* ThreeTableViewCell.h */,
+				F24C82681E2482F100B13989 /* ThreeTableViewCell.m */,
+				F24C82691E2482F100B13989 /* ThreeTableViewCell.xib */,
 			);
 			name = V;
 			sourceTree = "<group>";
@@ -1835,6 +1848,7 @@
 				F2AC019E1CAE53AF001C20CE /* 运动_睡眠时间调查icon_ct.png in Resources */,
 				F2AC01301CAE53AE001C20CE /* 分析_运动调查未勾选_dj@3x.png in Resources */,
 				F2AC013F1CAE53AE001C20CE /* 动图指示点_ct@3x.png in Resources */,
+				F24C826B1E2482F100B13989 /* ThreeTableViewCell.xib in Resources */,
 				F2AC00E51CAE53AE001C20CE /* 上传图片默认图@3x.png in Resources */,
 				F2AC01CC1CAE53AF001C20CE /* 首页_膳食调查icon_dj@2x.png in Resources */,
 				F2AC01571CAE53AE001C20CE /* 常规_主诉与病症icon_ct@2x.png in Resources */,
@@ -2129,6 +2143,7 @@
 				F26A76E71E1CDCBC00DE4C75 /* UITabBarController+MemoryLeak.m in Sources */,
 				F2ACFF6F1CAD12CF001C20CE /* NSString+CateString.m in Sources */,
 				F26A76E61E1CDCBC00DE4C75 /* UISplitViewController+MemoryLeak.m in Sources */,
+				F24C826A1E2482F100B13989 /* ThreeTableViewCell.m in Sources */,
 				F2ACFF7C1CAD13AE001C20CE /* UIColor+CateColor.m in Sources */,
 				F2F7F2391CB6540400A36F3A /* RAnserModel.m in Sources */,
 				F2F8E6331D0D6BDA00CFDEC2 /* TZPhotoPickerController.m in Sources */,
@@ -2203,6 +2218,7 @@
 				F2D8B6181CBCC53600028D71 /* ToLunchTableViewCell.m in Sources */,
 				F2ACFFE11CAD1656001C20CE /* FMResultSet.m in Sources */,
 				F2AC01E91CAF69AF001C20CE /* FiveViewController.m in Sources */,
+				F24C826E1E248A1700B13989 /* FoodDetailViewController.m in Sources */,
 				F26A76EA1E1CDCBC00DE4C75 /* UIViewController+MemoryLeak.m in Sources */,
 				F26A76E11E1CDCBC00DE4C75 /* MLeaksMessenger.m in Sources */,
 				F2AC01E31CAF6973001C20CE /* ThreeViewController.m in Sources */,
