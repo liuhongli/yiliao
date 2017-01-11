@@ -19,6 +19,9 @@
     UIView *j_actionV;
     NSDictionary *dataDic;
     
+    NSString *dateStr;
+    NSString *jobStr;
+    
 }
 @property (retain, nonatomic)UITableView *myTabV;
 
@@ -151,9 +154,20 @@
 }
 
 - (void)didcliK:(UIButton *)button {
+    if (dateStr == nil) {
+        
+        [Alert showWithTitle:@"请选择日期"];
+        return;
+    }
+    if (jobStr == nil) {
+        
+        [Alert showWithTitle:@"请选择职业"];
+        return;
+    }
 
     ThreeDetailController *detailVC = [[ThreeDetailController alloc] init];
-    
+    detailVC.dateStr = dateStr;
+    detailVC.job = jobStr;
     switch (button.tag) {
         case 10:
         {
@@ -273,6 +287,7 @@
     NSLog(@"%@",[dateFormatter stringFromDate:theDate]);
     UITextField *textF = [self.view viewWithTag:1000];
     textF.text = [dateFormatter stringFromDate:theDate];
+    dateStr = [dateFormatter stringFromDate:theDate];
     
 }
 
@@ -354,6 +369,7 @@
 
     UITextField *textF = [self.view viewWithTag:1001];
     textF.text = captionS;
+    jobStr  = captionS;
 }
 
 //替换text居中

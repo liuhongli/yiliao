@@ -16,8 +16,9 @@
     
     UIView *j_actionV;
     NSDictionary *dataDic;
-
+    NSMutableArray *dataArr;
 }
+@property (weak, nonatomic) IBOutlet UITableView *tableV;
 
 @end
 
@@ -27,20 +28,27 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    dataArr = [NSMutableArray array];
+    _tableV.tableFooterView = [[UIView alloc] init];
+    
     NSArray *result = [[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] objectForKey:@"result"];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
     switch (_comeType) {
         case 0: {
             self.title = @"睡眠时间调查";
 
             dataDic = result[16];
-
+            dataArr = (NSMutableArray *)[defaults objectForKey:KSleepRecordArr];
+            NSLog(@"%@",[defaults objectForKey:KSleepRecordArr]);
        
         }
            break;
         case 1: {
             
             self.title = @"职业调查";
-  
+            dataArr = (NSMutableArray *)[defaults objectForKey:KJobRecordArr];
+
         }
             break;
 
@@ -49,15 +57,16 @@
             
             self.title = @"运动调查";
             dataDic = result[18];
+            dataArr = (NSMutableArray *)[defaults objectForKey:KSportRecordArr];
 
         }
             break;
     }
-    
+    [self.tableV reloadData];
 }
 #pragma mark -------------------tableView delegate-------------------
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-       return 22;
+       return 1+dataArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -113,8 +122,12 @@
 
             cell = [tableView dequeueReusableCellWithIdentifier:cellIndefier];
         }
-        
+        NSDictionary *dic = dataArr[indexPath.row -1];
+        cell.nameLab.text = [dic objectForKey:@"caption"];
+        cell.dateLab.text = [dic objectForKey:@"date"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.deleBut.tag = indexPath.row -1;
+        [cell.deleBut addTarget:self action:@selector(deleteCode:) forControlEvents:UIControlEventTouchUpInside];
         
         return cell;
     }
@@ -136,6 +149,30 @@
     }
     
     
+}
+
+- (void)deleteCode:(UIButton *)button{
+    [dataArr removeObjectAtIndex:button.tag];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+    if (_comeType == 0) {
+      
+        [defaults setObject:dataArr forKey:KSleepRecordArr];
+        
+    }else if (_comeType == 1){
+      
+        [defaults setObject:dataArr forKey:KJobRecordArr];
+        
+        
+    }else if (_comeType == 2){
+
+        [defaults setObject:dataArr forKey:KSportRecordArr];
+        
+    }
+    [_tableV reloadData];
+    [defaults synchronize];
+
 }
 #pragma mark -------------------选择数据-------------------
 - (void)seleDataSource {
@@ -232,7 +269,7 @@
                 return array.count;
 
             }else{
-                return 24;
+                return 25;
             }
         }
             break;
@@ -263,7 +300,7 @@
 
         }else if (component == 1){
             
-            captionS = [NSString stringWithFormat:@"%ld小时",row +1];
+            captionS = [NSString stringWithFormat:@"%ld小时",row ];
 
         }
     }
@@ -274,7 +311,80 @@
 //选中picker cell,save ArrayIndex
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
+    NSString *captionS;
+  
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *codeDic = [NSMutableDictionary dictionary];
+    NSMutableArray *codeArr = [NSMutableArray array];
+    if (_comeType == 0) {
+        NSArray *a =[defaults objectForKey:KSleepRecordArr];
+        for (NSDictionary *d in a) {
+            NSString *ds = [d objectForKey:@"date"];
+            if (![ds isEqualToString:_dateStr]) {
+                [codeArr insertObject:d atIndex:0];
+            }
+        }
+        NSArray *array = [dataDic objectForKey:@"children"];
+        captionS = [array[row] objectForKey:@"caption"];
+       
+        [codeDic setObject:captionS forKey:@"caption"];
+        [codeDic setObject:_dateStr forKey:@"date"];
+        [codeDic setObject:_job forKey:@"job"];
+        
+        [codeArr addObject:codeDic];
+        [defaults setObject:codeArr forKey:KSleepRecordArr];
+        
+    }else if (_comeType == 1){
+        NSArray *a = [defaults objectForKey:KJobRecordArr];
+        for (NSDictionary *d in a) {
+            NSString *ds = [d objectForKey:@"date"];
+            if (![ds isEqualToString:_dateStr]) {
+                [codeArr addObject:d];
+            }
+        }
 
+        captionS = [NSString stringWithFormat:@"%ld小时",row +1];
+        [codeDic setObject:captionS forKey:@"caption"];
+        [codeDic setObject:_dateStr forKey:@"date"];
+        [codeDic setObject:_job forKey:@"job"];
+        
+        [codeArr addObject:codeDic];
+        [defaults setObject:codeArr forKey:KJobRecordArr];
+
+
+    }else if (_comeType == 2){
+        NSArray *a = [defaults objectForKey:KSportRecordArr];
+        for (NSDictionary *d in a) {
+            NSString *ds = [d objectForKey:@"date"];
+            if (![ds isEqualToString:_dateStr]) {
+                [codeArr addObject:d];
+            }
+        }
+        
+        if (component == 0) {
+            
+            NSArray *array = [dataDic objectForKey:@"children"];
+            captionS = [array[row] objectForKey:@"caption"];
+            
+        }else if (component == 1){
+            
+            captionS = [NSString stringWithFormat:@"%ld小时",row +1];
+            
+        }
+        
+        [codeDic setObject:captionS forKey:@"caption"];
+        [codeDic setObject:_dateStr forKey:@"date"];
+        [codeDic setObject:_job forKey:@"job"];
+        
+        [codeArr insertObject:codeDic atIndex:0];
+        [defaults setObject:codeArr forKey:KSportRecordArr];
+
+    }
+    dataArr = codeArr;
+   
+    [defaults synchronize];
+    [_tableV reloadData];
+    
 }
 
 //替换text居中

@@ -11,4 +11,8 @@
 @interface ThreeDetailController : BaseViewController
 @property(nonatomic,assign)NSInteger comeType; //1睡眠时间 2职业 3运动
 
+@property(nonatomic,copy)NSString *job;
+@property(nonatomic,copy)NSString *dateStr;
+
+
 @end

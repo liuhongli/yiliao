@@ -67,8 +67,12 @@ alpha:a])
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 
 #define tabBackColor [UIColor colorWithHexString:@"F9F6F7" alpha:1]
-#define BaseColor [UIColor colorWithHexString:@"FF8698" alpha:1]
+#define BaseColor [UIColor colorWithHexString:@"FF8698" alpha:1] //导航栏粉红色
 #define FontApp 16 //字体大小
+
+#define KSleepRecordArr @"KSleepRecordArr"
+#define KJobRecordArr   @"KJobRecordArr"
+#define KSportRecordArr @"KSportRecordArr"
 
 
 //#ifndef __IPHONE_8_0
