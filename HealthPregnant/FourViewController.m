@@ -98,6 +98,16 @@
     
     return 50;
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"编辑" message:@"请输入信息" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确认", @"取消", nil];
+    
+    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [alertView show];
+    
+}
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
