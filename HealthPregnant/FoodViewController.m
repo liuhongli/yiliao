@@ -179,7 +179,10 @@
 
         rightSelected =indexPath.row;
 
-        MKPAlertView *alertView = [[MKPAlertView alloc]initWithTitle:@"自定义UIAlertView" type:2 sureBtn:@"确认" cancleBtn:@"取消"];
+        NSDictionary *dic = dataArray[leftSelected];
+        NSArray *childArr = [dic objectForKey:@"children"];
+        NSDictionary *childDic = childArr[indexPath.row];
+         MKPAlertView *alertView = [[MKPAlertView alloc]initWithTitle:[childDic objectForKey:@"caption"] type:2 sureBtn:@"确认" cancleBtn:@"取消"];
         alertView.resultIndex = ^(NSString * str)
         {
             // 回调 -- 处理
