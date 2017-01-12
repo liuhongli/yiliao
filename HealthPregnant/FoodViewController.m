@@ -184,7 +184,10 @@
         {
             // 回调 -- 处理
             NSLog(@"%@",str);
-            
+            if ([str isEqualToString:@"cancle"]) {
+                return ;
+            }
+
                 NSIndexPath*oldIndexPath =[NSIndexPath indexPathForRow:rightSelected inSection:0];
                 UITableViewCell*oldCell = [tableView cellForRowAtIndexPath:oldIndexPath];
 

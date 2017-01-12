@@ -280,7 +280,13 @@
 {
     if (sender.tag == 2) {
         if (self.resultIndex) {
-            self.resultIndex(self.inputtF.text);
+            if (_comeType == 1) {
+                NSString * str = [NSString stringWithFormat:@"%@/%@",self.inputtF.text,self.inputtF2.text];
+                self.resultIndex(str);
+
+            }else{
+                self.resultIndex(self.inputtF.text);
+            }
         }
     }else{
         if (self.resultIndex) {

@@ -256,14 +256,17 @@
 - (void)seleXue {
     
     MKPAlertView *alertView = [[MKPAlertView alloc]initWithTitle:@"自定义UIAlertView" type:1 sureBtn:@"确认" cancleBtn:@"取消"];
-    alertView.comeType = 1;
     
     alertView.resultIndex = ^(NSString * str)
     {
         // 回调 -- 处理
         NSLog(@"%@",str);
+        if ([str isEqualToString:@"cancle"]) {
+            return ;
+        }
         
-        
+        UITextField *textF = [self.view viewWithTag:800];
+        textF.text = [NSString stringWithFormat:@"%@mmHg",str];
         
         
     };
