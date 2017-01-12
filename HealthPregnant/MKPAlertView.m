@@ -281,10 +281,20 @@
     if (sender.tag == 2) {
         if (self.resultIndex) {
             if (_comeType == 1) {
+                if (self.inputtF.text == nil || self.inputtF2.text == nil) {
+                    [self removeFromSuperview];
+                    return;
+                }
                 NSString * str = [NSString stringWithFormat:@"%@/%@",self.inputtF.text,self.inputtF2.text];
                 self.resultIndex(str);
 
             }else{
+                
+                if (self.inputtF.text == nil) {
+                    [self removeFromSuperview];
+                    return;
+                }
+
                 self.resultIndex(self.inputtF.text);
             }
         }

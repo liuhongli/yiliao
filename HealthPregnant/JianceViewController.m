@@ -29,7 +29,7 @@
     UIView *j_actionV;//宫高选择
     NSDictionary *dataDic;//数据
 
-    
+    NSInteger xueSel;//宫高选择
 }
 @property (retain, nonatomic)UITableView *myTabV;
 
@@ -46,7 +46,7 @@
     titleArray = @[@"B超",@"血常规",@"尿常规"];
     imageSArray = @[@"首页_常规调查icon_dj",@"首页_运动调查icon_dj",@"首页_膳食调查icon_dj"];
     imageDic = [NSMutableDictionary dictionary];
-    
+    xueSel = 0;
     NSArray *result = [[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] objectForKey:@"result"];
     dataDic = result[6];
     [self initTableView];
@@ -311,7 +311,7 @@
         pickerView.dataSource = self;
         pickerView.delegate = self;
         pickerView.backgroundColor = [UIColor whiteColor];
-        [pickerView selectRow:1 inComponent:0 animated:YES];
+        [pickerView selectRow:0 inComponent:0 animated:YES];
         
         [j_actionV addSubview:pickerView];
         
@@ -328,6 +328,12 @@
     
 }
 -(void)toolBarDoneClick{
+    
+    NSString *captionS = [NSString stringWithFormat:@"%ldcm",xueSel];
+    
+    UITextField *textF = [self.view viewWithTag:801];
+    textF.text = captionS;
+
     
     j_actionV.hidden = YES;
     
@@ -351,14 +357,15 @@
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     
-    NSString *captionS = [NSString stringWithFormat:@"%ld",row];
+    NSString *captionS = [NSString stringWithFormat:@"%ldcm",row];
     return captionS;
 }
 
 //选中picker cell,save ArrayIndex
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    NSString *captionS = [NSString stringWithFormat:@"%ld",row];
+    xueSel = row;
+    NSString *captionS = [NSString stringWithFormat:@"%ldcm",xueSel];
     
     UITextField *textF = [self.view viewWithTag:801];
     textF.text = captionS;

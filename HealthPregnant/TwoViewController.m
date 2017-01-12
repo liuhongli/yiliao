@@ -19,8 +19,11 @@
     UIView *j_actionV;
     NSDictionary *dataDic;
     
-    NSString *dateStr;
-    NSString *jobStr;
+    NSString *dateStr;//日期
+    NSString *jobStr;//职业
+    NSInteger dateSel;//默认日期
+    NSInteger jobSel;//默认职业
+    
     
 }
 @property (retain, nonatomic)UITableView *myTabV;
@@ -37,6 +40,9 @@
     questionSArray = @[@"日期",@"职业"];
     titleArray = @[@"睡眠时间调查",@"职业调查",@"运动调查"];
     imageSArray = @[@"首页_常规调查icon_dj",@"首页_运动调查icon_dj",@"首页_膳食调查icon_dj",@"首页_个人信息icon_dj",@"首页_分析结果icon_dj"];
+    
+    jobSel = 0;
+    dateSel = 0;
     [self initTableView];
     
     NSArray *result = [[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] objectForKey:@"result"];
@@ -267,13 +273,28 @@
 -(void)toolBarCanelClick{
     
     m_actionV.hidden = YES;
-    j_actionV.hidden = YES;
     
 }
 -(void)toolBarDoneClick{
-
+  
     m_actionV.hidden = YES;
-    j_actionV.hidden = YES;
+   
+    if (dateSel == 1) {
+        return;
+    }
+    NSDate *theDate = [NSDate date];
+    NSLog(@"%@",[theDate descriptionWithLocale:[NSLocale currentLocale]]);
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"YYYY-MM-dd ";
+    NSLog(@"%@",[dateFormatter stringFromDate:theDate]);
+
+    
+    
+    UITextField *textF = [self.view viewWithTag:1000];
+    textF.text = [dateFormatter stringFromDate:theDate];
+    
+    dateStr = [dateFormatter stringFromDate:theDate];
 
 
 }
@@ -288,7 +309,7 @@
     UITextField *textF = [self.view viewWithTag:1000];
     textF.text = [dateFormatter stringFromDate:theDate];
     dateStr = [dateFormatter stringFromDate:theDate];
-    
+    dateSel = 1;
 }
 
 #pragma mark -------------------选择职业-------------------
@@ -305,7 +326,7 @@
         NSMutableArray *barItems = [[NSMutableArray alloc] init];
         
         //
-        UIBarButtonItem *cancelBtn = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(toolBarCanelClick)];
+        UIBarButtonItem *cancelBtn = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(toolBaCanelClick)];
         
         [cancelBtn setTintColor:[UIColor whiteColor]];
         [barItems addObject:cancelBtn];
@@ -314,7 +335,7 @@
         [barItems addObject:flexSpace];
         
         //
-        UIBarButtonItem *doneBtn = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(toolBarDoneClick)];
+        UIBarButtonItem *doneBtn = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(toolBaDoneClick)];
         
         [doneBtn setTintColor:[UIColor whiteColor]];
         [barItems addObject:doneBtn];
@@ -329,7 +350,7 @@
         pickerView.delegate = self;
         pickerView.backgroundColor = [UIColor whiteColor];
 
-        [pickerView selectRow:1 inComponent:0 animated:YES];
+        [pickerView selectRow:0 inComponent:0 animated:YES];
         
         [j_actionV addSubview:pickerView];
         
@@ -338,6 +359,25 @@
     
     j_actionV.hidden = NO;
 
+}
+
+-(void)toolBaCanelClick{
+    
+    j_actionV.hidden = YES;
+    
+}
+-(void)toolBaDoneClick{
+    
+    NSArray *array = [dataDic objectForKey:@"children"];
+    NSString *captionS = [array[jobSel] objectForKey:@"caption"];
+    
+    UITextField *textF = [self.view viewWithTag:1001];
+    textF.text = captionS;
+
+    j_actionV.hidden = YES;
+    jobStr  = captionS;
+
+    
 }
 
 //组件数
@@ -364,8 +404,9 @@
 //选中picker cell,save ArrayIndex
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
+    jobSel =  row;
     NSArray *array = [dataDic objectForKey:@"children"];
-    NSString *captionS = [array[row] objectForKey:@"caption"];
+    NSString *captionS = [array[jobSel] objectForKey:@"caption"];
 
     UITextField *textF = [self.view viewWithTag:1001];
     textF.text = captionS;
