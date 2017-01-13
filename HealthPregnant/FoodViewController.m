@@ -191,10 +191,10 @@
                 return ;
             }
 
-                NSIndexPath*oldIndexPath =[NSIndexPath indexPathForRow:rightSelected inSection:0];
-                UITableViewCell*oldCell = [tableView cellForRowAtIndexPath:oldIndexPath];
-
-                oldCell.accessoryType=UITableViewCellAccessoryNone;
+            NSDictionary *dic = dataArray[leftSelected];
+            NSArray *childArr = [dic objectForKey:@"children"];
+            NSDictionary *childDic = childArr[rightSelected];
+            NSMutableDictionary *codeDic = [[NSMutableDictionary alloc] initWithDictionary:childDic];
 
             
             
