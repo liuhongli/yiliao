@@ -139,9 +139,9 @@
 //保存上传个人信息
 - (void)savemess{
 //http://test.kpjkgl.com:8090/pregnant/user/edit?mobilePhone=11111111&name=吴江&birthdate=1990-01-01&height=60&lastMenses=2016-01-01&bloodType=O&nationality=汉& profession=IT&email=161231233@qq.com&education=大学
+    NSDictionary *para = @{@"mobilePhone":@"18911475023",@"name":@"1234",@"birthdate":@"1990-01-01",@"height":@"60",@"lastMenses":@"2016-01-01",@"bloodType":@"O",@"nationality":@"汉",@"profession":@"IT",@"email":@"161231233qq.com",@"education":@"大学"};
     
-    
-    [RBaseHttpTool postWithUrl:@"user/edit" parameters:mymess sucess:^(id json){
+    [RBaseHttpTool postWithUrl:@"user/edit" parameters:para sucess:^(id json){
         
         if ([[json objectForKey:@"success"] floatValue]== 1) {
             NSUserDefaults *userDetaults = [NSUserDefaults standardUserDefaults];
