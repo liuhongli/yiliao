@@ -20,7 +20,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    
+    [self loadData];
     ViewController   *vc          = [[ViewController alloc] init];
     
     LandViewController *landVC    = [[LandViewController alloc]init];
@@ -39,7 +39,20 @@
     self.window.rootViewController = navVC;
     return YES;
 }
+- (void)loadData{
+    
+    [RBaseHttpTool getCacheWithUrl:@"data/dict/download" option:0 parameters:nil sucess:^(id json){
+        
+        
+        [[NSUserDefaults standardUserDefaults] setObject:json forKey:@"ALLData"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        
+    } failur:^(NSError *error) {
+        
+    }];
 
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

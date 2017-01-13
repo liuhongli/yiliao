@@ -28,16 +28,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [RBaseHttpTool getCacheWithUrl:@"data/dict/download" option:0 parameters:nil sucess:^(id json){
-        
-    
-        [[NSUserDefaults standardUserDefaults] setObject:json forKey:@"ALLData"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        
-        
-    } failur:^(NSError *error) {
-        
-    }];
     self.title = @"常规调查";
     questionSArray = @[@"调查日期",@"孕周",@"孕期"];
 
