@@ -22,7 +22,6 @@
     
     NSString *dateStr;//日期
     NSString *jobStr;//职业
-    NSInteger dateSel;//默认日期
     NSInteger jobSel;//默认职业
     
     NSArray *dinArray;
@@ -242,7 +241,6 @@
 //    UITextField *textF = [self.view viewWithTag:1000];
 //    textF.text = [dateFormatter stringFromDate:theDate];
     dateStr = [dateFormatter stringFromDate:theDate];
-    dateSel = 1;
 }
 
 #pragma mark -------------------选择职业-------------------

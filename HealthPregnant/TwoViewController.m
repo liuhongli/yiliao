@@ -22,7 +22,6 @@
     
     NSString *dateStr;//日期
     NSString *jobStr;//职业
-    NSInteger dateSel;//默认日期
     NSInteger jobSel;//默认职业
     
     
@@ -43,7 +42,6 @@
     imageSArray = @[@"首页_常规调查icon_dj",@"首页_运动调查icon_dj",@"首页_膳食调查icon_dj",@"首页_个人信息icon_dj",@"首页_分析结果icon_dj"];
     
     jobSel = 0;
-    dateSel = 0;
     [self initTableView];
     
     NSArray *result = [[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] objectForKey:@"result"];
@@ -306,7 +304,7 @@
 //    UITextField *textF = [self.view viewWithTag:1000];
 //    textF.text = [dateFormatter stringFromDate:theDate];
     dateStr = [dateFormatter stringFromDate:theDate];
-    dateSel = 1;
+
 }
 
 #pragma mark -------------------选择职业-------------------
