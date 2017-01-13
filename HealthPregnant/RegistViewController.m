@@ -56,6 +56,10 @@
     }
     NSDictionary *para = @{@"mobilePhone":mobTF.text,@"name":nameTF.text,@"birthdate":birthTF.text,@"height":hightTF.text,@"lastMenses":scTF.text};
     
+    NSUserDefaults *defet = [NSUserDefaults standardUserDefaults];
+    [defet setObject:para  forKey:@"USERINFO"];
+    //将数据同步到本地的文件中
+    [defet synchronize];
 
    [RBaseHttpTool postWithUrl:@"user/register" parameters:para sucess:^(id json) {
         

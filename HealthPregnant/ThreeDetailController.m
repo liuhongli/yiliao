@@ -17,6 +17,8 @@
     UIView *j_actionV;
     NSDictionary *dataDic;
     NSMutableArray *dataArr;
+    NSInteger selFInt;
+    NSInteger selSInt;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableV;
 
@@ -30,7 +32,9 @@
     
     dataArr = [NSMutableArray array];
     _tableV.tableFooterView = [[UIView alloc] init];
-    
+    selFInt = 0;
+    selSInt = 0;
+
     NSArray *result = [[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] objectForKey:@"result"];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
@@ -232,6 +236,7 @@
     j_actionV.hidden = YES;
     
     
+    [self seleRow:selFInt component:0];
 }
 
 
@@ -311,8 +316,21 @@
 //选中picker cell,save ArrayIndex
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
+    if (component == 0) {
+        selFInt = row;
+
+    }else{
+        selSInt = row;
+    }
+ 
+    
+    [self seleRow:row component:component];
+}
+
+- (void)seleRow:(NSInteger)row component:(NSInteger)component{
+    
     NSString *captionS;
-  
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *codeDic = [NSMutableDictionary dictionary];
     NSMutableArray *codeArr = [NSMutableArray array];
@@ -326,7 +344,7 @@
         }
         NSArray *array = [dataDic objectForKey:@"children"];
         captionS = [array[row] objectForKey:@"caption"];
-       
+        
         [codeDic setObject:captionS forKey:@"caption"];
         [codeDic setObject:_dateStr forKey:@"date"];
         [codeDic setObject:_job forKey:@"job"];
@@ -342,7 +360,7 @@
                 [codeArr addObject:d];
             }
         }
-
+        
         captionS = [NSString stringWithFormat:@"%ld小时",row +1];
         [codeDic setObject:captionS forKey:@"caption"];
         [codeDic setObject:_dateStr forKey:@"date"];
@@ -350,8 +368,8 @@
         
         [codeArr addObject:codeDic];
         [defaults setObject:codeArr forKey:KJobRecordArr];
-
-
+        
+        
     }else if (_comeType == 2){
         NSArray *a = [defaults objectForKey:KSportRecordArr];
         for (NSDictionary *d in a) {
@@ -361,16 +379,14 @@
             }
         }
         
-        if (component == 0) {
-            
+        
             NSArray *array = [dataDic objectForKey:@"children"];
-            captionS = [array[row] objectForKey:@"caption"];
+           NSString *caption1 = [array[selFInt] objectForKey:@"caption"];
             
-        }else if (component == 1){
+        
+            NSString *caption2 = [NSString stringWithFormat:@"%ld小时",selSInt];
             
-            captionS = [NSString stringWithFormat:@"%ld小时",row +1];
-            
-        }
+        captionS = [NSString stringWithFormat:@"%@ / %@",caption1,caption2];
         
         [codeDic setObject:captionS forKey:@"caption"];
         [codeDic setObject:_dateStr forKey:@"date"];
@@ -378,13 +394,12 @@
         
         [codeArr insertObject:codeDic atIndex:0];
         [defaults setObject:codeArr forKey:KSportRecordArr];
-
+        
     }
     dataArr = codeArr;
-   
+    
     [defaults synchronize];
     [_tableV reloadData];
-    
 }
 
 //替换text居中

@@ -61,7 +61,9 @@
     [view addSubview:buton];
     table.tableFooterView = view;
     UIBarButtonItem *butItem = [[UIBarButtonItem alloc] initWithTitle:@"删除记录" style:UIBarButtonItemStylePlain target:self action:@selector(deleteInfo)];
-    self.navigationController.navigationItem.rightBarButtonItem = butItem;
+    butItem.tintColor = [UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem = butItem;
+    
 }
 
 - (void)deleteInfo{

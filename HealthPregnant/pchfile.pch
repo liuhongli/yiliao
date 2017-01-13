@@ -70,6 +70,9 @@ alpha:a])
 #define BaseColor [UIColor colorWithHexString:@"FF8698" alpha:1] //导航栏粉红色
 #define FontApp 16 //字体大小
 
+#define USERINFO      [[NSUserDefaults standardUserDefaults] objectForKey:@"USERINFO"]
+
+
 #define KSleepRecordArr @"KSleepRecordArr"
 #define KJobRecordArr   @"KJobRecordArr"
 #define KSportRecordArr @"KSportRecordArr"
