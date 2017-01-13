@@ -163,7 +163,7 @@
     [backView addSubview:sureButton];
     [sureButton addTarget:self action:@selector(sure) forControlEvents:UIControlEventTouchUpInside];
         
-                picker = [[UIPickerView alloc]initWithFrame:CGRectMake(0, 44, self.view.frame.size.width, 216)];
+            picker = [[UIPickerView alloc]initWithFrame:CGRectMake(0, 44, self.view.frame.size.width, 216)];
             picker.delegate = self;
             picker.tintAdjustmentMode = UIViewTintAdjustmentModeAutomatic;
             picker.dataSource = self;
@@ -207,6 +207,8 @@
 - (void)maskViewAction:(UIControl *)contrl {
     [self cancle];
 }
+
+
 -(void)sure{
     
     if (datePicker.tag == 3) {
