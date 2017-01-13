@@ -18,6 +18,7 @@
     UIView *m_actionV;
     UIView *j_actionV;
     NSDictionary *dataDic;
+    UIDatePicker *datePicker;
     
     NSString *dateStr;//日期
     NSString *jobStr;//职业
@@ -247,7 +248,7 @@
     [m_actionV addSubview:pickerDateToolbar];
     
     
-    UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 44, kScreenWidth, 216)];
+        datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 44, kScreenWidth, 216)];
     
         [datePicker setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"zh_CN"]];
         // 设置时区
@@ -278,11 +279,8 @@
 -(void)toolBarDoneClick{
   
     m_actionV.hidden = YES;
-   
-    if (dateSel == 1) {
-        return;
-    }
-    NSDate *theDate = [NSDate date];
+
+    NSDate *theDate = datePicker.date;
     NSLog(@"%@",[theDate descriptionWithLocale:[NSLocale currentLocale]]);
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -299,15 +297,14 @@
 
 }
 
-- (void)datePickerValueChanged:(UIDatePicker *)datePicker {
-    NSDate *theDate = datePicker.date;
-    NSLog(@"%@",[theDate descriptionWithLocale:[NSLocale currentLocale]]);
+- (void)datePickerValueChanged:(UIDatePicker *)datePickers {
+    NSDate *theDate = datePickers.date;
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"YYYY-MM-dd ";
-    NSLog(@"%@",[dateFormatter stringFromDate:theDate]);
-    UITextField *textF = [self.view viewWithTag:1000];
-    textF.text = [dateFormatter stringFromDate:theDate];
+
+//    UITextField *textF = [self.view viewWithTag:1000];
+//    textF.text = [dateFormatter stringFromDate:theDate];
     dateStr = [dateFormatter stringFromDate:theDate];
     dateSel = 1;
 }
@@ -408,8 +405,8 @@
     NSArray *array = [dataDic objectForKey:@"children"];
     NSString *captionS = [array[jobSel] objectForKey:@"caption"];
 
-    UITextField *textF = [self.view viewWithTag:1001];
-    textF.text = captionS;
+//    UITextField *textF = [self.view viewWithTag:1001];
+//    textF.text = captionS;
     jobStr  = captionS;
 }
 

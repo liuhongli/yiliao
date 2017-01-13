@@ -77,6 +77,7 @@
            [Alert showWithTitle:[NSString stringWithFormat:@"%@",[json objectForKey:@"message"]]];
            
        }
+       [self.navigationController popViewControllerAnimated:YES];
 
        
     } failur:^(NSError *error) {
@@ -175,12 +176,13 @@
             
             datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, 44, self.view.frame.size.width, 216)];
             datePicker.backgroundColor = [UIColor whiteColor];
-            
+           [datePicker setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"zh_CN"]];
+
             [datePicker setDatePickerMode:UIDatePickerModeDate];
             [backView addSubview:datePicker];
             
             
-            
+        
         
 }
     backView.frame = CGRectMake(0,kScreenHeight- 216-44,kScreenWidth, 216+44);

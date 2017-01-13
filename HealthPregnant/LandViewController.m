@@ -89,6 +89,9 @@
             
             [userDetaults setBool:YES forKey:@"showGuide"];
             //将数据同步到本地的文件中
+            NSDictionary *info = [json objectForKey:@"result"];
+            [userDetaults setObject:info  forKey:@"USERINFO"];
+
             [userDetaults synchronize];
 
             ViewController *VC = [[ViewController alloc] init];

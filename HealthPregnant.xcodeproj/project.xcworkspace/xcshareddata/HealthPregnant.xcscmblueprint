@@ -1,25 +1,42 @@
 {
-  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "1a7a252f-ddac-ea7a-4959-ce57b7db7bff++505",
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "1CB21F79F2E25845897EFC48A34639BA42B8D812",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "976e6d59-db8b-460e-834d-cae14a7fc955++2087" : {
+
+    },
     "1a7a252f-ddac-ea7a-4959-ce57b7db7bff++505" : {
 
     }
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "1a7a252f-ddac-ea7a-4959-ce57b7db7bff++505" : 0
+    "976e6d59-db8b-460e-834d-cae14a7fc955++2087" : 0,
+    "1a7a252f-ddac-ea7a-4959-ce57b7db7bff++505" : 0,
+    "1CB21F79F2E25845897EFC48A34639BA42B8D812" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "F649C1CA-E9FB-4AFE-99FE-2E8C59BEB6FE",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "1a7a252f-ddac-ea7a-4959-ce57b7db7bff++505" : "waibaoyiliao\/"
+    "976e6d59-db8b-460e-834d-cae14a7fc955++2087" : "HealthPregnant\/",
+    "1a7a252f-ddac-ea7a-4959-ce57b7db7bff++505" : "waibaoyiliao\/",
+    "1CB21F79F2E25845897EFC48A34639BA42B8D812" : "HealthPregnant\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "HealthPregnant",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
   "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "HealthPregnant.xcodeproj",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
     {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/liuhongli\/yiliao.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "1CB21F79F2E25845897EFC48A34639BA42B8D812"
+    },
+    {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/liuhongli\/yiliao",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "1a7a252f-ddac-ea7a-4959-ce57b7db7bff++505"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "svn:\/\/localhost",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "976e6d59-db8b-460e-834d-cae14a7fc955++2087"
     }
   ]
 }

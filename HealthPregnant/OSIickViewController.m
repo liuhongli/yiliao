@@ -69,8 +69,18 @@
     
     
     NSString *tableName = [dataDic objectForKey:@"tableName"];
-    NSArray *parArr = @[@{@"field":paraDic,@"globalRecordNr":@"18911475023",@"inspectionOrder":@"1",@"recordTime":@"2016-11-22",@"sign":@"1",@"tableName":tableName}];
-    para = @{@"globalRecordNr":@"18911475023",@"recordTime":@"2016-11-22",@"generalSurveyList":parArr};
+    
+    NSDictionary *dic = USERINFO;
+    
+    NSDate *theDate = [NSDate date];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"YYYY-MM-dd ";
+    
+    NSArray *parArr = @[@{@"field":paraDic,@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"inspectionOrder":@"1",@"recordTime":[dateFormatter stringFromDate:theDate]
+,@"sign":@"1",@"tableName":tableName}];
+    para = @{@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"recordTime":[dateFormatter stringFromDate:theDate]
+,@"generalSurveyList":parArr};
     
     [RBaseHttpTool postWithUrl:@"data/upload2" parameters:para sucess:^(id json) {
         

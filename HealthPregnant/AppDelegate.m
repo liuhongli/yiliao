@@ -23,7 +23,7 @@
     [self loadData];
     ViewController   *vc          = [[ViewController alloc] init];
     
-    LandViewController *landVC    = [[LandViewController alloc]init];it
+    LandViewController *landVC    = [[LandViewController alloc]init];
     HPNavigationController *navVC;
     
     NSUserDefaults *userDetaults = [NSUserDefaults standardUserDefaults];

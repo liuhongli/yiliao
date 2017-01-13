@@ -191,13 +191,26 @@
                 return ;
             }
 
+                NSIndexPath*oldIndexPath =[NSIndexPath indexPathForRow:rightSelected inSection:0];
+                UITableViewCell*oldCell = [tableView cellForRowAtIndexPath:oldIndexPath];
+
+                oldCell.accessoryType=UITableViewCellAccessoryNone;
             NSDictionary *dic = dataArray[leftSelected];
             NSArray *childArr = [dic objectForKey:@"children"];
             NSDictionary *childDic = childArr[rightSelected];
             NSMutableDictionary *codeDic = [[NSMutableDictionary alloc] initWithDictionary:childDic];
+            
+            NSDate *theDate = [NSDate date];
+            NSLog(@"%@",[theDate descriptionWithLocale:[NSLocale currentLocale]]);
+            
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            dateFormatter.dateFormat = @"YYYY-MM-dd ";
+ 
+            [codeDic setObject:[dateFormatter stringFromDate:theDate] forKey:@"addTime"];
 
-            
-            
+            [codeDic setObject:str forKey:@"defaultValue"];
+
+            NSLog(@"%@",codeDic);
         };
         [alertView showMKPAlertView];
 

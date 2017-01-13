@@ -365,10 +365,10 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     xueSel = row;
-    NSString *captionS = [NSString stringWithFormat:@"%ldcm",xueSel];
-    
-    UITextField *textF = [self.view viewWithTag:801];
-    textF.text = captionS;
+//    NSString *captionS = [NSString stringWithFormat:@"%ldcm",xueSel];
+//    
+//    UITextField *textF = [self.view viewWithTag:801];
+//    textF.text = captionS;
 }
 
 

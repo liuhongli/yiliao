@@ -43,7 +43,7 @@
             self.title = @"睡眠时间调查";
 
             dataDic = result[16];
-            dataArr = (NSMutableArray *)[defaults objectForKey:KSleepRecordArr];
+            dataArr = [NSMutableArray arrayWithArray:[defaults objectForKey:KSleepRecordArr]];
             NSLog(@"%@",[defaults objectForKey:KSleepRecordArr]);
        
         }
@@ -51,7 +51,7 @@
         case 1: {
             
             self.title = @"职业调查";
-            dataArr = (NSMutableArray *)[defaults objectForKey:KJobRecordArr];
+            dataArr =[NSMutableArray arrayWithArray:[defaults objectForKey:KJobRecordArr]];
 
         }
             break;
@@ -61,7 +61,7 @@
             
             self.title = @"运动调查";
             dataDic = result[18];
-            dataArr = (NSMutableArray *)[defaults objectForKey:KSportRecordArr];
+            dataArr = [NSMutableArray arrayWithArray:[defaults objectForKey:KSportRecordArr]];
 
         }
             break;
@@ -215,7 +215,7 @@
         pickerView.dataSource = self;
         pickerView.delegate = self;
         pickerView.backgroundColor = [UIColor whiteColor];
-        [pickerView selectRow:1 inComponent:0 animated:YES];
+        [pickerView selectRow:0 inComponent:0 animated:YES];
         
         [j_actionV addSubview:pickerView];
         
@@ -324,7 +324,7 @@
     }
  
     
-    [self seleRow:row component:component];
+//    [self seleRow:row component:component];
 }
 
 - (void)seleRow:(NSInteger)row component:(NSInteger)component{
