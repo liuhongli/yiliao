@@ -37,20 +37,20 @@
     // Do any additional setup after loading the view.
     self.title = @"个人信息";
     NSUserDefaults *userDetaults = [NSUserDefaults standardUserDefaults];
+    
+    NSDictionary *userdic = [userDetaults objectForKey:@"USERINFO"];
+    
+    
     mymess = [userDetaults objectForKey:@"mymess"];
     mymess = [NSMutableDictionary dictionaryWithDictionary:mymess];
     if (mymess == nil) {
         mymess = [NSMutableDictionary dictionary];
     }
-
+    
     titleArray = @[@[@"手机号码",@"姓名",@"出生年月",@"身高",@"末次月经"],@[@"血型",@"民族",@"职业",@"E-Mail",@"文化程度"]];
     [self initTableView];
     
     UIView *rightview = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 80, 40)];
-    
-    NSUserDefaults *defet = [NSUserDefaults standardUserDefaults];
-    NSDictionary *userdic =  [defet objectForKey:@"USERINFO"];
-    NSLog(@"%@",userdic);
     
     UIButton *savebtn = [UIButton buttonWithType:UIButtonTypeCustom];
     savebtn.frame = CGRectMake(40, 0, 40, 40);
@@ -175,6 +175,7 @@
                 myDatePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 44, self.view.frame.size.width, 216)];
                 myDatePicker.datePickerMode = UIDatePickerModeDate;
                 myDatePicker.tag = indexPath.section*10+indexPath.row+500;
+                myDatePicker.backgroundColor = [UIColor groupTableViewBackgroundColor];
 
 //                myDatePicker.center = self.view.center;
                 [backView addSubview:myDatePicker];
