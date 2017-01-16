@@ -209,6 +209,8 @@
             [codeDic setObject:[dateFormatter stringFromDate:theDate] forKey:@"addTime"];
 
             [codeDic setObject:str forKey:@"defaultValue"];
+            
+//          NSUserDefaults  [NSUserDefaults standardUserDefaults]
 
             NSLog(@"%@",codeDic);
         };

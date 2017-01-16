@@ -25,6 +25,37 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    
+    self.interestArray = [NSMutableArray new];
+    
+    
+    NSUserDefaults *defaut = [NSUserDefaults standardUserDefaults];
+    
+    if (_comeType == 1) {
+        
+        dataArray = [defaut objectForKey:@"user_zhusuSDic"];
+        
+    }else if (_comeType == 2) {
+        
+        dataArray = [defaut objectForKey:@"user_yingshiSDic"];
+
+        
+    }if (_comeType == 3) {
+        
+        dataArray = [defaut objectForKey:@"user_shenghuoSDic"];
+
+        
+    }
+    if (dataArray.count <  1) {
+      
+        [self initData];
+    }
+
+    [self initTableView];
+    [self initFootView];
+}
+- (void)initData{
+    
     NSArray *result = [[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] objectForKey:@"result"];
     switch (_comeType) {
         case 1:
@@ -42,13 +73,8 @@
         default:
             break;
     }
-    
-    self.interestArray = [NSMutableArray new];
 
-    [self initTableView];
-    [self initFootView];
 }
-
 - (void)dataZhu:(NSArray *)result{
     
     
@@ -135,8 +161,32 @@
     [RBaseHttpTool postWithUrl:@"data/upload2" parameters:para sucess:^(id json) {
         
         
+        NSUserDefaults *defaut = [NSUserDefaults standardUserDefaults];
         
+        if (_comeType == 1) {
+            
+            [defaut setObject:para forKey:@"user_zhusuPDic"];
+            
+        }else if (_comeType == 2) {
+            
+            [defaut setObject:para forKey:@"user_yingshiPDic"];
+            
+        }if (_comeType == 3) {
+            
+            [defaut setObject:para forKey:@"user_shenghuoPDic"];
+            
+        }
         
+        [defaut synchronize];
+
+        NSInteger success = [[json objectForKey:@"success"] integerValue];
+        if (success == 1) {
+            [Alert showWithTitle:@"保存成功"];
+            [self.navigationController popViewControllerAnimated:YES];
+        }else{
+            
+            [Alert showWithTitle:[json objectForKey:@"message"]];
+        }
         
     } failur:^(NSError *error) {
         
@@ -391,7 +441,25 @@
     [children replaceObjectAtIndex:index withObject:subDic];
     [chageDic setObject:children forKey:@"children"];
     [dataArray replaceObjectAtIndex:indexPath.section withObject:chageDic];
+    
+    NSUserDefaults *defaut = [NSUserDefaults standardUserDefaults];
 
+    if (_comeType == 1) {
+    
+        [defaut setObject:dataArray forKey:@"user_zhusuSDic"];
+        
+    }else if (_comeType == 2) {
+
+        [defaut setObject:dataArray forKey:@"user_yingshiSDic"];
+
+    }if (_comeType == 3) {
+        
+        [defaut setObject:dataArray forKey:@"user_shenghuoSDic"];
+
+    }
+    
+    [defaut synchronize];
+    
 }
 
 #pragma mark ------------------ 单选 -------------------------
@@ -439,6 +507,25 @@
         [dataArray replaceObjectAtIndex:indexPath.section withObject:chageDic];
 
     }
+    
+    NSUserDefaults *defaut = [NSUserDefaults standardUserDefaults];
+    
+    if (_comeType == 1) {
+        
+        [defaut setObject:dataArray forKey:@"user_zhusuSDic"];
+        
+    }else if (_comeType == 2) {
+        
+        [defaut setObject:dataArray forKey:@"user_yingshiSDic"];
+        
+    }if (_comeType == 3) {
+        
+        [defaut setObject:dataArray forKey:@"user_shenghuoSDic"];
+        
+    }
+    
+    [defaut synchronize];
+
     
 }
 

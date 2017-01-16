@@ -348,7 +348,7 @@
         [codeDic setObject:captionS forKey:@"caption"];
         [codeDic setObject:_dateStr forKey:@"date"];
         [codeDic setObject:_job forKey:@"job"];
-        
+        [codeDic setObject:[array[row] objectForKey:@"fieldName"] forKey:@"fieldName"];
         [codeArr addObject:codeDic];
         [defaults setObject:codeArr forKey:KSleepRecordArr];
         
@@ -365,7 +365,7 @@
         [codeDic setObject:captionS forKey:@"caption"];
         [codeDic setObject:_dateStr forKey:@"date"];
         [codeDic setObject:_job forKey:@"job"];
-        
+        [codeDic setObject:@"ProfessionTime" forKey:@"fieldName"];
         [codeArr addObject:codeDic];
         [defaults setObject:codeArr forKey:KJobRecordArr];
         
@@ -391,7 +391,7 @@
         [codeDic setObject:captionS forKey:@"caption"];
         [codeDic setObject:_dateStr forKey:@"date"];
         [codeDic setObject:_job forKey:@"job"];
-        
+        [codeDic setObject:[array[row] objectForKey:@"fieldName"] forKey:@"fieldName"];
         [codeArr insertObject:codeDic atIndex:0];
         [defaults setObject:codeArr forKey:KSportRecordArr];
         

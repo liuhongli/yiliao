@@ -64,12 +64,29 @@
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(20, 40, kScreenWidth-40, 40)];
     button.titleLabel.textColor= [UIColor whiteColor];
     [button setTitle:@"保存" forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(saveInfo) forControlEvents:UIControlEventTouchUpInside];
     [button setBackgroundImage:[UIImage imageNamed:@"界面底部大按钮_ct"] forState:UIControlStateNormal];
     [footview addSubview:button];
     
     _myTabV.tableFooterView = footview;
     [self.view addSubview:_myTabV];
     
+}
+- (void)saveInfo {
+
+//    if (imageDic.allKeys.count < 3) {
+//        [Alert showWithTitle:@"请选择B超，血常规，尿常规图片"];
+//
+//        return;
+//    }
+//    NSDictionary *para1 = @{@"generalSurveyList":@[@{@"field":@{@"FundalHeight":@"23",@"HighBloodPressure":@"98",@"LowBloodPressure":@"56"},@"globalRecordNr":@"18911475023",@"inspectionOrder":@"1",@"recordTime":@"2016-11-22",@"sign":@"1",@"tableName":@"PhysiqueCheckRecord"}],@"globalRecordNr":@"18911475023",@"recordTime":@"2016-11-22"};
+    
+//      NSDictionary *para = @{@"generalSurveyList":@[@{@"field":@{@"FundalHeight":@"49",@"HighBloodPressure":@"1",@"LowBloodPressure":@"3"},@"globalRecordNr":@"18911475023",@"inspectionOrder":@"1",@"recordTime":@"2016-11-22",@"sign":@"1",@"tableName":@"PhysiqueCheckRecord"}],@"globalRecordNr":@"18911475023",@"recordTime":@"2016-11-22"};
+    [RBaseHttpTool postWithUrl:@"data/uploadFile" parameters:nil image:imageDic sucess:^(id json) {
+        
+    } failur:^(NSError *error) {
+        
+    }];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
@@ -126,7 +143,7 @@
             imageV.tag = 1000+i;
             imageV.layer.cornerRadius = 25;
             imageV.clipsToBounds = YES;
-            imageV.image = [UIImage imageNamed:imageSArray[i]];
+            imageV.image = [UIImage imageNamed:@"上传图片默认图@3x"];
             imageV.backgroundColor = [UIColor redColor];
             [button addSubview:imageV];
             
@@ -142,7 +159,7 @@
 
         SIMAGE = [[UIImageView alloc] initWithFrame:CGRectMake(15, 130, kScreenWidth-30, 0.6*(kScreenWidth-30))];
         SIMAGE.userInteractionEnabled = YES;
-        SIMAGE.backgroundColor = [UIColor  greenColor];
+        SIMAGE.image = [UIImage imageNamed:@"上传图片默认图@3x"];
         SIMAGE.contentMode = UIViewContentModeScaleAspectFit;
         [cell.contentView addSubview:SIMAGE];
         

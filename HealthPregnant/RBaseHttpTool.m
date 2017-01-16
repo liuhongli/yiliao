@@ -76,7 +76,7 @@ static YTKKeyValueStore *_store;
     
 }
 
-+(void)postWithUrl:(NSString *)url parameters:(NSDictionary *)parameters image:(NSArray *)imageArray sucess:(BaseHttpToolSucess)sucess failur:(BaseHttpToolFailur)failur
++(void)postWithUrl:(NSString *)url parameters:(NSDictionary *)parameters image:(NSDictionary *)imageDic sucess:(BaseHttpToolSucess)sucess failur:(BaseHttpToolFailur)failur
 {
     
     url = [NSString stringWithFormat:@"%@%@",HTTPURL,url];
@@ -91,10 +91,13 @@ static YTKKeyValueStore *_store;
     
     [manager POST:url parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         NSLog(@"%@",formData);
-        for (int i = 0; i< imageArray.count; i++) {
+        NSArray *aName = @[@"B_modeUltrasound",@"BooldConventionCheck",@"UrineConventionCheck"];
+        for (int i = 0; i< imageDic.allKeys.count; i++) {
             NSString *fileName = [NSString stringWithFormat:@"XX%d.jpg",i];
-            UIImage *image = imageArray[i];
-            [formData appendPartWithFileData:UIImageJPEGRepresentation(image, 0.5) name:@"avatar" fileName:fileName mimeType:@"image/jpeg" ];
+            
+            UIImage *image = [imageDic objectForKey:[NSString stringWithFormat:@"%ld",i+1000]];
+            
+            [formData appendPartWithFileData:UIImageJPEGRepresentation(image, 0.5) name:aName[i] fileName:fileName mimeType:@"image/jpeg" ];
             
         }
         
