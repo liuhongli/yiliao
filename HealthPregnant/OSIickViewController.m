@@ -84,8 +84,15 @@
     
     [RBaseHttpTool postWithUrl:@"data/upload2" parameters:para sucess:^(id json) {
         
+        NSInteger success = [[json objectForKey:@"success"] integerValue];
         
-        
+        [Alert showWithTitle:[json objectForKey:@"message"]];
+
+        if (success == 1) {
+           
+            [self.navigationController popViewControllerAnimated:YES];
+            
+        }
         
         
     } failur:^(NSError *error) {

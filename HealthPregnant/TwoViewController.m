@@ -173,6 +173,7 @@
     ThreeDetailController *detailVC = [[ThreeDetailController alloc] init];
     detailVC.dateStr = dateStr;
     detailVC.job = jobStr;
+    
     switch (button.tag) {
         case 10:
         {

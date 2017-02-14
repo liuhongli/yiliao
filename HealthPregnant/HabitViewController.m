@@ -180,12 +180,11 @@
         [defaut synchronize];
 
         NSInteger success = [[json objectForKey:@"success"] integerValue];
+        [Alert showWithTitle:[json objectForKey:@"message"]];
+
         if (success == 1) {
             [Alert showWithTitle:@"保存成功"];
             [self.navigationController popViewControllerAnimated:YES];
-        }else{
-            
-            [Alert showWithTitle:[json objectForKey:@"message"]];
         }
         
     } failur:^(NSError *error) {

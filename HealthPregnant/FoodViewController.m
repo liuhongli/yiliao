@@ -182,9 +182,16 @@
         NSDictionary *dic = dataArray[leftSelected];
         NSArray *childArr = [dic objectForKey:@"children"];
         NSDictionary *childDic = childArr[indexPath.row];
+        
+        if (_comeType == 5) {
+            if (_block) {
+                self.block(childDic);
+                [self.navigationController popViewControllerAnimated:YES];
+                return;
+            }
+        }
          MKPAlertView *alertView = [[MKPAlertView alloc]initWithTitle:[childDic objectForKey:@"caption"] type:2 sureBtn:@"确认" cancleBtn:@"取消"];
-        alertView.resultIndex = ^(NSString * str)
-        {
+        alertView.resultIndex = ^(NSString * str) {
             // 回调 -- 处理
             NSLog(@"%@",str);
             if ([str isEqualToString:@"cancle"]) {
@@ -211,7 +218,7 @@
             [codeDic setObject:str forKey:@"defaultValue"];
             
 //          NSUserDefaults  [NSUserDefaults standardUserDefaults]
-
+            [self.navigationController popViewControllerAnimated:YES];
             NSLog(@"%@",codeDic);
         };
         [alertView showMKPAlertView];

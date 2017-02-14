@@ -17,7 +17,8 @@
     NSArray *titleArray;
     NSArray *imageSArray;
     NSArray *questionSArray;
-    
+    NSArray *imageSeleArray;
+    NSInteger selectInt;
 }
 @property (retain, nonatomic)UITableView *myTabV;
 
@@ -30,8 +31,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"膳食调查";
+    selectInt = 0;
     titleArray = @[@"早餐",@"午餐",@"晚餐",@"加餐"];
-    imageSArray = @[@"首页_常规调查icon_dj",@"首页_运动调查icon_dj",@"首页_膳食调查icon_dj",@"首页_个人信息icon_dj",@"首页_分析结果icon_dj"];
+    imageSArray = @[@"膳食_早餐icon_ct",@"膳食_午餐icon_ct",@"膳食_晚餐icon_ct",@"膳食_加餐icon_ct"];
+    imageSeleArray = @[@"膳食_早餐icon_dj",@"膳食_午餐icon_dj",@"膳食_晚餐icon_dj",@"膳食_加餐icon_dj"];
+
     [self initTableView];
 }
 
@@ -62,7 +66,9 @@
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIndetifer];
         }
-        
+        for (UIView *v in cell.contentView.subviews) {
+            [v removeFromSuperview];
+        }
         //标题
         for (int i = 0; i < titleArray.count; i ++) {
             int row = i/4;
@@ -83,7 +89,12 @@
             UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake((kScreenWidth/4-50)/2, 20, 50, 50)];
             imageV.layer.cornerRadius = 25;
             imageV.clipsToBounds = YES;
-            imageV.image = [UIImage imageNamed:imageSArray[i]];
+            if (i == selectInt) {
+                imageV.image = [UIImage imageNamed:imageSeleArray[i]];
+
+            }else{
+                imageV.image = [UIImage imageNamed:imageSArray[i]];
+            }
             imageV.backgroundColor = [UIColor redColor];
             [button addSubview:imageV];
             
@@ -144,6 +155,7 @@
     }
     return 60;
 }
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 1) {
         if (indexPath.row == 0) {
@@ -156,6 +168,7 @@
 }
 - (void)didcliK:(UIButton *)button {
     FoodViewController *foodVC = [[FoodViewController alloc] init];
+    selectInt = button.tag- 10;
     
     switch (button.tag) {
         case 10:
@@ -181,8 +194,8 @@
         }
             break;
     }
-    
-    [self.navigationController pushViewController:foodVC animated:YES];
+    [_myTabV reloadData];
+//    [self.navigationController pushViewController:foodVC animated:YES];
 
 }
 

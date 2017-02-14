@@ -8,6 +8,15 @@
 
 #import "BaseViewController.h"
 
+
+typedef void (^FoodBlock)(NSDictionary *dic);
+
+
+
 @interface FoodViewController : BaseViewController
-@property(nonatomic,assign)NSInteger comeType; //1早餐 2中 3晚 4加餐
+
+
+@property (nonatomic,copy)FoodBlock block;
+
+@property(nonatomic,assign)NSInteger comeType; //1早餐 2中 3晚 4加餐 5 修改
 @end

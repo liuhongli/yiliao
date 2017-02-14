@@ -24,6 +24,9 @@
     NSString *jobStr;//职业
     NSInteger jobSel;//默认职业
     
+    NSString *canShiStr;//餐食
+
+    
     NSArray *dinArray;
     NSInteger foodType;
 
@@ -40,6 +43,7 @@
     self.title = @"膳食详情";
     questionSArray = @[@"日期",@"餐食",@"食物",@"重量"];
     dinArray = @[@"早餐",@"中餐",@"晚餐",@"加餐"];
+    jobStr = @"早餐";
     [self initTableView];
 }
 
@@ -126,7 +130,11 @@
     }else if (textField.tag == 1002){
         
         FoodViewController *foodVc = [[FoodViewController alloc] init];
-        foodVc.comeType = foodType;
+        foodVc.comeType = 5;
+        foodVc.block = ^(NSDictionary *dic){
+            UITextField *textF = [self.view viewWithTag:1002];
+            textF.text = [dic objectForKey:@"caption"];
+        };
         [self.navigationController pushViewController:foodVc animated:YES];
         
     }else if (textField.tag == 1003){
@@ -139,8 +147,8 @@
                 return ;
             }
             
-            
-            
+            UITextField *textF = [self.view viewWithTag:1003];
+            textF.text = str;
             
         };
         [alertView showMKPAlertView];
@@ -301,10 +309,10 @@
     
     
     UITextField *textF = [self.view viewWithTag:1001];
-    textF.text = @"";
+    textF.text = jobStr;
     
     j_actionV.hidden = YES;
-    jobStr  = @"";
+//    jobStr  = @"";
     
     
 }

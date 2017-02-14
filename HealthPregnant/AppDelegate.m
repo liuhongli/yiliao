@@ -21,6 +21,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [self loadData];
+    
     ViewController   *vc          = [[ViewController alloc] init];
     
     LandViewController *landVC    = [[LandViewController alloc]init];
