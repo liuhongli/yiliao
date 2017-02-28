@@ -19,6 +19,7 @@
 		F24C826E1E248A1700B13989 /* FoodDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F24C826D1E248A1700B13989 /* FoodDetailViewController.m */; };
 		F25B85E81CD8A586004432BC /* ThreeDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = F25B85E61CD8A586004432BC /* ThreeDetailController.m */; };
 		F25B85E91CD8A586004432BC /* ThreeDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F25B85E71CD8A586004432BC /* ThreeDetailController.xib */; };
+		F26922071E651CA7008D2F0B /* AlldinerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F26922061E651CA7008D2F0B /* AlldinerViewController.m */; };
 		F26A76E01E1CDCBC00DE4C75 /* MLeakedObjectProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = F26A76CA1E1CDCBC00DE4C75 /* MLeakedObjectProxy.m */; };
 		F26A76E11E1CDCBC00DE4C75 /* MLeaksMessenger.m in Sources */ = {isa = PBXBuildFile; fileRef = F26A76CD1E1CDCBC00DE4C75 /* MLeaksMessenger.m */; };
 		F26A76E21E1CDCBC00DE4C75 /* NSObject+MemoryLeak.m in Sources */ = {isa = PBXBuildFile; fileRef = F26A76CF1E1CDCBC00DE4C75 /* NSObject+MemoryLeak.m */; };
@@ -438,6 +439,8 @@
 		F25B85E51CD8A586004432BC /* ThreeDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreeDetailController.h; sourceTree = "<group>"; };
 		F25B85E61CD8A586004432BC /* ThreeDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThreeDetailController.m; sourceTree = "<group>"; };
 		F25B85E71CD8A586004432BC /* ThreeDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ThreeDetailController.xib; sourceTree = "<group>"; };
+		F26922051E651CA7008D2F0B /* AlldinerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlldinerViewController.h; sourceTree = "<group>"; };
+		F26922061E651CA7008D2F0B /* AlldinerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlldinerViewController.m; sourceTree = "<group>"; };
 		F26A76C91E1CDCBC00DE4C75 /* MLeakedObjectProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLeakedObjectProxy.h; sourceTree = "<group>"; };
 		F26A76CA1E1CDCBC00DE4C75 /* MLeakedObjectProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLeakedObjectProxy.m; sourceTree = "<group>"; };
 		F26A76CB1E1CDCBC00DE4C75 /* MLeaksFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLeaksFinder.h; sourceTree = "<group>"; };
@@ -975,6 +978,8 @@
 				F20DB7381DFE7FB5001C0AF0 /* FoodViewController.m */,
 				F24C826C1E248A1700B13989 /* FoodDetailViewController.h */,
 				F24C826D1E248A1700B13989 /* FoodDetailViewController.m */,
+				F26922051E651CA7008D2F0B /* AlldinerViewController.h */,
+				F26922061E651CA7008D2F0B /* AlldinerViewController.m */,
 			);
 			name = C;
 			sourceTree = "<group>";
@@ -2219,6 +2224,7 @@
 				F2ACFFE11CAD1656001C20CE /* FMResultSet.m in Sources */,
 				F2AC01E91CAF69AF001C20CE /* FiveViewController.m in Sources */,
 				F24C826E1E248A1700B13989 /* FoodDetailViewController.m in Sources */,
+				F26922071E651CA7008D2F0B /* AlldinerViewController.m in Sources */,
 				F26A76EA1E1CDCBC00DE4C75 /* UIViewController+MemoryLeak.m in Sources */,
 				F26A76E11E1CDCBC00DE4C75 /* MLeaksMessenger.m in Sources */,
 				F2AC01E31CAF6973001C20CE /* ThreeViewController.m in Sources */,

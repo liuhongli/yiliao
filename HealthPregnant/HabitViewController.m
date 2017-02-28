@@ -33,16 +33,16 @@
     
     if (_comeType == 1) {
         
-        dataArray = [defaut objectForKey:@"user_zhusuSDic"];
+        dataArray = [[defaut objectForKey:@"user_zhusuSDic"] mutableCopy];
         
     }else if (_comeType == 2) {
         
-        dataArray = [defaut objectForKey:@"user_yingshiSDic"];
+        dataArray = [[defaut objectForKey:@"user_yingshiSDic"] mutableCopy];
 
         
     }if (_comeType == 3) {
         
-        dataArray = [defaut objectForKey:@"user_shenghuoSDic"];
+        dataArray = [[defaut objectForKey:@"user_shenghuoSDic"] mutableCopy];
 
         
     }
@@ -148,7 +148,10 @@
     
     NSString *tableName = [dataArray[0] objectForKey:@"tableName"];
     NSDictionary *dic = USERINFO;
-    
+    if (!dic) {
+        [Alert showWithTitle:@"请重新登录"];
+        return;
+    }
     NSDate *theDate = [NSDate date];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -439,6 +442,7 @@
     }
     [children replaceObjectAtIndex:index withObject:subDic];
     [chageDic setObject:children forKey:@"children"];
+    NSLog(@"%ld",indexPath.section);
     [dataArray replaceObjectAtIndex:indexPath.section withObject:chageDic];
     
     NSUserDefaults *defaut = [NSUserDefaults standardUserDefaults];

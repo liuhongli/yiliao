@@ -10,4 +10,7 @@
 
 @interface FoodDetailViewController : BaseViewController
 
+
+@property(nonatomic,strong)NSMutableDictionary *infoDic;
+@property(nonatomic,assign)NSInteger indexRow;
 @end

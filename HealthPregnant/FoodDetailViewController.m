@@ -71,10 +71,52 @@
 
 - (void)deleteInfo{
     
+    NSMutableArray *changArray = [shanshiPDic mutableCopy];
+    [changArray removeObjectAtIndex:_indexRow];
     
+    NSUserDefaults *defaultS =  [NSUserDefaults standardUserDefaults];
+    [defaultS setObject:changArray forKey:@"user_shanshiPDic"];
+    [defaultS synchronize];
+    [self.navigationController popViewControllerAnimated:YES];
+
 }
 
 - (void)postInfo {
+    
+    NSMutableDictionary *saveDic = [NSMutableDictionary dictionary];
+    UITextField *dateTF = [self.view viewWithTag:1000];
+    UITextField *typeTF = [self.view viewWithTag:1001];
+
+    UITextField *dinerTF = [self.view viewWithTag:1002];
+    UITextField *wghTF = [self.view viewWithTag:1003];
+
+    
+    [_infoDic setObject:dateTF.text forKey:@"addTime"];
+    if ([typeTF.text isEqualToString:@"早餐"]) {
+       
+        [_infoDic setObject:@"1" forKey:@"addTime"];
+    }else if ([typeTF.text isEqualToString:@"中餐"]) {
+        
+        [_infoDic setObject:@"2" forKey:@"addTime"];
+    }else if ([typeTF.text isEqualToString:@"晚餐"]) {
+        
+        [_infoDic setObject:@"3" forKey:@"addTime"];
+    }else    if ([typeTF.text isEqualToString:@"加餐"]) {
+        
+        [_infoDic setObject:@"4" forKey:@"addTime"];
+    }else
+    
+    [_infoDic setObject:dinerTF.text forKey:@"caption"];
+    [_infoDic setObject:wghTF.text forKey:@"defaultValue"];
+    
+    NSMutableArray *changArray = [shanshiPDic mutableCopy];
+    [changArray replaceObjectAtIndex:_indexRow withObject:_infoDic];
+    
+    NSUserDefaults *defaultS =  [NSUserDefaults standardUserDefaults];
+    [defaultS setObject:changArray forKey:@"user_shanshiPDic"];
+    [defaultS synchronize];
+
+    [self.navigationController popViewControllerAnimated:YES];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
@@ -98,6 +140,55 @@
         cell.nameLab.text = questionSArray[indexPath.row];
         cell.wTF.delegate = self;
         cell.wTF.tag = 1000 + indexPath.row;
+    switch (indexPath.row) {
+        case 0:
+           
+            cell.wTF.text = [_infoDic objectForKey:@"addTime"];
+            break;
+        case 1:{
+        
+            NSInteger dinType = [[_infoDic objectForKey:@"updateTime"] integerValue];
+            // 1早餐 2中 3晚 4加餐 5 修改
+            switch (dinType) {
+                case 1:
+                {
+                    cell.wTF.text = @"早餐";
+                }
+                    break;
+                case 2:
+                {
+                    cell.wTF.text = @"中餐";
+                }
+                    break;
+                case 3:
+                {
+                    cell.wTF.text = @"晚餐";
+                }
+                    break;
+                case 4:
+                {
+                    cell.wTF.text = @"加餐";
+                }
+                    break;
+                default:
+                    break;
+            }
+}
+            
+            break;
+        case 2:
+            
+            cell.wTF.text = [_infoDic objectForKey:@"caption"];
+            break;
+        case 3:
+            
+            cell.wTF.text = [_infoDic objectForKey:@"defaultValue"];
+            break;
+
+        default:
+            break;
+    }
+    
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return cell;

@@ -11,7 +11,7 @@
 #import "TZImagePickerController.h"
 #import "UIImageView+WebCache.h"
 #import "MKPAlertView.h"
-
+#import "SDWebImageManager.h"
 #define myWithd 90
 #define myheight 90
 #define myDistance  20 //间距
@@ -47,9 +47,26 @@
     imageSArray = @[@"首页_常规调查icon_dj",@"首页_运动调查icon_dj",@"首页_膳食调查icon_dj"];
     imageDic = [NSMutableDictionary dictionary];
     xueSel = 0;
+    seleImage = 1000;
     NSArray *result = [[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] objectForKey:@"result"];
     dataDic = result[6];
+
+    UIImage *image0 = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:@"seleImage0"];
+    if (image0) {
+        [imageDic setObject:image0 forKey:@"1000"];
+    }
+    UIImage *image1 = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:@"seleImage1"];    if (image1) {
+        [imageDic setObject:image1 forKey:@"1001"];
+    }
+
+    UIImage *image2 = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:@"seleImage2"];
+    if (image2) {
+        [imageDic setObject:image2 forKey:@"1002"];
+    }
+
     [self initTableView];
+    
+    
     
 }
 
@@ -114,6 +131,20 @@
         cell.wTF.delegate = self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
+        if (indexPath.row == 0) {
+            NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:@"xueya"];
+            if (str.length > 0) {
+                cell.wTF.text = str;
+            }
+        }else{
+            
+            NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:@"gongGao"];
+            if (str.length > 0) {
+                cell.wTF.text = str;
+            }
+
+        }
+        
         return cell;
     }
     else {
@@ -143,7 +174,13 @@
             imageV.tag = 1000+i;
             imageV.layer.cornerRadius = 25;
             imageV.clipsToBounds = YES;
-            imageV.image = [UIImage imageNamed:@"上传图片默认图@3x"];
+            
+            UIImage *saveIM = [imageDic objectForKey:[NSString stringWithFormat:@"%ld",1000+i]];
+            if (saveIM) {
+                imageV.image = saveIM;
+            }else{
+                imageV.image = [UIImage imageNamed:@"上传图片默认图@3x"];
+            }
             imageV.backgroundColor = [UIColor redColor];
             [button addSubview:imageV];
             
@@ -159,11 +196,18 @@
 
         SIMAGE = [[UIImageView alloc] initWithFrame:CGRectMake(15, 130, kScreenWidth-30, 0.6*(kScreenWidth-30))];
         SIMAGE.userInteractionEnabled = YES;
-        SIMAGE.image = [UIImage imageNamed:@"上传图片默认图@3x"];
+        
+        UIImage *saveIM = [imageDic objectForKey:[NSString stringWithFormat:@"%ld",1000]];
+        if (saveIM) {
+            SIMAGE.image = saveIM;
+        }else{
+            SIMAGE.image = [UIImage imageNamed:@"上传图片默认图@3x"];
+        }
         SIMAGE.contentMode = UIViewContentModeScaleAspectFit;
         [cell.contentView addSubview:SIMAGE];
         
-        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didSelect)];
+        [SIMAGE addGestureRecognizer:tap];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         
@@ -192,31 +236,55 @@
 
 - (void)didcliK:(UIButton *)button {
     
-    [self selePhoto];
     
+    
+    UIImage *image2 = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:@"seleImage2"];
+    if (image2) {
+        [imageDic setObject:image2 forKey:@"1002"];
+    }
 
+    UIImage *image1;
+    
     switch (button.tag) {
         case 10:
         {
             seleImage = 1000;
+            
+            image1 = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:@"seleImage0"];
+
         }
             break;
             
         case 11:
         {
             seleImage = 1001;
+            
+            image1 = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:@"seleImage1"];
         }
             break;
             
         default:{
             
             seleImage = 1002;
+            
+          image1 = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:@"seleImage2"];
         }
             break;
     }
     
+    if (image1) {
         SIMAGE.image = [imageDic objectForKey:[NSString stringWithFormat:@"%ld",seleImage]];
+    }else{
+        SIMAGE.image = [UIImage imageNamed:@"上传图片默认图@3x"];
+    }
+
     
+}
+
+- (void)didSelect{
+    
+    [self selePhoto];
+
 }
 - (void)selePhoto {
     TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:self];
@@ -248,7 +316,24 @@
     imageV.image = photos[0];
     SIMAGE.image = photos[0];
     [imageDic setObject:photos[0] forKey:[NSString stringWithFormat:@"%ld",seleImage]];
+    NSMutableArray *array = [NSMutableArray array];
+    [array addObject:imageV.image];
+    
+    SDWebImageManager *mageManager = [SDWebImageManager sharedManager];
+    switch (seleImage) {
+        case 1000:
+            [mageManager saveImageToCache:imageV.image forURL:[NSURL URLWithString:@"seleImage0"]];
+            break;
+        case 1001:
+            [mageManager saveImageToCache:imageV.image forURL:[NSURL URLWithString:@"seleImage1"]];            break;
+        case 1002:
+            [mageManager saveImageToCache:imageV.image forURL:[NSURL URLWithString:@"seleImage2"]];
+            break;
 
+            
+        default:
+            break;
+    }
     
 }
 
@@ -285,7 +370,7 @@
         UITextField *textF = [self.view viewWithTag:800];
         textF.text = [NSString stringWithFormat:@"%@mmHg",str];
         
-        
+        [self saveThing:textF.text keyStr:@"xueya"];
     };
     [alertView showMKPAlertView];
 
@@ -350,11 +435,19 @@
     
     UITextField *textF = [self.view viewWithTag:801];
     textF.text = captionS;
-
+    [self saveThing:captionS keyStr:@"gongGao"];
     
     j_actionV.hidden = YES;
     
     
+}
+
+- (void)saveThing:(id)thing keyStr:(NSString *)str{
+    
+    
+    NSUserDefaults *defaultS =  [NSUserDefaults standardUserDefaults];
+    [defaultS setObject:thing forKey:str];
+    [defaultS synchronize];
 }
 
 

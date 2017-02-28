@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface EatTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *dinerT;
+@property (weak, nonatomic) IBOutlet UILabel *dinerEat;
+@property (weak, nonatomic) IBOutlet UILabel *dinerWht;
 
 @end

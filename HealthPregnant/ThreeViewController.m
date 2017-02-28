@@ -11,6 +11,7 @@
 #import "EatTableViewCell.h"
 #import "FoodViewController.h"
 #import "FoodDetailViewController.h"
+#import "AlldinerViewController.h"
 
 @interface ThreeViewController ()<UITableViewDataSource,UITableViewDelegate>{
     
@@ -19,9 +20,9 @@
     NSArray *questionSArray;
     NSArray *imageSeleArray;
     NSInteger selectInt;
+    NSArray *dinerArray;
 }
 @property (retain, nonatomic)UITableView *myTabV;
-
 
 @end
 
@@ -35,12 +36,17 @@
     titleArray = @[@"早餐",@"午餐",@"晚餐",@"加餐"];
     imageSArray = @[@"膳食_早餐icon_ct",@"膳食_午餐icon_ct",@"膳食_晚餐icon_ct",@"膳食_加餐icon_ct"];
     imageSeleArray = @[@"膳食_早餐icon_dj",@"膳食_午餐icon_dj",@"膳食_晚餐icon_dj",@"膳食_加餐icon_dj"];
-
-    [self initTableView];
+        [self initTableView];
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    dinerArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_shanshiPDic"];
+    [_myTabV reloadData];
+}
 - (void)initTableView {
-    _myTabV = [[UITableView alloc] initWithFrame:    CGRectMake(0, 0, kScreenWidth, kScreenHeight) style:UITableViewStyleGrouped];
+   
+    _myTabV = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) style:UITableViewStyleGrouped];
     _myTabV.delegate = self;
     _myTabV.dataSource = self;
     [self.view addSubview:_myTabV];
@@ -54,7 +60,7 @@
     if (section == 0) {
         return 1;
     }
-    return 22;
+    return dinerArray.count+1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -133,6 +139,42 @@
                 cell = [[NSBundle mainBundle] loadNibNamed:@"EatTableViewCell" owner:self options:nil].lastObject;
             }
             
+            NSDictionary *dic = dinerArray[indexPath.row - 1];
+            
+            NSInteger dinType = [[dic objectForKey:@"updateTime"] integerValue];
+           // 1早餐 2中 3晚 4加餐 5 修改
+            switch (dinType) {
+                case 1:
+                {
+                   cell.dinerT.text = @"早餐";
+                }
+                    break;
+                case 2:
+                {
+                    cell.dinerT.text = @"中餐";
+                }
+                    break;
+                case 3:
+                {
+                   cell.dinerT.text = @"晚餐";
+                }
+                    break;
+                case 4:
+                {
+                    cell.dinerT.text = @"加餐";
+                }
+                    break;
+                case 5:
+                {
+                    
+                }
+                    break;
+                    
+                default:
+                    break;
+            }
+            cell.dinerEat.text = [dic objectForKey:@"caption"];
+            cell.dinerWht.text = [dic objectForKey:@"defaultValue"];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             return cell;
@@ -160,8 +202,14 @@
     if (indexPath.section == 1) {
         if (indexPath.row == 0) {
             
+            AlldinerViewController *vc = [[AlldinerViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+            
         }else{
             FoodDetailViewController *VC = [[FoodDetailViewController alloc] init];
+            NSDictionary *dic = dinerArray[indexPath.row -1];
+            VC.infoDic = [dic mutableCopy];
+            VC.indexRow = indexPath.row -1;
             [self.navigationController pushViewController:VC animated:YES];
         }
     }
@@ -195,7 +243,7 @@
             break;
     }
     [_myTabV reloadData];
-//    [self.navigationController pushViewController:foodVC animated:YES];
+   [self.navigationController pushViewController:foodVC animated:YES];
 
 }
 

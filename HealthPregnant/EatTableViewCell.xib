@@ -55,6 +55,11 @@
                 </constraints>
             </tableViewCellContentView>
             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+            <connections>
+                <outlet property="dinerEat" destination="OgC-YE-LMo" id="XwN-cC-ijI"/>
+                <outlet property="dinerT" destination="dnD-iF-alc" id="hOH-Gk-qNb"/>
+                <outlet property="dinerWht" destination="cZQ-h7-S8k" id="jkJ-Ut-MKZ"/>
+            </connections>
             <point key="canvasLocation" x="298" y="245"/>
         </tableViewCell>
     </objects>

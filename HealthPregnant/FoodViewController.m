@@ -216,10 +216,16 @@
             [codeDic setObject:[dateFormatter stringFromDate:theDate] forKey:@"addTime"];
 
             [codeDic setObject:str forKey:@"defaultValue"];
-            
-//          NSUserDefaults  [NSUserDefaults standardUserDefaults]
+            NSString *dineTime = [NSString stringWithFormat:@"%ld",_comeType];
+            [codeDic setObject:dineTime forKey:@"updateTime"];
+            NSUserDefaults *defaultS =  [NSUserDefaults standardUserDefaults];
+            NSMutableArray *mutableArray =[NSMutableArray array];
+            mutableArray = [shanshiPDic mutableCopy];
+            [mutableArray addObject:codeDic];
+            [defaultS setObject:mutableArray forKey:@"user_shanshiPDic"];
+            [defaultS synchronize];
             [self.navigationController popViewControllerAnimated:YES];
-            NSLog(@"%@",codeDic);
+        
         };
         [alertView showMKPAlertView];
 

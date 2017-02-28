@@ -71,7 +71,11 @@
     NSString *tableName = [dataDic objectForKey:@"tableName"];
     
     NSDictionary *dic = USERINFO;
-    
+    if (!dic) {
+        [Alert showWithTitle:@"请重新登录"];
+        return;
+    }
+
     NSDate *theDate = [NSDate date];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
