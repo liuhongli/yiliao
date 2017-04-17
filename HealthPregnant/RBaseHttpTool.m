@@ -93,11 +93,10 @@ static YTKKeyValueStore *_store;
         NSLog(@"%@",formData);
         NSArray *aName = @[@"B_modeUltrasound",@"BooldConventionCheck",@"UrineConventionCheck"];
         for (int i = 0; i< imageDic.allKeys.count; i++) {
-            NSString *fileName = [NSString stringWithFormat:@"XX%d.jpg",i];
-            
+
             UIImage *image = [imageDic objectForKey:[NSString stringWithFormat:@"%ld",i+1000]];
             
-            [formData appendPartWithFileData:UIImageJPEGRepresentation(image, 0.5) name:aName[i] fileName:fileName mimeType:@"image/jpeg" ];
+            [formData appendPartWithFileData:UIImageJPEGRepresentation(image, 0.5) name:aName[i] fileName:aName[i] mimeType:@"image/jpeg" ];
             
         }
         

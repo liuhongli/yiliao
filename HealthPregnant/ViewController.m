@@ -52,10 +52,8 @@
     [self.view addSubview:scrollView];
     
     
-    NSArray *images = @[[UIImage imageNamed:@"1.jpg"],
-                        [UIImage imageNamed:@"2.jpg"],
-                        [UIImage imageNamed:@"3.jpg"],
-                        [UIImage imageNamed:@"4.jpg"]
+    NSArray *images = @[[UIImage imageNamed:@"banner1.png"],
+                        [UIImage imageNamed:@"banner2.jpg"]
                         ];
     SDCycleScrollView *cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:scrollView.frame imagesGroup:images];
     cycleScrollView.delegate = self;

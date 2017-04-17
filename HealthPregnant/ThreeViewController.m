@@ -36,6 +36,7 @@
     titleArray = @[@"早餐",@"午餐",@"晚餐",@"加餐"];
     imageSArray = @[@"膳食_早餐icon_ct",@"膳食_午餐icon_ct",@"膳食_晚餐icon_ct",@"膳食_加餐icon_ct"];
     imageSeleArray = @[@"膳食_早餐icon_dj",@"膳食_午餐icon_dj",@"膳食_晚餐icon_dj",@"膳食_加餐icon_dj"];
+
         [self initTableView];
 }
 
@@ -49,6 +50,7 @@
     _myTabV = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) style:UITableViewStyleGrouped];
     _myTabV.delegate = self;
     _myTabV.dataSource = self;
+    
     [self.view addSubview:_myTabV];
     
 }
@@ -141,7 +143,7 @@
             
             NSDictionary *dic = dinerArray[indexPath.row - 1];
             
-            NSInteger dinType = [[dic objectForKey:@"updateTime"] integerValue];
+            NSInteger dinType = [[dic objectForKey:@"addTime"] integerValue];
            // 1早餐 2中 3晚 4加餐 5 修改
             switch (dinType) {
                 case 1:

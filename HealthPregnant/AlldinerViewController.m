@@ -65,7 +65,7 @@
             
             NSDictionary *dic = dinerArray[indexPath.row];
             
-            NSInteger dinType = [[dic objectForKey:@"updateTime"] integerValue];
+            NSInteger dinType = [[dic objectForKey:@"addTime"] integerValue];
             // 1早餐 2中 3晚 4加餐 5 修改
             switch (dinType) {
                 case 1:

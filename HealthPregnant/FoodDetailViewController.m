@@ -104,11 +104,10 @@
     }else    if ([typeTF.text isEqualToString:@"加餐"]) {
         
         [_infoDic setObject:@"4" forKey:@"addTime"];
-    }else
-    
+    }
     [_infoDic setObject:dinerTF.text forKey:@"caption"];
     [_infoDic setObject:wghTF.text forKey:@"defaultValue"];
-    
+            NSLog(@"%@",_infoDic);
     NSMutableArray *changArray = [shanshiPDic mutableCopy];
     [changArray replaceObjectAtIndex:_indexRow withObject:_infoDic];
     
@@ -147,7 +146,7 @@
             break;
         case 1:{
         
-            NSInteger dinType = [[_infoDic objectForKey:@"updateTime"] integerValue];
+            NSInteger dinType = [[_infoDic objectForKey:@"addTime"] integerValue];
             // 1早餐 2中 3晚 4加餐 5 修改
             switch (dinType) {
                 case 1:

@@ -459,14 +459,13 @@
     dateFormatter.timeZone = [NSTimeZone timeZoneWithName:@"beijing"];
     [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
     [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
     
     NSString * timeStampString = [NSString stringWithFormat:@"%@",creatTime];
-    NSTimeInterval _interval=[timeStampString doubleValue] ;
+    NSTimeInterval _interval=[timeStampString doubleValue] /1000;
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:_interval];
     NSString *fixString = [dateFormatter stringFromDate:date];
     
-//    NSString *fixString = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:[creatTime integerValue]/1000 ]];
     return fixString;
 }
 

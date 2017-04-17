@@ -41,11 +41,7 @@
     NSDictionary *userdic = [userDetaults objectForKey:@"USERINFO"];
     
     
-    mymess = [userDetaults objectForKey:@"mymess"];
-    mymess = [NSMutableDictionary dictionaryWithDictionary:mymess];
-    if (mymess == nil) {
-        mymess = [NSMutableDictionary dictionary];
-    }
+    mymess = [NSMutableDictionary dictionaryWithDictionary:userdic];
     
     titleArray = @[@[@"手机号码",@"姓名",@"出生年月",@"身高",@"末次月经"],@[@"血型",@"民族",@"职业",@"E-Mail",@"文化程度"]];
     [self initTableView];
@@ -111,12 +107,147 @@
     NSArray *array = titleArray[indexPath.section];
     
     cell.titleLab.text = [NSString stringWithFormat:@"%@",array[indexPath.row]];
-    if ([mymess objectForKey:[NSString stringWithFormat:@"%ld", indexPath.section*10+indexPath.row+500]] ==nil) {
-        cell.subLab.text = @"未填写";
-    }else {
-        cell.subLab.text = [mymess objectForKey:[NSString stringWithFormat:@"%ld", indexPath.section*10+indexPath.row+500]];
-        cell.subLab.textColor =[UIColor colorWithHexString:@"FF8698" alpha:1];
+    if (indexPath.section == 0) {
+        
+        switch (indexPath.row) {
+            case 0:{
+             
+                if ([NSString stringWithFormat:@"%@",[mymess objectForKey:@"mobilePhone"]].length < 1) {
+                    cell.subLab.text = @"未填写";
+                }else {
+                    cell.subLab.text = [NSString stringWithFormat:@"%@",[mymess objectForKey:@"mobilePhone"]];
+                    cell.subLab.textColor =[UIColor colorWithHexString:@"FF8698" alpha:1];
+                }
+
+           
+            }
+                break;
+            case 1:{
+                
+                if ([NSString stringWithFormat:@"%@",[mymess objectForKey:@"name"]].length < 1) {
+                    cell.subLab.text = @"未填写";
+                }else {
+                    cell.subLab.text = [NSString stringWithFormat:@"%@",[mymess objectForKey:@"name"]] ;
+                    cell.subLab.textColor =[UIColor colorWithHexString:@"FF8698" alpha:1];
+                }
+ 
+            }
+                break;
+            case 2:{
+               
+                if ([NSString dateString:[mymess objectForKey:@"birthDate"]].length < 1) {
+                    cell.subLab.text = @"未填写";
+                }else {
+                    cell.subLab.text = [NSString dateString:[mymess objectForKey:@"birthDate"]];
+                    cell.subLab.textColor =[UIColor colorWithHexString:@"FF8698" alpha:1];
+                }
+
+                
+            }
+                break;
+            case 3:{
+              
+                if ([NSString stringWithFormat:@"%@",[mymess objectForKey:@"height"]].length < 1) {
+                    cell.subLab.text = @"未填写";
+                }else {
+                    cell.subLab.text = [NSString stringWithFormat:@"%@",[mymess objectForKey:@"height"]] ;
+                    cell.subLab.textColor =[UIColor colorWithHexString:@"FF8698" alpha:1];
+                }
+
+                
+            }
+                break;
+            case 4:{
+             
+                if ([NSString stringWithFormat:@"%@",[mymess objectForKey:@"lastMenses"]].length < 1) {
+                    cell.subLab.text = @"未填写";
+                }else {
+                    cell.subLab.text = [NSString stringWithFormat:@"%@",[mymess objectForKey:@"lastMenses"]];
+                    cell.subLab.textColor =[UIColor colorWithHexString:@"FF8698" alpha:1];
+                }
+
+                
+            }
+                break;
+
+                
+            default:
+                break;
+        }
+        
+    }else if (indexPath.section == 1){
+        
+        
+        switch (indexPath.row) {
+           
+            case 0:{
+                
+                if ([NSString stringWithFormat:@"%@",[mymess objectForKey:@"bloodType"]].length <1) {
+                    cell.subLab.text = @"未填写";
+                }else {
+                    cell.subLab.text = [NSString stringWithFormat:@"%@",[mymess objectForKey:@"bloodType"]] ;
+                    cell.subLab.textColor =[UIColor colorWithHexString:@"FF8698" alpha:1];
+                }
+                
+            }
+                break;
+            case 1:{
+                
+                if ([NSString stringWithFormat:@"%@",[mymess objectForKey:@"nationality"]].length < 1) {
+                    cell.subLab.text = @"未填写";
+                }else {
+                    cell.subLab.text = [NSString stringWithFormat:@"%@",[mymess objectForKey:@"nationality"]];
+                    cell.subLab.textColor =[UIColor colorWithHexString:@"FF8698" alpha:1];
+                }
+                
+                
+            }
+                break;
+            case 2:{
+                
+                if ([NSString stringWithFormat:@"%@",[mymess objectForKey:@"profession"]].length <1) {
+                    cell.subLab.text = @"未填写";
+                }else {
+                    cell.subLab.text = [NSString stringWithFormat:@"%@",[mymess objectForKey:@"profession"]];
+                    cell.subLab.textColor =[UIColor colorWithHexString:@"FF8698" alpha:1];
+                }
+                
+                
+            }
+                break;
+            case 3:{
+                
+                if ([NSString stringWithFormat:@"%@",[mymess objectForKey:@"email"]].length < 1) {
+                    cell.subLab.text = @"未填写";
+                }else {
+                    cell.subLab.text = [NSString stringWithFormat:@"%@",[mymess objectForKey:@"email"]];
+                    cell.subLab.textColor =[UIColor colorWithHexString:@"FF8698" alpha:1];
+                }
+                
+                
+            }
+                break;
+                
+            case 4:{
+                
+                if ([NSString stringWithFormat:@"%@", [mymess objectForKey:@"education"]].length < 1) {
+                    cell.subLab.text = @"未填写";
+                }else {
+                    cell.subLab.text = [NSString stringWithFormat:@"%@", [mymess objectForKey:@"education"]];
+                    cell.subLab.textColor =[UIColor colorWithHexString:@"FF8698" alpha:1];
+                }
+                
+                
+            }
+                break;
+
+                
+            default:
+                break;
+        }
+        
     }
+    
     
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -223,9 +354,67 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 0) {
-        UITextField * accoutNameField = [alertView textFieldAtIndex:0];
-        NSLog(@"%@",accoutNameField.text);
-        [mymess setObject:accoutNameField.text forKey:[NSString stringWithFormat:@"%ld" ,(long)alertView.tag]];
+        
+        switch (alertView.tag) {
+            case 503:{
+                
+                UITextField * accoutNameField = [alertView textFieldAtIndex:0];
+                
+                [mymess setObject:accoutNameField.text forKey:@"height"];
+                
+                
+            }
+                break;
+
+            case 510:{
+              
+                UITextField * accoutNameField = [alertView textFieldAtIndex:0];
+                
+                [mymess setObject:accoutNameField.text forKey:@"bloodType"];
+
+        
+            }
+                break;
+            case 511:{
+                
+                UITextField * accoutNameField = [alertView textFieldAtIndex:0];
+                
+                [mymess setObject:accoutNameField.text forKey:@"nationality"];
+
+                
+            }
+                break;
+            case 512:{
+                
+                UITextField * accoutNameField = [alertView textFieldAtIndex:0];
+                
+                [mymess setObject:accoutNameField.text forKey:@"profession"];
+
+                
+            }
+                break;
+            case 513:{
+               
+                UITextField * accoutNameField = [alertView textFieldAtIndex:0];
+                
+                [mymess setObject:accoutNameField.text forKey:@"email"];
+
+                
+            }
+                break;
+            case 514:{
+                
+                UITextField * accoutNameField = [alertView textFieldAtIndex:0];
+                
+                [mymess setObject:accoutNameField.text forKey:@"education"];
+
+                
+            }
+                break;
+                
+            default:
+                break;
+        }
         [tableV reloadData];
     }
 }
@@ -239,7 +428,7 @@
         return;
     }
     
-    NSDictionary *para = @{@"mobilePhone":[mymess objectForKey:@"500"],@"name":[mymess objectForKey:@"501"],@"birthdate":[mymess objectForKey:@"502"],@"height":[mymess objectForKey:@"503"],@"lastMenses":[mymess objectForKey:@"504"],@"bloodType":[mymess objectForKey:@"510"],@"nationality":[mymess objectForKey:@"511"],@"profession":[mymess objectForKey:@"512"],@"email":[mymess objectForKey:@"513"],@"education":[mymess objectForKey:@"514"]};
+    NSDictionary *para = @{@"mobilePhone":[mymess objectForKey:@"mobilePhone"],@"name":[mymess objectForKey:@"name"],@"birthDate":[mymess objectForKey:@"birthDate"],@"height":[mymess objectForKey:@"height"],@"lastMenses":[mymess objectForKey:@"lastMenses"],@"bloodType":[mymess objectForKey:@"bloodType"],@"nationality":[mymess objectForKey:@"nationality"],@"profession":[mymess objectForKey:@"profession"],@"email":[mymess objectForKey:@"email"],@"education":[mymess objectForKey:@"education"]};
     
     [RBaseHttpTool postWithUrl:@"user/edit" parameters:para sucess:^(id json){
         
@@ -280,7 +469,24 @@
     NSDateFormatter *fmt = [[NSDateFormatter alloc]init];
     fmt.dateFormat = @"yyyy-MM-dd";
     NSString *dateStr = [fmt stringFromDate:date];
-    [mymess setObject:dateStr forKey:[NSString stringWithFormat:@"%ld" ,(long)myDatePicker.tag]];
+    switch (myDatePicker.tag) {
+        case 502:
+        {
+            [mymess setObject:dateStr forKey:@"birthDate"];
+ 
+        }
+            break;
+        case 504:
+        {
+            [mymess setObject:dateStr forKey:@"lastMenses"];
+
+        }
+            break;
+
+            
+        default:
+            break;
+    }
     
     [self cancle];
     

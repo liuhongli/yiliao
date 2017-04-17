@@ -27,7 +27,8 @@
 #import "UIView+ViewController.h"
 #import "SubHeader.h"
 #import "UIColor+CateColor.h"
-#define HTTPURL @"http://test.kpjkgl.com:8090/pregnant/"//服务器外网地址
+#define HTTPURL @"http://114.115.206.180:8080/pregnant/"//服务器外网地址
+//#define HTTPURL @"http://192.168.1.2:8090/pregnant/"//服务器外网地址
 
 //http://test.kpjkgl.com:8083/chart.aspx?basicid=13161485286&order=1
 

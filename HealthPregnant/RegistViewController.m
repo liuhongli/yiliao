@@ -54,7 +54,7 @@
         [Alert showWithTitle:@"信息未填写完成，请填写完成后重试"];
         return;
     }
-    NSDictionary *para = @{@"mobilePhone":mobTF.text,@"name":nameTF.text,@"birthdate":birthTF.text,@"height":hightTF.text,@"lastMenses":scTF.text};
+    NSDictionary *para = @{@"mobilePhone":mobTF.text,@"name":nameTF.text,@"birthDate":birthTF.text,@"height":hightTF.text,@"lastMenses":scTF.text};
     
     NSUserDefaults *defet = [NSUserDefaults standardUserDefaults];
     [defet setObject:para  forKey:@"USERINFO"];

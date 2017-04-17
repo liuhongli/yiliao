@@ -18,7 +18,9 @@
 @interface FiveViewController ()
 {
     NSArray *titleArray;
-    NSArray *imageSArray;
+    NSArray *imageSArray;//未勾选
+    NSArray *imageArray;//勾选
+
 
 
 
@@ -34,7 +36,7 @@
     self.title = @"分析结果";
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     
-    [self loadmainview];
+//    [self loadmainview];
     
     
 //    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
@@ -42,7 +44,16 @@
 //    [self.view addSubview:webView];
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    [self loadmainview];
+
+}
 - (void)loadmainview{
+    
+    for (UIView *view in self.view.subviews) {
+        [view removeFromSuperview];
+    }
 
     UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(0, 20, kScreenWidth, 40)];
     lab.text = @"  调查结果";
@@ -60,12 +71,12 @@
     
     titleArray = @[@"主诉与病症",@"既往及现病史",@"实验室检测",@"饮食习惯",@"生活习惯",@"膳食调查",@"运动调查"];
     imageSArray = @[@"分析_主诉与病症未勾选_ct",@"分析_既往及现病史未勾选_ct",@"分析_实验室检测未勾选_ct",@"分析_饮食习惯未勾选_ct",@"分析_生活习惯未勾选_ct",@"分析_膳食调查未勾选_ct",@"分析_运动调查未勾选_ct"];
+    imageSArray = @[@"分析_主诉与病症勾选_ct",@"分析_既往及现病史勾选_ct",@"分析_实验室检测勾选_ct",@"分析_饮食习惯勾选_ct",@"分析_生活习惯勾选_ct",@"分析_膳食调查勾选_ct",@"分析_运动调查勾选_ct"];
     
     //标题
     for (int i = 0; i < titleArray.count; i++) {
         int row = i/4;
         int clow = i %4;
-        NSLog(@"%d **** %d",row,clow);
         //创建按钮
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth/4*clow, 90*row, kScreenWidth/4, 90)];
         
@@ -74,15 +85,95 @@
         //点击事件
         [button addTarget:self action:@selector(didcliK:) forControlEvents:UIControlEventTouchUpInside];
         
-        //        [button setBackgroundColor: rgb(100+20*i, 150, 30+30*i, 1)];
         button.tag = 10+i;
         [btnview addSubview:button];
         
         UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake((kScreenWidth/4-50)/2, 20, 50, 50)];
-        imageV.layer.cornerRadius = 25;
+//        imageV.layer.cornerRadius = 25;
         imageV.clipsToBounds = YES;
-        imageV.image = [UIImage imageNamed:imageSArray[i]];
-        //        imageV.backgroundColor = [UIColor redColor];
+        
+        switch (4*row + clow) {
+            case 0:
+            {
+                if (zhusuSDic == nil) {
+                    imageV.image = [UIImage imageNamed:imageSArray[i]];
+    
+                }else{
+                    imageV.image = [UIImage imageNamed:imageArray[i]];
+
+                }
+            }
+                break;
+            case 1:
+            {
+                if (jiwangSDic == nil) {
+                    imageV.image = [UIImage imageNamed:imageSArray[i]];
+    
+                }else{
+                    imageV.image = [UIImage imageNamed:imageArray[i]];
+
+                }
+            }
+                break;
+            case 2:
+            {
+                if (shiyanSDic == nil) {
+                    imageV.image = [UIImage imageNamed:imageSArray[i]];
+
+                }else{
+                    imageV.image = [UIImage imageNamed:imageArray[i]];
+
+                }
+            }
+                break;
+            case 3:
+            {
+                if (yingshiPDic == nil) {
+                    imageV.image = [UIImage imageNamed:imageSArray[i]];
+   
+                }else{
+                    imageV.image = [UIImage imageNamed:imageArray[i]];
+
+                }
+            }
+                break;
+            case 4:
+            {
+                if (shenghuoSDic == nil) {
+                    imageV.image = [UIImage imageNamed:imageSArray[i]];
+       
+                }else{
+                    imageV.image = [UIImage imageNamed:imageArray[i]];
+
+                }
+            }
+                break;
+            case 5:
+            {
+                if (shanshiSDic == nil) {
+                    imageV.image = [UIImage imageNamed:imageSArray[i]];
+     
+                }else{
+                    imageV.image = [UIImage imageNamed:imageArray[i]];
+
+                }
+            }
+                break;
+            case 6:
+            {
+                if (yundongSDic == nil) {
+                    imageV.image = [UIImage imageNamed:imageSArray[i]];
+    
+                }else{
+                    imageV.image = [UIImage imageNamed:imageArray[i]];
+
+                }
+            }
+                break;
+            default:
+                break;
+        }
+        
         [button addSubview:imageV];
         
         UILabel *titleLa = [[UILabel alloc] initWithFrame:CGRectMake(0, imageV.bottom + 10, kScreenWidth/4, 20)];

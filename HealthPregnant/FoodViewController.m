@@ -198,10 +198,10 @@
                 return ;
             }
 
-                NSIndexPath*oldIndexPath =[NSIndexPath indexPathForRow:rightSelected inSection:0];
-                UITableViewCell*oldCell = [tableView cellForRowAtIndexPath:oldIndexPath];
+            NSIndexPath*oldIndexPath =[NSIndexPath indexPathForRow:rightSelected inSection:0];
+            UITableViewCell*oldCell = [tableView cellForRowAtIndexPath:oldIndexPath];
 
-                oldCell.accessoryType=UITableViewCellAccessoryNone;
+            oldCell.accessoryType=UITableViewCellAccessoryNone;
             NSDictionary *dic = dataArray[leftSelected];
             NSArray *childArr = [dic objectForKey:@"children"];
             NSDictionary *childDic = childArr[rightSelected];
@@ -217,10 +217,13 @@
 
             [codeDic setObject:str forKey:@"defaultValue"];
             NSString *dineTime = [NSString stringWithFormat:@"%ld",_comeType];
-            [codeDic setObject:dineTime forKey:@"updateTime"];
+            [codeDic setObject:dineTime forKey:@"addTime"];
             NSUserDefaults *defaultS =  [NSUserDefaults standardUserDefaults];
             NSMutableArray *mutableArray =[NSMutableArray array];
-            mutableArray = [shanshiPDic mutableCopy];
+            if (shanshiPDic) {
+                mutableArray = [shanshiPDic mutableCopy];
+
+            }
             [mutableArray addObject:codeDic];
             [defaultS setObject:mutableArray forKey:@"user_shanshiPDic"];
             [defaultS synchronize];
