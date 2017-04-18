@@ -92,11 +92,13 @@ static YTKKeyValueStore *_store;
     [manager POST:url parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         NSLog(@"%@",formData);
         NSArray *aName = @[@"B_modeUltrasound",@"BooldConventionCheck",@"UrineConventionCheck"];
+//        NSArray *aName =  @[@"",@"",@""];
         for (int i = 0; i< imageDic.allKeys.count; i++) {
+            NSString *fileName = [NSString stringWithFormat:@"%d.jpg",i];
 
             UIImage *image = [imageDic objectForKey:[NSString stringWithFormat:@"%ld",i+1000]];
             
-            [formData appendPartWithFileData:UIImageJPEGRepresentation(image, 0.5) name:aName[i] fileName:aName[i] mimeType:@"image/jpeg" ];
+            [formData appendPartWithFileData:UIImageJPEGRepresentation(image, 0.5) name:@"file" fileName:fileName mimeType:aName[i]];
             
         }
         

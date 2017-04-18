@@ -97,9 +97,9 @@
 //        return;
 //    }
 //    NSDictionary *para1 = @{@"generalSurveyList":@[@{@"field":@{@"FundalHeight":@"23",@"HighBloodPressure":@"98",@"LowBloodPressure":@"56"},@"globalRecordNr":@"18911475023",@"inspectionOrder":@"1",@"recordTime":@"2016-11-22",@"sign":@"1",@"tableName":@"PhysiqueCheckRecord"}],@"globalRecordNr":@"18911475023",@"recordTime":@"2016-11-22"};
-    
-//      NSDictionary *para = @{@"generalSurveyList":@[@{@"field":@{@"FundalHeight":@"49",@"HighBloodPressure":@"1",@"LowBloodPressure":@"3"},@"globalRecordNr":@"18911475023",@"inspectionOrder":@"1",@"recordTime":@"2016-11-22",@"sign":@"1",@"tableName":@"PhysiqueCheckRecord"}],@"globalRecordNr":@"18911475023",@"recordTime":@"2016-11-22"};
-    [RBaseHttpTool postWithUrl:@"data/uploadFile" parameters:nil image:imageDic sucess:^(id json) {
+  
+      NSDictionary *para =   @{@"field":@{@"FundalHeight":@"49",@"HighBloodPressure":@"1 ",@"LowBloodPressure":@"3"},@"globalRecordNr":@"18911475023",@"inspectionOrder":@"1",@"recordTime":@"2016-11-22",@"sign":@"1",@"tableName":@"PhysiqueCheckRecord"};
+    [RBaseHttpTool postWithUrl:@"data/uploadFile" parameters:para image:imageDic sucess:^(id json) {
         
     } failur:^(NSError *error) {
         
