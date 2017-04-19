@@ -76,7 +76,7 @@ static YTKKeyValueStore *_store;
     
 }
 
-+(void)postWithUrl:(NSString *)url parameters:(NSDictionary *)parameters image:(NSDictionary *)imageDic sucess:(BaseHttpToolSucess)sucess failur:(BaseHttpToolFailur)failur
++(void)postWithUrl:(NSString *)url parameters:(NSDictionary *)parameters image:(UIImage *)image sucess:(BaseHttpToolSucess)sucess failur:(BaseHttpToolFailur)failur
 {
     
     url = [NSString stringWithFormat:@"%@%@",HTTPURL,url];
@@ -91,16 +91,8 @@ static YTKKeyValueStore *_store;
     
     [manager POST:url parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         NSLog(@"%@",formData);
-        NSArray *aName = @[@"B_modeUltrasound",@"BooldConventionCheck",@"UrineConventionCheck"];
-//        NSArray *aName =  @[@"",@"",@""];
-        for (int i = 0; i< imageDic.allKeys.count; i++) {
-            NSString *fileName = [NSString stringWithFormat:@"%d.jpg",i];
 
-            UIImage *image = [imageDic objectForKey:[NSString stringWithFormat:@"%ld",i+1000]];
-            
-            [formData appendPartWithFileData:UIImageJPEGRepresentation(image, 0.5) name:@"file" fileName:fileName mimeType:aName[i]];
-            
-        }
+            [formData appendPartWithFileData:UIImageJPEGRepresentation(image, 0.5) name:@"file" fileName:@"iOS" mimeType:@"image/jpeg"];
         
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSData *doubi = responseObject;

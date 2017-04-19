@@ -98,12 +98,8 @@
 //    }
 //    NSDictionary *para1 = @{@"generalSurveyList":@[@{@"field":@{@"FundalHeight":@"23",@"HighBloodPressure":@"98",@"LowBloodPressure":@"56"},@"globalRecordNr":@"18911475023",@"inspectionOrder":@"1",@"recordTime":@"2016-11-22",@"sign":@"1",@"tableName":@"PhysiqueCheckRecord"}],@"globalRecordNr":@"18911475023",@"recordTime":@"2016-11-22"};
   
-      NSDictionary *para =   @{@"field":@{@"FundalHeight":@"49",@"HighBloodPressure":@"1 ",@"LowBloodPressure":@"3"},@"globalRecordNr":@"18911475023",@"inspectionOrder":@"1",@"recordTime":@"2016-11-22",@"sign":@"1",@"tableName":@"PhysiqueCheckRecord"};
-    [RBaseHttpTool postWithUrl:@"data/uploadFile" parameters:para image:imageDic sucess:^(id json) {
-        
-    } failur:^(NSError *error) {
-        
-    }];
+//      NSDictionary *para =   @{@"field":@{@"FundalHeight":@"49",@"HighBloodPressure":@"1 ",@"LowBloodPressure":@"3"},@"globalRecordNr":@"18911475023",@"inspectionOrder":@"1",@"recordTime":@"2017-4-19",@"sign":@"1",@"tableName":@"PhysiqueCheckRecord"};
+    
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
@@ -305,9 +301,6 @@
     NSLog(@"cancel");
 }
 
-- (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray<UIImage *> *)photos sourceAssets:(NSArray *)assets {
-    
-}
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray<UIImage *> *)photos sourceAssets:(NSArray *)assets infos:(NSArray<NSDictionary *> *)infos {
     if (photos.count < 1) {
         return;
@@ -321,13 +314,20 @@
     
     SDWebImageManager *mageManager = [SDWebImageManager sharedManager];
     switch (seleImage) {
-        case 1000:
+        case 1000:{
+            [self uploadImage:imageV.image index:1000];
             [mageManager saveImageToCache:imageV.image forURL:[NSURL URLWithString:@"seleImage0"]];
+        }
             break;
-        case 1001:
-            [mageManager saveImageToCache:imageV.image forURL:[NSURL URLWithString:@"seleImage1"]];            break;
-        case 1002:
+        case 1001:{
+            [self uploadImage:imageV.image index:1001];
+            [mageManager saveImageToCache:imageV.image forURL:[NSURL URLWithString:@"seleImage1"]];
+        }
+            break;
+        case 1002:{
             [mageManager saveImageToCache:imageV.image forURL:[NSURL URLWithString:@"seleImage2"]];
+            [self uploadImage:imageV.image index:1002];
+        }
             break;
 
             
@@ -335,6 +335,42 @@
             break;
     }
     
+}
+
+- (void)uploadImage:(UIImage *) image index:(NSInteger )index {
+    
+    NSDate *theDate = [NSDate date];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"YYYY-MM-dd ";
+    NSDictionary *dic = USERINFO;
+    if (!dic) {
+        [Alert showWithTitle:@"请重新登录"];
+        return;
+    }
+
+
+    NSDictionary *para;
+    if (index == 1000) {
+        
+        para = @{@"imgType":@"B_modeUltrasound",@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"recordTime":[dateFormatter stringFromDate:theDate]};
+    }
+    if (index == 1001) {
+        
+        para = @{@"imgType":@"BooldConventionCheck",@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"recordTime":[dateFormatter stringFromDate:theDate]};
+    }
+    if (index == 1002) {
+        
+        para = @{@"imgType":@"UrineConventionCheck",@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"recordTime":[dateFormatter stringFromDate:theDate]};
+    }
+
+
+    [RBaseHttpTool postWithUrl:@"data/uploadFile" parameters:para image:image sucess:^(id json) {
+        
+    } failur:^(NSError *error) {
+        
+    }];
+
 }
 
 #pragma mark -------------------textField delegat-------------------

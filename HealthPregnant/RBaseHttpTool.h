@@ -41,7 +41,7 @@ typedef NS_ENUM(NSUInteger, BcRequestCenterCachePolicy) {
  */
 +(void)postWithUrl:(NSString *)url parameters:(NSDictionary *)parameters sucess:(BaseHttpToolSucess)sucess failur:(BaseHttpToolFailur)failur;
 
-+(void)postWithUrl:(NSString *)url parameters:(NSDictionary *)parameters image:(NSArray *)imageArray sucess:(BaseHttpToolSucess)sucess failur:(BaseHttpToolFailur)failur;
++(void)postWithUrl:(NSString *)url parameters:(NSDictionary *)parameters image:(UIImage *)image sucess:(BaseHttpToolSucess)sucess failur:(BaseHttpToolFailur)failur;
 /**
  *  带缓存的 get 请求
  *
