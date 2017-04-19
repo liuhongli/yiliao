@@ -77,28 +77,21 @@
         [Alert showWithTitle:@"请重新登录"];
         return nil;
     }
-
-    NSDictionary *dataDic = array[0];
-    NSString *listStr;
-    if (type == 0) {
-     
-        listStr = @"generalSurveyList";
-        
-    }
-    if (type == 1) {
-       
-        listStr = @"sportSurveyList";
-    }
-    if (type == 2) {
-
-        listStr = @"dietarySurveyList";
-    }
-
-    NSString *tableName = [dataDic objectForKey:@"tableName"];
     NSDate *theDate = [NSDate date];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"YYYY-MM-dd ";
+    NSMutableArray *generM = [NSMutableArray array];
+    NSMutableArray *sportM = [NSMutableArray array];
+    NSMutableArray *dietrM = [NSMutableArray array];
+
+    for (int num = 0; num < array.count; num ++) {
+        
+    
+    NSDictionary *dataDic = array[num];
+
+
+    NSString *tableName = [dataDic objectForKey:@"tableName"];
     
     NSMutableDictionary *paraDic = [NSMutableDictionary dictionary];
     
@@ -115,7 +108,43 @@
     
     NSArray *parArr =@[@{@"field":paraDic,@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"inspectionOrder":@"1",@"recordTime":[dateFormatter stringFromDate:theDate],@"sign":@"1",@"tableName":tableName}];
     
-   NSDictionary *para = @{@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"recordTime":[dateFormatter stringFromDate:theDate],listStr:parArr};
+        if (type == 0) {
+            
+            [generM addObject:parArr];
+        }
+        if (type == 1) {
+            
+            [sportM addObject:parArr];
+        }
+        if (type == 2) {
+            
+            [dietrM addObject:parArr];
+        }
+
+
+    }
+    NSString *listStr;
+    NSMutableDictionary *para = [NSMutableDictionary dictionary];
+    [para setObject:[dic objectForKey:@"mobilePhone"] forKey:@"globalRecordNr"];
+    [para setObject:[dateFormatter stringFromDate:theDate] forKey:@"recordTime"];
+    if (generM.count > 0) {
+        
+        [para setObject:generM forKey:@"generalSurveyList"];
+    }
+    if (sportM.count > 0) {
+        
+        listStr = @"sportSurveyList";
+        [para setObject:sportM forKey:@"generalSurveyList"];
+
+    }
+    if (dietrM.count > 0) {
+        
+        listStr = @"dietarySurveyList";
+        [para setObject:dietrM forKey:@"dietarySurveyList"];
+
+    }
+
+
     return para;
 }
 

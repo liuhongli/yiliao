@@ -301,10 +301,10 @@
 
     //去数据进行数据处理
     NSLog(@"%@,%@,%@,%@,%@,%@,%@",zhusuPDic,jiwangSDic,shiyanPDic,yingshiPDic,shenghuoPDic,shanshiPDic,yundongPDic);
-//    NSMutableDictionary *mudic = [NSMutableDictionary dictionary];
+    NSMutableDictionary *mudic = [NSMutableDictionary dictionary];
     NSMutableArray *arr = [NSMutableArray array];
     if (zhusuPDic != nil) {
-//        [mudic setObject:[zhusuPDic objectForKey:@"generalSurveyList"] forKey:@"generalSurveyList"];
+        [mudic setObject:[zhusuPDic objectForKey:@"generalSurveyList"] forKey:@"generalSurveyList"];
         [arr addObject:zhusuPDic];
     }
     if (jiwangSDic != nil) {
