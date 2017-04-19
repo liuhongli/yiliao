@@ -188,6 +188,7 @@
     [sendbtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     sendbtn.backgroundColor = [UIColor colorWithHexString:@"FF8698" alpha:1];
     [sendbtn setTitle:@"提交" forState:UIControlStateNormal];
+    [sendbtn addTarget:self action:@selector(sendmess) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview: sendbtn];
 
 }
@@ -293,8 +294,49 @@
             break;
     }
     
+}
+
+//提交检测信息
+- (void)sendmess{
+
+    //去数据进行数据处理
+    NSLog(@"%@,%@,%@,%@,%@,%@,%@",zhusuPDic,jiwangSDic,shiyanPDic,yingshiPDic,shenghuoPDic,shanshiPDic,yundongPDic);
+    NSMutableDictionary *mudic = [NSMutableDictionary dictionary];
+    if (zhusuPDic != nil) {
+        [mudic setObject:[zhusuPDic objectForKey:@"generalSurveyList"] forKey:@"generalSurveyList"];
+    }
+    if (jiwangSDic != nil) {
+        
+    }
+    if (shiyanPDic != nil) {
+    }
+    if (yingshiPDic != nil) {
+    }
+    if (shenghuoPDic != nil) {
+    }
+    if (shanshiPDic != nil) {
+    }
+    if (yundongPDic != nil) {
+    }
+
+    //转json
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:mudic options:NSJSONWritingPrettyPrinted error:&error];//此处data参数是我上面提到的key为"data"的数组
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding] ;
+
+    NSDictionary *para1 = @{@"jsonStr":jsonString};
+
     
     
+    
+    //KEY=jsonStr; VALUE={"dietarySurveyList":[{"field":{"StapleFoodRoundGrainedRice":"8"},"foodTime":"0","globalRecordNr":"15900001111","inspectionOrder":"1","recordTime":"2017-01-16","sign":"1","tableName":"StapleFoodInspectionO"},{"field":{"StapleFoodWheatFlourEmbryoIntake":"2"},"foodTime":"3","globalRecordNr":"15900001111","inspectionOrder":"1","recordTime":"2017-01-16","sign":"1","tableName":"StapleFoodInspectionO"}],"generalSurveyList":[{"field":{"ImmuneOralUlcersTag":"1","SkinRoughSkinTag":"1"},"globalRecordNr":"15900001111","inspectionOrder":"1","recordTime":"2016-11-22","sign":"1","tableName":"StatementSymptomRecord"},{"field":{"BloodHypotensionTag":"1"},"globalRecordNr":"15900001111","inspectionOrder":"1","recordTime":"2016-11-22","sign":"1","tableName":"DiseaseHistoryRecord"},{"field":{"FundalHeight":"49","HighBloodPressure":"1 ","LowBloodPressure":" 3 "},"globalRecordNr":"15900001111","inspectionOrder":"1","recordTime":"2016-11-22","sign":"1","tableName":"PhysiqueCheckRecord"},{"field":{"LongTimeNoStaple":"1"},"globalRecordNr":"15900001111","inspectionOrder":"1","recordTime":"2016-11-22","sign":"1","tableName":"DietHabitInspection"},{"field":{"SmokeHabit":"1","NourishmentYesOrNo":"1","CoffeeHabit":"3","StayUpAllNight":"1","WineHabit":"1"},"globalRecordNr":"15900001111","inspectionOrder":"1","recordTime":"2016-11-22","sign":"1","tableName":"LifeHabbitInspection"}],"globalRecordNr":"15900001111","recordTime":"2016-11-22","sportSurveyList":[{"field":{"ProfessionTime":"4","Agriculture":"1","stepCountExceed6000":"1","SleepExceed10Hour":"1"},"globalRecordNr":"15900001111","inspectionOrder":"1","recordTime":"2017-01-16","sign":"1","tableName":"SportConditionInspectionO"}]}
+
+    [RBaseHttpTool postWithUrl:@"data/upload2" parameters:para1 sucess:^(id json) {
+        
+        NSLog(@"%@",json);
+    } failur:^(NSError *error) {
+        
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

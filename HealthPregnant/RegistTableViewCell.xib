@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
@@ -16,6 +16,7 @@
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="手机号码" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5K1-IC-pmH">
                         <rect key="frame" x="8" y="25" width="112" height="21"/>
+                        <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="QbV-Ra-AbK"/>
                         </constraints>
@@ -25,6 +26,7 @@
                     </label>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="*必填" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OwL-At-Qjb">
                         <rect key="frame" x="123" y="23" width="174" height="29"/>
+                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="150" id="4Fe-38-fl0"/>
                             <constraint firstAttribute="height" constant="30" id="LzM-mo-qUu"/>
@@ -34,12 +36,14 @@
                     </textField>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gd@2x.png" translatesAutoresizingMaskIntoConstraints="NO" id="m2w-M0-nyx">
                         <rect key="frame" x="305" y="30.5" width="7" height="11"/>
+                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="7" id="0Fd-Ye-9VC"/>
                             <constraint firstAttribute="height" constant="11" id="qac-0H-m6s"/>
                         </constraints>
                     </imageView>
                 </subviews>
+                <animations/>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="m2w-M0-nyx" secondAttribute="trailing" constant="8" id="CJO-OH-zlQ"/>
                     <constraint firstItem="5K1-IC-pmH" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="CqC-b7-3MK"/>
@@ -50,6 +54,7 @@
                     <constraint firstItem="5K1-IC-pmH" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="qUw-oR-7Gk"/>
                 </constraints>
             </tableViewCellContentView>
+            <animations/>
             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="nameLab" destination="5K1-IC-pmH" id="sXd-36-DNV"/>

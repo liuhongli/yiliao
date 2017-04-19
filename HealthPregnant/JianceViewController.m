@@ -72,7 +72,7 @@
 
 - (void)initTableView {
 
-    _myTabV = [[UITableView alloc] initWithFrame:    CGRectMake(0, 0, kScreenWidth, kScreenHeight) style:UITableViewStyleGrouped];
+    _myTabV = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) style:UITableViewStyleGrouped];
     _myTabV.delegate = self;
     _myTabV.dataSource = self;
     
@@ -100,6 +100,11 @@
   
 //      NSDictionary *para =   @{@"field":@{@"FundalHeight":@"49",@"HighBloodPressure":@"1 ",@"LowBloodPressure":@"3"},@"globalRecordNr":@"18911475023",@"inspectionOrder":@"1",@"recordTime":@"2017-4-19",@"sign":@"1",@"tableName":@"PhysiqueCheckRecord"};
     
+//    [RBaseHttpTool postWithUrl:@"data/uploadFile" parameters:para image:imageDic sucess:^(id json) {
+//        
+//    } failur:^(NSError *error) {
+//        
+//    }];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
