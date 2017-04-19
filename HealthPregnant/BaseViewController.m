@@ -71,7 +71,53 @@
     return theImage;
 }
 
+- (NSDictionary *)listType:(NSInteger )type dataArray:(NSArray *)array {
+    NSDictionary *dic = USERINFO;
+    if (!dic) {
+        [Alert showWithTitle:@"请重新登录"];
+        return nil;
+    }
 
+    NSDictionary *dataDic = array[0];
+    NSString *listStr;
+    if (type == 0) {
+     
+        listStr = @"generalSurveyList";
+        
+    }
+    if (type == 1) {
+       
+        listStr = @"sportSurveyList";
+    }
+    if (type == 2) {
+
+        listStr = @"dietarySurveyList";
+    }
+
+    NSString *tableName = [dataDic objectForKey:@"tableName"];
+    NSDate *theDate = [NSDate date];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"YYYY-MM-dd ";
+    
+    NSMutableDictionary *paraDic = [NSMutableDictionary dictionary];
+    
+    NSArray *chidArr = [dataDic objectForKey:@"children"];
+    for (NSDictionary *chidDic in chidArr) {
+        NSInteger defaultValue = [[chidDic objectForKey:@"defaultValue"] integerValue];
+        if (defaultValue != 0) {
+            
+            [paraDic setObject:[chidDic objectForKey:@"defaultValue"] forKey:[chidDic objectForKey:@"fieldName"]];
+            
+        }    }
+    
+
+    
+    NSArray *parArr =@[@{@"field":paraDic,@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"inspectionOrder":@"1",@"recordTime":[dateFormatter stringFromDate:theDate],@"sign":@"1",@"tableName":tableName}];
+    
+   NSDictionary *para = @{@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"recordTime":[dateFormatter stringFromDate:theDate],listStr:parArr};
+    return para;
+}
 
 - (void)backBtnClick:(UIButton *)btn
 {
