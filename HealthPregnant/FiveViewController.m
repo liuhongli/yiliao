@@ -301,9 +301,11 @@
 
     //去数据进行数据处理
     NSLog(@"%@,%@,%@,%@,%@,%@,%@",zhusuPDic,jiwangSDic,shiyanPDic,yingshiPDic,shenghuoPDic,shanshiPDic,yundongPDic);
-    NSMutableDictionary *mudic = [NSMutableDictionary dictionary];
+//    NSMutableDictionary *mudic = [NSMutableDictionary dictionary];
+    NSMutableArray *arr = [NSMutableArray array];
     if (zhusuPDic != nil) {
-        [mudic setObject:[zhusuPDic objectForKey:@"generalSurveyList"] forKey:@"generalSurveyList"];
+//        [mudic setObject:[zhusuPDic objectForKey:@"generalSurveyList"] forKey:@"generalSurveyList"];
+        [arr addObject:zhusuPDic];
     }
     if (jiwangSDic != nil) {
         
@@ -321,7 +323,7 @@
 
     //转json
     NSError *error;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:mudic options:NSJSONWritingPrettyPrinted error:&error];//此处data参数是我上面提到的key为"data"的数组
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:arr options:NSJSONWritingPrettyPrinted error:&error];//此处data参数是我上面提到的key为"data"的数组
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding] ;
 
     NSDictionary *para1 = @{@"jsonStr":jsonString};
