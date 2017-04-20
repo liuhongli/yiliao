@@ -71,7 +71,7 @@
     
     titleArray = @[@"主诉与病症",@"既往及现病史",@"实验室检测",@"饮食习惯",@"生活习惯",@"膳食调查",@"运动调查"];
     imageSArray = @[@"分析_主诉与病症未勾选_ct",@"分析_既往及现病史未勾选_ct",@"分析_实验室检测未勾选_ct",@"分析_饮食习惯未勾选_ct",@"分析_生活习惯未勾选_ct",@"分析_膳食调查未勾选_ct",@"分析_运动调查未勾选_ct"];
-    imageSArray = @[@"分析_主诉与病症勾选_ct",@"分析_既往及现病史勾选_ct",@"分析_实验室检测勾选_ct",@"分析_饮食习惯勾选_ct",@"分析_生活习惯勾选_ct",@"分析_膳食调查勾选_ct",@"分析_运动调查勾选_ct"];
+    imageArray = @[@"分析_主诉与病症勾选_ct",@"分析_既往及现病史勾选_ct",@"分析_实验室检测勾选_ct",@"分析_饮食习惯勾选_ct",@"分析_生活习惯勾选_ct",@"分析_膳食调查勾选_ct",@"分析_运动调查勾选_ct"];
     
     //标题
     for (int i = 0; i < titleArray.count; i++) {
@@ -302,13 +302,14 @@
     //去数据进行数据处理
     NSLog(@"%@,%@,%@,%@,%@,%@,%@",zhusuSDic,jiwangSDic,shiyanPDic,yingshiPDic,shenghuoPDic,shanshiPDic,yundongPDic);
     NSMutableDictionary *mudic = [NSMutableDictionary dictionary];
-    
+    NSLog(@"%@",zhusuSDic);
  NSDictionary *dic =  [self listType:2 dataArray:@[zhusuSDic,zhusuSDic]];
     NSLog(@"%@",dic);
     NSMutableArray *arr = [NSMutableArray array];
     if (zhusuPDic != nil) {
         [mudic setObject:[zhusuPDic objectForKey:@"generalSurveyList"] forKey:@"generalSurveyList"];
         [arr addObject:zhusuPDic];
+        
     }
     if (jiwangSDic != nil) {
         
