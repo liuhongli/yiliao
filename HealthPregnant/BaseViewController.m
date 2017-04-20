@@ -86,42 +86,43 @@
     NSMutableArray *dietrM = [NSMutableArray array];
 
     for (int num = 0; num < array.count; num ++) {
-        
+        NSArray *contArray = array[num];
+        for (int subNum = 0; subNum < contArray.count; subNum++) {
     
-    NSDictionary *dataDic = array[num];
+            NSDictionary *dataDic = contArray[num];
 
 
-    NSString *tableName = [dataDic objectForKey:@"tableName"];
-    
-    NSMutableDictionary *paraDic = [NSMutableDictionary dictionary];
-    
-    NSArray *chidArr = [dataDic objectForKey:@"children"];
-    for (NSDictionary *chidDic in chidArr) {
-        NSInteger defaultValue = [[chidDic objectForKey:@"defaultValue"] integerValue];
-        if (defaultValue != 0) {
+            NSString *tableName = [dataDic objectForKey:@"tableName"];
             
-            [paraDic setObject:[chidDic objectForKey:@"defaultValue"] forKey:[chidDic objectForKey:@"fieldName"]];
+            NSMutableDictionary *paraDic = [NSMutableDictionary dictionary];
             
-        }    }
-    
+            NSArray *chidArr = [dataDic objectForKey:@"children"];
+            for (NSDictionary *chidDic in chidArr) {
+                NSInteger defaultValue = [[chidDic objectForKey:@"defaultValue"] integerValue];
+                if (defaultValue != 0) {
+                    
+                    [paraDic setObject:[chidDic objectForKey:@"defaultValue"] forKey:[chidDic objectForKey:@"fieldName"]];
+                    
+                }    }
+            
 
-    
-    NSArray *parArr =@[@{@"field":paraDic,@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"inspectionOrder":@"1",@"recordTime":[dateFormatter stringFromDate:theDate],@"sign":@"1",@"tableName":tableName}];
-    
-        if (type == 0) {
             
-            [generM addObject:parArr];
+            NSArray *parArr =@[@{@"field":paraDic,@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"inspectionOrder":@"1",@"recordTime":[paraDic objectForKey:@"addTime"],@"sign":@"1",@"tableName":tableName}];
+            
+                if (type == 0) {
+                    
+                    [generM addObject:parArr];
+                }
+                if (type == 1) {
+                    
+                    [sportM addObject:parArr];
+                }
+                if (type == 2) {
+                    
+                    [dietrM addObject:parArr];
+                }
+
         }
-        if (type == 1) {
-            
-            [sportM addObject:parArr];
-        }
-        if (type == 2) {
-            
-            [dietrM addObject:parArr];
-        }
-
-
     }
     NSString *listStr;
     NSMutableDictionary *para = [NSMutableDictionary dictionary];

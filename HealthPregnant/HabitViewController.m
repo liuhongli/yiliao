@@ -168,15 +168,15 @@
         
         if (_comeType == 1) {
             
-            [defaut setObject:para forKey:@"user_zhusuPDic"];
+            [defaut setObject:dataArray forKey:@"user_zhusuSDic"];
             
         }else if (_comeType == 2) {
             
-            [defaut setObject:para forKey:@"user_yingshiPDic"];
+            [defaut setObject:dataArray forKey:@"user_yingshiSDic"];
             
         }if (_comeType == 3) {
             
-            [defaut setObject:para forKey:@"user_shenghuoPDic"];
+            [defaut setObject:dataArray forKey:@"user_shenghuoSDic"];
             
         }
         
@@ -441,8 +441,14 @@
         [subDic setObject:@"1" forKey:@"defaultValue"];
     }
     [children replaceObjectAtIndex:index withObject:subDic];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    NSDate *theDate = [NSDate date];
+    dateFormatter.dateFormat = @"YYYY-MM-dd ";
+    NSString *dataStr =  [dateFormatter stringFromDate:theDate];
     [chageDic setObject:children forKey:@"children"];
-    NSLog(@"%ld",indexPath.section);
+    [chageDic setObject:dataStr forKey:@"addTime"];
+    [chageDic setObject:@"0" forKey:@"code"];
+
     [dataArray replaceObjectAtIndex:indexPath.section withObject:chageDic];
     
     NSUserDefaults *defaut = [NSUserDefaults standardUserDefaults];
@@ -507,6 +513,14 @@
         
         [children replaceObjectAtIndex:i withObject:subDic];
         [chageDic setObject:children forKey:@"children"];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        NSDate *theDate = [NSDate date];
+        dateFormatter.dateFormat = @"YYYY-MM-dd ";
+        NSString *dataStr =  [dateFormatter stringFromDate:theDate];
+        [chageDic setObject:children forKey:@"children"];
+        [chageDic setObject:dataStr forKey:@"addTime"];
+        [chageDic setObject:@"0" forKey:@"code"];
+
         [dataArray replaceObjectAtIndex:indexPath.section withObject:chageDic];
 
     }

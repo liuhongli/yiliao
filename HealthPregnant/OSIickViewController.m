@@ -161,7 +161,17 @@
 
     }
     
+    
+    
     [children replaceObjectAtIndex:indexPath.row withObject:subDic];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    NSDate *theDate = [NSDate date];
+    dateFormatter.dateFormat = @"YYYY-MM-dd ";
+    NSString *dataStr =  [dateFormatter stringFromDate:theDate];
+    [dataDic setObject:children forKey:@"children"];
+    [dataDic setObject:dataStr forKey:@"addTime"];
+    [dataDic setObject:@"0" forKey:@"code"];
+
     [dataDic setObject:children forKey:@"children"];
 
 }

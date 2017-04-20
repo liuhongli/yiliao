@@ -300,8 +300,11 @@
 - (void)sendmess{
 
     //去数据进行数据处理
-    NSLog(@"%@,%@,%@,%@,%@,%@,%@",zhusuPDic,jiwangSDic,shiyanPDic,yingshiPDic,shenghuoPDic,shanshiPDic,yundongPDic);
+    NSLog(@"%@,%@,%@,%@,%@,%@,%@",zhusuSDic,jiwangSDic,shiyanPDic,yingshiPDic,shenghuoPDic,shanshiPDic,yundongPDic);
     NSMutableDictionary *mudic = [NSMutableDictionary dictionary];
+    
+ NSDictionary *dic =  [self listType:2 dataArray:@[zhusuSDic,zhusuSDic]];
+    NSLog(@"%@",dic);
     NSMutableArray *arr = [NSMutableArray array];
     if (zhusuPDic != nil) {
         [mudic setObject:[zhusuPDic objectForKey:@"generalSurveyList"] forKey:@"generalSurveyList"];

@@ -27,7 +27,7 @@
     NSInteger seleImage;//b超 血常规 尿常规
     NSMutableDictionary *imageDic;//图片存储
     UIView *j_actionV;//宫高选择
-    NSDictionary *dataDic;//数据
+    NSMutableDictionary *dataDic;//数据
 
     NSInteger xueSel;//宫高选择
 }
@@ -49,13 +49,14 @@
     xueSel = 0;
     seleImage = 1000;
     NSArray *result = [[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] objectForKey:@"result"];
-    dataDic = result[6];
+    dataDic = [[NSMutableDictionary alloc] initWithDictionary:result[6]];
 
     UIImage *image0 = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:@"seleImage0"];
     if (image0) {
         [imageDic setObject:image0 forKey:@"1000"];
     }
-    UIImage *image1 = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:@"seleImage1"];    if (image1) {
+    UIImage *image1 = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:@"seleImage1"];
+    if (image1) {
         [imageDic setObject:image1 forKey:@"1001"];
     }
 
@@ -105,6 +106,11 @@
 //    } failur:^(NSError *error) {
 //        
 //    }];
+    
+    NSUserDefaults *defaut = [NSUserDefaults standardUserDefaults];
+    
+    [defaut setObject:@[dataDic] forKey:@"user_shiyanSDic"];
+    [defaut synchronize];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
@@ -371,6 +377,47 @@
 
 
     [RBaseHttpTool postWithUrl:@"data/uploadFile" parameters:para image:image sucess:^(id json) {
+        if ([[json objectForKey:@"sucess"] integerValue] !=1) {
+            [Alert showWithTitle:[json objectForKey:@"message"]];
+            return ;
+        }
+        NSString *str = [json objectForKey:@"result"];
+        NSMutableArray *children =[NSMutableArray arrayWithArray:[dataDic objectForKey:@"children"]];
+       
+        if (index == 1000) {
+            NSMutableDictionary *Dic = [[NSMutableDictionary alloc]initWithDictionary:[children objectAtIndex:2]];
+            [Dic setObject:str forKey:@"defaultValue"];
+            
+            [children replaceObjectAtIndex:2 withObject:Dic];
+  
+        }
+        if (index == 1001) {
+            NSMutableDictionary *Dic = [[NSMutableDictionary alloc]initWithDictionary:[children objectAtIndex:3]];
+            [Dic setObject:str forKey:@"defaultValue"];
+            
+            [children replaceObjectAtIndex:3 withObject:Dic];
+
+
+        }
+        if (index == 1002) {
+            NSMutableDictionary *Dic = [[NSMutableDictionary alloc]initWithDictionary:[children objectAtIndex:4]];
+            [Dic setObject:str forKey:@"defaultValue"];
+            
+            [children replaceObjectAtIndex:4 withObject:Dic];
+
+        }
+
+        
+        
+        [dataDic setObject:children forKey:@"children"];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        NSDate *theDate = [NSDate date];
+        dateFormatter.dateFormat = @"YYYY-MM-dd ";
+        NSString *dataStr =  [dateFormatter stringFromDate:theDate];
+        [dataDic setObject:children forKey:@"children"];
+        [dataDic setObject:dataStr forKey:@"addTime"];
+        [dataDic setObject:@"0" forKey:@"code"];
+
         
     } failur:^(NSError *error) {
         
@@ -409,6 +456,26 @@
         }
         
         UITextField *textF = [self.view viewWithTag:800];
+     NSArray *array =  [str componentsSeparatedByString:@"/"];
+        NSMutableArray *children =[NSMutableArray arrayWithArray:[dataDic objectForKey:@"children"]];
+        NSMutableDictionary *gaoDic = [[NSMutableDictionary alloc]initWithDictionary:[children objectAtIndex:1]];
+        [gaoDic setObject:array[0] forKey:@"defaultValue"];
+
+        NSMutableDictionary *diDic = [[NSMutableDictionary alloc]initWithDictionary:[children objectAtIndex:2]];
+        [diDic setObject:array[1] forKey:@"defaultValue"];
+
+        [children replaceObjectAtIndex:1 withObject:gaoDic];
+        [children replaceObjectAtIndex:2 withObject:diDic];
+
+        [dataDic setObject:children forKey:@"children"];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        NSDate *theDate = [NSDate date];
+        dateFormatter.dateFormat = @"YYYY-MM-dd ";
+        NSString *dataStr =  [dateFormatter stringFromDate:theDate];
+        [dataDic setObject:children forKey:@"children"];
+        [dataDic setObject:dataStr forKey:@"addTime"];
+        [dataDic setObject:@"0" forKey:@"code"];
+
         textF.text = [NSString stringWithFormat:@"%@mmHg",str];
         
         [self saveThing:textF.text keyStr:@"xueya"];
@@ -477,6 +544,24 @@
     UITextField *textF = [self.view viewWithTag:801];
     textF.text = captionS;
     [self saveThing:captionS keyStr:@"gongGao"];
+    
+    NSMutableArray *children =[NSMutableArray arrayWithArray:[dataDic objectForKey:@"children"]];
+    NSMutableDictionary *gongDic = [[NSMutableDictionary alloc]initWithDictionary:[children objectAtIndex:0]];
+    [gongDic setObject:captionS forKey:@"defaultValue"];
+    
+   
+    
+    [children replaceObjectAtIndex:0 withObject:gongDic];
+    
+    [dataDic setObject:children forKey:@"children"];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    NSDate *theDate = [NSDate date];
+    dateFormatter.dateFormat = @"YYYY-MM-dd ";
+    NSString *dataStr =  [dateFormatter stringFromDate:theDate];
+    [dataDic setObject:children forKey:@"children"];
+    [dataDic setObject:dataStr forKey:@"addTime"];
+    [dataDic setObject:@"0" forKey:@"code"];
+
     
     j_actionV.hidden = YES;
     

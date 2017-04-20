@@ -282,7 +282,7 @@
         if (self.resultIndex) {
             if (_comeType == 1) {
                 if (self.inputtF.text == nil || self.inputtF2.text == nil) {
-                    [self removeFromSuperview];
+                    [Alert showWithTitle:@"请正确输入"];
                     return;
                 }
                 NSString * str = [NSString stringWithFormat:@"%@/%@",self.inputtF.text,self.inputtF2.text];
@@ -291,7 +291,7 @@
             }else{
                 
                 if (self.inputtF.text == nil) {
-                    [self removeFromSuperview];
+                    [Alert showWithTitle:@"请正确输入"];
                     return;
                 }
 
