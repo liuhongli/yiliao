@@ -15,7 +15,7 @@
 @interface ThreeDetailController ()<UITableViewDelegate,UITableViewDataSource,UIPickerViewDelegate,UIPickerViewDataSource>{
     
     UIView *j_actionV;
-    NSDictionary *dataDic;
+    NSMutableDictionary *dataDic;
     NSMutableArray *dataArr;
     NSInteger selFInt;
     NSInteger selSInt;
@@ -42,7 +42,8 @@
         case 0: {
             self.title = @"睡眠时间调查";
 
-            dataDic = result[16];
+            dataDic = [[NSMutableDictionary alloc] initWithDictionary:result[16]];
+
             dataArr = [NSMutableArray arrayWithArray:[defaults objectForKey:KSleepRecordArr]];
             NSLog(@"%@",[defaults objectForKey:KSleepRecordArr]);
        
@@ -52,6 +53,8 @@
             
             self.title = @"职业调查";
             dataArr =[NSMutableArray arrayWithArray:[defaults objectForKey:KJobRecordArr]];
+            dataDic = [[NSMutableDictionary alloc] initWithDictionary:result[17]];
+
 
         }
             break;
@@ -60,7 +63,8 @@
         default: {
             
             self.title = @"运动调查";
-            dataDic = result[18];
+            dataDic = [[NSMutableDictionary alloc] initWithDictionary:result[18]];
+
             dataArr = [NSMutableArray arrayWithArray:[defaults objectForKey:KSportRecordArr]];
 
         }
@@ -127,8 +131,15 @@
             cell = [tableView dequeueReusableCellWithIdentifier:cellIndefier];
         }
         NSDictionary *dic = dataArr[indexPath.row -1];
-        cell.nameLab.text = [dic objectForKey:@"caption"];
-        cell.dateLab.text = [dic objectForKey:@"date"];
+        NSArray *array = [dic objectForKey:@"children"];
+
+        for (NSDictionary *chidDic in array) {
+            if ([[chidDic objectForKey:@"defaultValue"] integerValue] != 0) {
+                cell.nameLab.text = [chidDic objectForKey:@"caption"];
+
+            }
+        }
+        cell.dateLab.text = [dic objectForKey:@"addTime"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.deleBut.tag = indexPath.row -1;
         [cell.deleBut addTarget:self action:@selector(deleteCode:) forControlEvents:UIControlEventTouchUpInside];
@@ -331,54 +342,46 @@
     
     NSString *captionS;
     
+      NSMutableArray *children =[NSMutableArray arrayWithArray:[dataDic objectForKey:@"children"]];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSMutableDictionary *codeDic = [NSMutableDictionary dictionary];
     NSMutableArray *codeArr = [NSMutableArray array];
     if (_comeType == 0) {
         NSArray *a =[defaults objectForKey:KSleepRecordArr];
-        for (NSDictionary *d in a) {
-            NSString *ds = [d objectForKey:@"date"];
-            if (![ds isEqualToString:_dateStr]) {
-                [codeArr insertObject:d atIndex:0];
-            }
-        }
-        NSArray *array = [dataDic objectForKey:@"children"];
-        captionS = [array[row] objectForKey:@"caption"];
-        
-        [codeDic setObject:captionS forKey:@"caption"];
-        [codeDic setObject:_dateStr forKey:@"date"];
-        [codeDic setObject:_job forKey:@"job"];
-        [codeDic setObject:[array[row] objectForKey:@"fieldName"] forKey:@"fieldName"];
-        [codeArr addObject:codeDic];
+        codeArr = [a mutableCopy];
+        NSMutableDictionary *subDic = [[NSMutableDictionary alloc]initWithDictionary:[children objectAtIndex:row]];
+        [subDic setObject:@"1" forKey:@"defaultValue"];
+        [children replaceObjectAtIndex:row withObject:subDic];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        NSDate *theDate = [NSDate date];
+        dateFormatter.dateFormat = @"YYYY-MM-dd ";
+        NSString *dataStr =  [dateFormatter stringFromDate:theDate];
+        [dataDic setObject:children forKey:@"children"];
+        [dataDic setObject:dataStr forKey:@"addTime"];
+        [dataDic setObject:@"1" forKey:@"code"];
+        [codeArr insertObject:dataDic atIndex:0];
         [defaults setObject:codeArr forKey:KSleepRecordArr];
         
     }else if (_comeType == 1){
         NSArray *a = [defaults objectForKey:KJobRecordArr];
-        for (NSDictionary *d in a) {
-            NSString *ds = [d objectForKey:@"date"];
-            if (![ds isEqualToString:_dateStr]) {
-                [codeArr addObject:d];
-            }
-        }
-        
+        codeArr = [a mutableCopy];
         captionS = [NSString stringWithFormat:@"%ld小时",row +1];
-        [codeDic setObject:captionS forKey:@"caption"];
-        [codeDic setObject:_dateStr forKey:@"date"];
-        [codeDic setObject:_job forKey:@"job"];
-        [codeDic setObject:@"ProfessionTime" forKey:@"fieldName"];
-        [codeArr addObject:codeDic];
+        NSMutableDictionary *subDic = [[NSMutableDictionary alloc]initWithDictionary:[children objectAtIndex:0]];
+        [subDic setObject:captionS forKey:@"defaultValue"];
+        [children replaceObjectAtIndex:0 withObject:subDic];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        NSDate *theDate = [NSDate date];
+        dateFormatter.dateFormat = @"YYYY-MM-dd ";
+        NSString *dataStr =  [dateFormatter stringFromDate:theDate];
+        [dataDic setObject:children forKey:@"children"];
+        [dataDic setObject:dataStr forKey:@"addTime"];
+        [dataDic setObject:@"1" forKey:@"code"];
+        [codeArr insertObject:dataDic atIndex:0];
         [defaults setObject:codeArr forKey:KJobRecordArr];
         
         
     }else if (_comeType == 2){
         NSArray *a = [defaults objectForKey:KSportRecordArr];
-        for (NSDictionary *d in a) {
-            NSString *ds = [d objectForKey:@"date"];
-            if (![ds isEqualToString:_dateStr]) {
-                [codeArr addObject:d];
-            }
-        }
-        
+        codeArr = [a mutableCopy];
         
             NSArray *array = [dataDic objectForKey:@"children"];
            NSString *caption1 = [array[selFInt] objectForKey:@"caption"];
@@ -387,12 +390,19 @@
             NSString *caption2 = [NSString stringWithFormat:@"%ld小时",selSInt];
             
         captionS = [NSString stringWithFormat:@"%@ / %@",caption1,caption2];
-        
-        [codeDic setObject:captionS forKey:@"caption"];
-        [codeDic setObject:_dateStr forKey:@"date"];
-        [codeDic setObject:_job forKey:@"job"];
-        [codeDic setObject:[array[row] objectForKey:@"fieldName"] forKey:@"fieldName"];
-        [codeArr insertObject:codeDic atIndex:0];
+        NSString *caStr = [NSString stringWithFormat:@"%ld",selSInt];
+        NSMutableDictionary *subDic = [[NSMutableDictionary alloc]initWithDictionary:[children objectAtIndex:selFInt]];
+        [subDic setObject:caStr forKey:@"defaultValue"];
+        [children replaceObjectAtIndex:selFInt withObject:subDic];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        NSDate *theDate = [NSDate date];
+        dateFormatter.dateFormat = @"YYYY-MM-dd ";
+        NSString *dataStr =  [dateFormatter stringFromDate:theDate];
+        [dataDic setObject:children forKey:@"children"];
+        [dataDic setObject:dataStr forKey:@"addTime"];
+        [dataDic setObject:@"1" forKey:@"code"];
+        [codeArr insertObject:dataDic atIndex:0];
+
         [defaults setObject:codeArr forKey:KSportRecordArr];
         
     }

@@ -29,6 +29,7 @@
     
     NSArray *dinArray;
     NSInteger foodType;
+    NSDictionary *replaceDic;
 
 
 }
@@ -41,6 +42,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.title = @"膳食详情";
+    replaceDic = [NSDictionary dictionary];
     questionSArray = @[@"日期",@"餐食",@"食物",@"重量"];
     dinArray = @[@"早餐",@"中餐",@"晚餐",@"加餐"];
     jobStr = @"早餐";
@@ -58,7 +60,7 @@
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 80)];
     UIButton *buton  = [[UIButton alloc] initWithFrame:CGRectMake(10, 20, kScreenWidth-20, 40)];
-    [buton setTitle:@"提交" forState:UIControlStateNormal];
+    [buton setTitle:@"完成修改" forState:UIControlStateNormal];
     [buton addTarget:self action:@selector(postInfo) forControlEvents:UIControlEventTouchUpInside];
     [buton setBackgroundColor:BaseColor];
     [view addSubview:buton];
@@ -82,37 +84,521 @@
 }
 
 - (void)postInfo {
-    
-    NSMutableDictionary *saveDic = [NSMutableDictionary dictionary];
+    NSMutableArray *changArray = [shanshiSDic mutableCopy];
+
     UITextField *dateTF = [self.view viewWithTag:1000];
     UITextField *typeTF = [self.view viewWithTag:1001];
 
-    UITextField *dinerTF = [self.view viewWithTag:1002];
     UITextField *wghTF = [self.view viewWithTag:1003];
-
-    
-    [_infoDic setObject:dateTF.text forKey:@"addTime"];
+    NSString *nowType;
     if ([typeTF.text isEqualToString:@"早餐"]) {
-       
-        [_infoDic setObject:@"1" forKey:@"addTime"];
+        nowType = @"1";
     }else if ([typeTF.text isEqualToString:@"中餐"]) {
         
-        [_infoDic setObject:@"2" forKey:@"addTime"];
+        nowType = @"2";
     }else if ([typeTF.text isEqualToString:@"晚餐"]) {
-        
-        [_infoDic setObject:@"3" forKey:@"addTime"];
+        nowType = @"3";
     }else    if ([typeTF.text isEqualToString:@"加餐"]) {
         
-        [_infoDic setObject:@"4" forKey:@"addTime"];
+        nowType = @"4";
     }
-    [_infoDic setObject:dinerTF.text forKey:@"caption"];
-    [_infoDic setObject:wghTF.text forKey:@"defaultValue"];
-            NSLog(@"%@",_infoDic);
-    NSMutableArray *changArray = [shanshiPDic mutableCopy];
-    [changArray replaceObjectAtIndex:_indexRow withObject:_infoDic];
+    NSMutableArray *dArray = [NSMutableArray array];
+    
+    NSArray *zaoArray = [_infoDic objectForKey:@"foodTime0"];
+    for (NSDictionary *dic in zaoArray) {
+        [dArray addObject:dic];
+    }
+    NSArray *zhongArray = [_infoDic objectForKey:@"foodTime1"];
+    for (NSDictionary *dic in zhongArray) {
+        [dArray addObject:dic];
+    }
+    NSArray *wanArray = [_infoDic objectForKey:@"foodTime2"];
+    for (NSDictionary *dic in wanArray) {
+        [dArray addObject:dic];
+    }
+    NSArray *jiaArray = [_infoDic objectForKey:@"foodTime3"];
+    for (NSDictionary *dic in jiaArray) {
+        [dArray addObject:dic];
+    }
+    NSString *dinerType = [[dArray objectAtIndex:_indexRow] objectForKey:@"foodTYpe"];
+    if ([dateTF.text isEqualToString:[_infoDic objectForKey:@"addTime"]] ) {
+        //操作没有改变日期：修改就餐类型（添加、删除）、没有修改就餐类型（替换）
+        if ([dinerType isEqualToString:nowType]) {
+          //操作没改变早晚餐类型
+            
+            if (_indexRow < zaoArray.count) {
+                NSMutableArray *zaoArr = [NSMutableArray array];
+                NSArray *zaomArr = [_infoDic objectForKey:@"foodTime0"];
+                if (zaomArr.count > 0) {
+                    zaoArr = [zaomArr mutableCopy];
+                }
+                NSMutableDictionary *repDic = [[zaoArr objectAtIndex:_indexRow] mutableCopy];
+                if (replaceDic.allKeys.count > 0) {
+                    [repDic setValue:[replaceDic objectForKey:@"caption"] forKey:@"caption"];
+                    [repDic setValue:[replaceDic objectForKey:@"code"] forKey:@"code"];
+
+                    [repDic setValue:[replaceDic objectForKey:@"fieldName"] forKey:@"fieldName"];
+                    [repDic setValue:[replaceDic objectForKey:@"remark"] forKey:@"remark"];
+
+
+                }
+                [repDic setValue:wghTF.text forKey:@"defaultValue"];
+                [zaoArr  replaceObjectAtIndex:_indexRow withObject:repDic];
+                [_infoDic setValue:zaoArr  forKey:@"foodTime0"];
+                
+            }else if (_indexRow < zaoArray.count+zhongArray.count) {
+                NSMutableArray *zaoArr = [NSMutableArray array];
+                NSArray *zaomArr = [_infoDic objectForKey:@"foodTime1"];
+                if (zaomArr.count > 0) {
+                    zaoArr = [zaomArr mutableCopy];
+                }
+                NSMutableDictionary *repDic = [[zaoArr objectAtIndex:_indexRow-zaoArray.count] mutableCopy];
+                if (replaceDic.allKeys.count > 0) {
+                    [repDic setValue:[replaceDic objectForKey:@"caption"] forKey:@"caption"];
+                    [repDic setValue:[replaceDic objectForKey:@"code"] forKey:@"code"];
+                    
+                    [repDic setValue:[replaceDic objectForKey:@"fieldName"] forKey:@"fieldName"];
+                    [repDic setValue:[replaceDic objectForKey:@"remark"] forKey:@"remark"];
+                    
+                    
+                }
+                [repDic setValue:wghTF.text forKey:@"defaultValue"];
+                [zaoArr  replaceObjectAtIndex:_indexRow-zaoArray.count withObject:repDic];
+                [_infoDic setValue:zaoArr  forKey:@"foodTime1"];
+
+            }else if (_indexRow < zaoArray.count+zhongArray.count+wanArray.count) {
+                NSMutableArray *zaoArr = [NSMutableArray array];
+                NSArray *zaomArr = [_infoDic objectForKey:@"foodTime2"];
+                if (zaomArr.count > 0) {
+                    zaoArr = [zaomArr mutableCopy];
+                }
+                
+                NSMutableDictionary *repDic = [[zaoArr objectAtIndex:_indexRow-zaoArray.count-zhongArray.count] mutableCopy];
+                if (replaceDic.allKeys.count > 0) {
+                    [repDic setValue:[replaceDic objectForKey:@"caption"] forKey:@"caption"];
+                    [repDic setValue:[replaceDic objectForKey:@"code"] forKey:@"code"];
+                    
+                    [repDic setValue:[replaceDic objectForKey:@"fieldName"] forKey:@"fieldName"];
+                    [repDic setValue:[replaceDic objectForKey:@"remark"] forKey:@"remark"];
+                    
+                    
+                }
+                [repDic setValue:wghTF.text forKey:@"defaultValue"];
+                [zaoArr  replaceObjectAtIndex:_indexRow-zaoArray.count-zhongArray.count withObject:repDic];
+                [_infoDic setValue:zaoArr  forKey:@"foodTime2"];
+
+            }else if (_indexRow < zaoArray.count+zhongArray.count+wanArray.count+jiaArray.count) {
+                NSMutableArray *zaoArr = [NSMutableArray array];
+                NSArray *zaomArr = [_infoDic objectForKey:@"foodTime3"];
+                if (zaomArr.count > 0) {
+                    zaoArr = [zaomArr mutableCopy];
+                }
+                NSMutableDictionary *repDic = [[zaoArr objectAtIndex:_indexRow-zaoArray.count-zhongArray.count-wanArray.count] mutableCopy];
+                if (replaceDic.allKeys.count > 0) {
+                    [repDic setValue:[replaceDic objectForKey:@"caption"] forKey:@"caption"];
+                    [repDic setValue:[replaceDic objectForKey:@"code"] forKey:@"code"];
+                    
+                    [repDic setValue:[replaceDic objectForKey:@"fieldName"] forKey:@"fieldName"];
+                    [repDic setValue:[replaceDic objectForKey:@"remark"] forKey:@"remark"];
+                    
+                    
+                }
+                [repDic setValue:wghTF.text forKey:@"defaultValue"];
+                [zaoArr  replaceObjectAtIndex:_indexRow-zaoArray.count-zhongArray.count-wanArray.count withObject:repDic];
+                [_infoDic setValue:zaoArr  forKey:@"foodTime3"];
+
+            }
+
+        }else{
+            //操作改变早晚餐类型
+            NSMutableDictionary *repDic = [[dArray objectAtIndex:_indexRow] mutableCopy];
+
+            if ([typeTF.text isEqualToString:@"早餐"]) {
+                
+                NSMutableArray *zaoArr = [NSMutableArray array];
+                NSArray *zaomArr = [_infoDic objectForKey:@"foodTime0"];
+                if (zaomArr.count > 0) {
+                    zaoArr = [zaomArr mutableCopy];
+                }
+                if (replaceDic.allKeys.count > 0) {
+                    [repDic setValue:[replaceDic objectForKey:@"caption"] forKey:@"caption"];
+                    [repDic setValue:[replaceDic objectForKey:@"code"] forKey:@"code"];
+                    
+                    [repDic setValue:[replaceDic objectForKey:@"fieldName"] forKey:@"fieldName"];
+                    [repDic setValue:[replaceDic objectForKey:@"remark"] forKey:@"remark"];
+                    
+                    [repDic setValue:[replaceDic objectForKey:@"1"] forKey:@"foodTYpe"];
+                }
+                [repDic setValue:wghTF.text forKey:@"defaultValue"];
+                [zaoArr  addObject:repDic];
+                [_infoDic setValue:zaoArr  forKey:@"foodTime0"];
+
+            }else if ([typeTF.text isEqualToString:@"中餐"]) {
+                
+                NSMutableArray *zaoArr = [NSMutableArray array];
+                NSArray *zaomArr = [_infoDic objectForKey:@"foodTime1"];
+                if (zaomArr.count > 0) {
+                    zaoArr = [zaomArr mutableCopy];
+                }
+
+                if (replaceDic.allKeys.count > 0) {
+                    [repDic setValue:[replaceDic objectForKey:@"caption"] forKey:@"caption"];
+                    [repDic setValue:[replaceDic objectForKey:@"code"] forKey:@"code"];
+                    
+                    [repDic setValue:[replaceDic objectForKey:@"fieldName"] forKey:@"fieldName"];
+                    [repDic setValue:[replaceDic objectForKey:@"remark"] forKey:@"remark"];
+                    
+                    [repDic setValue:[replaceDic objectForKey:@"2"] forKey:@"foodTYpe"];
+
+                }
+                [repDic setValue:wghTF.text forKey:@"defaultValue"];
+                [zaoArr  addObject:repDic];
+                [_infoDic setValue:zaoArr  forKey:@"foodTime1"];
+
+
+            }else if ([typeTF.text isEqualToString:@"晚餐"]) {
+                
+                NSMutableArray *zaoArr = [NSMutableArray array];
+                NSArray *zaomArr = [_infoDic objectForKey:@"foodTime2"];
+                if (zaomArr.count > 0) {
+                    zaoArr = [zaomArr mutableCopy];
+                }
+
+                if (replaceDic.allKeys.count > 0) {
+                    [repDic setValue:[replaceDic objectForKey:@"caption"] forKey:@"caption"];
+                    [repDic setValue:[replaceDic objectForKey:@"code"] forKey:@"code"];
+                    
+                    [repDic setValue:[replaceDic objectForKey:@"fieldName"] forKey:@"fieldName"];
+                    [repDic setValue:[replaceDic objectForKey:@"remark"] forKey:@"remark"];
+                    [repDic setObject:@"3" forKey:@"foodTYpe"];
+                    
+                }
+                [repDic setValue:wghTF.text forKey:@"defaultValue"];
+                [zaoArr  addObject:repDic];
+                [_infoDic setValue:zaoArr  forKey:@"foodTime2"];
+                
+
+                
+            }else    if ([typeTF.text isEqualToString:@"加餐"]) {
+                NSMutableArray *zaoArr = [NSMutableArray array];
+                NSArray *zaomArr = [_infoDic objectForKey:@"foodTime3"];
+                if (zaomArr.count > 0) {
+                    zaoArr = [zaomArr mutableCopy];
+                }
+
+                if (replaceDic.allKeys.count > 0) {
+                    [repDic setValue:[replaceDic objectForKey:@"caption"] forKey:@"caption"];
+                    [repDic setValue:[replaceDic objectForKey:@"code"] forKey:@"code"];
+                    
+                    [repDic setValue:[replaceDic objectForKey:@"fieldName"] forKey:@"fieldName"];
+                    [repDic setValue:[replaceDic objectForKey:@"remark"] forKey:@"remark"];
+                    [repDic setObject:@"4" forKey:@"foodTYpe"];
+
+                    
+                }
+                [repDic setValue:wghTF.text forKey:@"defaultValue"];
+                [zaoArr  addObject:repDic];
+                [_infoDic setValue:zaoArr  forKey:@"foodTime3"];
+                
+
+            }
+
+            if (_indexRow < zaoArray.count) {
+                
+                NSMutableArray *zaoArr = [NSMutableArray array];
+                NSArray *zaomArr = [_infoDic objectForKey:@"foodTime0"];
+                if (zaomArr.count > 0) {
+                    zaoArr = [zaomArr mutableCopy];
+                }
+                [zaoArr  removeObjectAtIndex:_indexRow];
+                [_infoDic setValue:zaoArr  forKey:@"foodTime0"];
+
+                
+            }else if (_indexRow < zaoArray.count+zhongArray.count) {
+                
+                NSMutableArray *zaoArr = [NSMutableArray array];
+                NSArray *zaomArr = [_infoDic objectForKey:@"foodTime1"];
+                if (zaomArr.count > 0) {
+                    zaoArr = [zaomArr mutableCopy];
+                }
+                [zaoArr removeObjectAtIndex:_indexRow-zaoArray.count];
+                [_infoDic setValue:zaoArr  forKey:@"foodTime1"];
+                
+            }else if (_indexRow < zaoArray.count+zhongArray.count+wanArray.count) {
+                NSMutableArray *zaoArr = [NSMutableArray array];
+                NSArray *zaomArr = [_infoDic objectForKey:@"foodTime2"];
+                if (zaomArr.count > 0) {
+                    zaoArr = [zaomArr mutableCopy];
+                }
+                [zaoArr  removeObjectAtIndex:_indexRow-zaoArray.count-zhongArray.count];
+                [_infoDic setValue:zaoArr  forKey:@"foodTime2"];
+
+                
+            }else if (_indexRow < zaoArray.count+zhongArray.count+wanArray.count+jiaArray.count) {
+                
+                NSMutableArray *zaoArr = [NSMutableArray array];
+                NSArray *zaomArr = [_infoDic objectForKey:@"foodTime3"];
+                if (zaomArr.count > 0) {
+                    zaoArr = [zaomArr mutableCopy];
+                }
+                [zaoArr  removeObjectAtIndex:_indexRow-zaoArray.count-zhongArray.count-wanArray.count];
+                [_infoDic setValue:zaoArr  forKey:@"foodTime3"];
+            }
+
+            
+        }
+       
+        [changArray replaceObjectAtIndex:_indexSection withObject:_infoDic];
+
+        
+    }else{
+    //日期不同:日期存在（添加进日餐）、日期不存在（添加一个日期）
+        NSInteger sameNum = -1;
+        for (int i = 0; i < changArray.count; i++) {
+            NSString *timeStr = [[changArray objectAtIndex:i] objectForKey:@"addTime"];
+            if ([dateTF.text isEqualToString:timeStr]) {
+                sameNum = i;
+            }
+        }
+        if (sameNum > 0) {
+            
+            
+            NSMutableDictionary *repDic = [[dArray objectAtIndex:_indexRow] mutableCopy];
+            
+            if ([typeTF.text isEqualToString:@"早餐"]) {
+                
+                if (replaceDic.allKeys.count > 0) {
+                    [repDic setValue:[replaceDic objectForKey:@"caption"] forKey:@"caption"];
+                    [repDic setValue:[replaceDic objectForKey:@"code"] forKey:@"code"];
+                    
+                    [repDic setValue:[replaceDic objectForKey:@"fieldName"] forKey:@"fieldName"];
+                    [repDic setValue:[replaceDic objectForKey:@"remark"] forKey:@"remark"];
+                    
+                    [repDic setValue:[replaceDic objectForKey:@"1"] forKey:@"foodTYpe"];
+                }
+                [repDic setValue:wghTF.text forKey:@"defaultValue"];
+                
+                NSMutableDictionary *chDic = [[changArray objectAtIndex:sameNum] mutableCopy];
+                NSArray *chA = [chDic objectForKey:@"foodTime0"];
+                NSMutableArray *chmA = [NSMutableArray array];
+                if (chA.count > 0) {
+                    chmA = [chA mutableCopy];
+                }
+                [chmA addObject:repDic];
+                [chDic setObject:chmA forKey:@"foodTime0"];
+                [changArray replaceObjectAtIndex:sameNum withObject:chDic];
+            }else if ([typeTF.text isEqualToString:@"中餐"]) {
+                
+                if (replaceDic.allKeys.count > 0) {
+                    [repDic setValue:[replaceDic objectForKey:@"caption"] forKey:@"caption"];
+                    [repDic setValue:[replaceDic objectForKey:@"code"] forKey:@"code"];
+                    
+                    [repDic setValue:[replaceDic objectForKey:@"fieldName"] forKey:@"fieldName"];
+                    [repDic setValue:[replaceDic objectForKey:@"remark"] forKey:@"remark"];
+                    
+                    [repDic setValue:[replaceDic objectForKey:@"1"] forKey:@"foodTYpe"];
+                }
+                [repDic setValue:wghTF.text forKey:@"defaultValue"];
+                
+                NSMutableDictionary *chDic = [[changArray objectAtIndex:sameNum] mutableCopy];
+                NSArray *chA = [chDic objectForKey:@"foodTime1"];
+                NSMutableArray *chmA = [NSMutableArray array];
+                if (chA.count > 0) {
+                    chmA = [chA mutableCopy];
+                }
+                [chmA addObject:repDic];
+                [chDic setObject:chmA forKey:@"foodTime1"];
+                [changArray replaceObjectAtIndex:sameNum withObject:chDic];
+                
+                
+            }else if ([typeTF.text isEqualToString:@"晚餐"]) {
+                
+                if (replaceDic.allKeys.count > 0) {
+                    [repDic setValue:[replaceDic objectForKey:@"caption"] forKey:@"caption"];
+                    [repDic setValue:[replaceDic objectForKey:@"code"] forKey:@"code"];
+                    
+                    [repDic setValue:[replaceDic objectForKey:@"fieldName"] forKey:@"fieldName"];
+                    [repDic setValue:[replaceDic objectForKey:@"remark"] forKey:@"remark"];
+                    
+                    [repDic setValue:[replaceDic objectForKey:@"1"] forKey:@"foodTYpe"];
+                }
+                [repDic setValue:wghTF.text forKey:@"defaultValue"];
+                
+                NSMutableDictionary *chDic = [[changArray objectAtIndex:sameNum] mutableCopy];
+                NSArray *chA = [chDic objectForKey:@"foodTime2"];
+                NSMutableArray *chmA = [NSMutableArray array];
+                if (chA.count > 0) {
+                    chmA = [chA mutableCopy];
+                }
+                [chmA addObject:repDic];
+                [chDic setObject:chmA forKey:@"foodTime2"];
+                [changArray replaceObjectAtIndex:sameNum withObject:chDic];
+                
+            }else    if ([typeTF.text isEqualToString:@"加餐"]) {
+                if (replaceDic.allKeys.count > 0) {
+                    [repDic setValue:[replaceDic objectForKey:@"caption"] forKey:@"caption"];
+                    [repDic setValue:[replaceDic objectForKey:@"code"] forKey:@"code"];
+                    
+                    [repDic setValue:[replaceDic objectForKey:@"fieldName"] forKey:@"fieldName"];
+                    [repDic setValue:[replaceDic objectForKey:@"remark"] forKey:@"remark"];
+                    
+                    [repDic setValue:[replaceDic objectForKey:@"1"] forKey:@"foodTYpe"];
+                }
+                [repDic setValue:wghTF.text forKey:@"defaultValue"];
+                
+                NSMutableDictionary *chDic = [[changArray objectAtIndex:sameNum] mutableCopy];
+                NSArray *chA = [chDic objectForKey:@"foodTime3"];
+                NSMutableArray *chmA = [NSMutableArray array];
+                if (chA.count > 0) {
+                    chmA = [chA mutableCopy];
+                }
+                [chmA addObject:repDic];
+                [chDic setObject:chmA forKey:@"foodTime3"];
+                [changArray replaceObjectAtIndex:sameNum withObject:chDic];
+                
+            }
+
+        }else{
+            //日期不存在（添加一个日期）
+            NSMutableDictionary *repDic = [[dArray objectAtIndex:_indexRow] mutableCopy];
+            
+            if ([typeTF.text isEqualToString:@"早餐"]) {
+                
+                if (replaceDic.allKeys.count > 0) {
+                    [repDic setValue:[replaceDic objectForKey:@"caption"] forKey:@"caption"];
+                    [repDic setValue:[replaceDic objectForKey:@"code"] forKey:@"code"];
+                    
+                    [repDic setValue:[replaceDic objectForKey:@"fieldName"] forKey:@"fieldName"];
+                    [repDic setValue:[replaceDic objectForKey:@"remark"] forKey:@"remark"];
+                    
+                    [repDic setValue:[replaceDic objectForKey:@"1"] forKey:@"foodTYpe"];
+                }
+                [repDic setValue:wghTF.text forKey:@"defaultValue"];
+                
+                NSMutableDictionary *chDic = [NSMutableDictionary dictionary];
+                NSArray *chA = @[repDic];
+                [chDic setObject:chA forKey:@"foodTime0"];
+                [chDic setObject:dateTF.text forKey:@"addTime"];
+                [chDic setObject:@"3" forKey:@"code"];
+                [chDic setObject:[_infoDic objectForKey:@"tableName"] forKey:@"tableName"];
+                [changArray addObject:chDic];
+            }else if ([typeTF.text isEqualToString:@"中餐"]) {
+                
+                if (replaceDic.allKeys.count > 0) {
+                    [repDic setValue:[replaceDic objectForKey:@"caption"] forKey:@"caption"];
+                    [repDic setValue:[replaceDic objectForKey:@"code"] forKey:@"code"];
+                    
+                    [repDic setValue:[replaceDic objectForKey:@"fieldName"] forKey:@"fieldName"];
+                    [repDic setValue:[replaceDic objectForKey:@"remark"] forKey:@"remark"];
+                    
+                    [repDic setValue:[replaceDic objectForKey:@"1"] forKey:@"foodTYpe"];
+                }
+                [repDic setValue:wghTF.text forKey:@"defaultValue"];
+                
+                NSMutableDictionary *chDic = [NSMutableDictionary dictionary];
+                NSArray *chA = @[repDic];
+                [chDic setObject:chA forKey:@"foodTime1"];
+                [chDic setObject:dateTF.text forKey:@"addTime"];
+                [chDic setObject:@"3" forKey:@"code"];
+                [chDic setObject:[_infoDic objectForKey:@"tableName"] forKey:@"tableName"];
+                [changArray addObject:chDic];
+                
+                
+            }else if ([typeTF.text isEqualToString:@"晚餐"]) {
+                
+                if (replaceDic.allKeys.count > 0) {
+                    [repDic setValue:[replaceDic objectForKey:@"caption"] forKey:@"caption"];
+                    [repDic setValue:[replaceDic objectForKey:@"code"] forKey:@"code"];
+                    
+                    [repDic setValue:[replaceDic objectForKey:@"fieldName"] forKey:@"fieldName"];
+                    [repDic setValue:[replaceDic objectForKey:@"remark"] forKey:@"remark"];
+                    
+                    [repDic setValue:[replaceDic objectForKey:@"1"] forKey:@"foodTYpe"];
+                }
+                [repDic setValue:wghTF.text forKey:@"defaultValue"];
+                
+                NSMutableDictionary *chDic = [NSMutableDictionary dictionary];
+                NSArray *chA = @[repDic];
+                [chDic setObject:chA forKey:@"foodTime2"];
+                [chDic setObject:dateTF.text forKey:@"addTime"];
+                [chDic setObject:@"3" forKey:@"code"];
+                [chDic setObject:[_infoDic objectForKey:@"tableName"] forKey:@"tableName"];
+                [changArray addObject:chDic];
+                
+            }else    if ([typeTF.text isEqualToString:@"加餐"]) {
+                if (replaceDic.allKeys.count > 0) {
+                    [repDic setValue:[replaceDic objectForKey:@"caption"] forKey:@"caption"];
+                    [repDic setValue:[replaceDic objectForKey:@"code"] forKey:@"code"];
+                    
+                    [repDic setValue:[replaceDic objectForKey:@"fieldName"] forKey:@"fieldName"];
+                    [repDic setValue:[replaceDic objectForKey:@"remark"] forKey:@"remark"];
+                    
+                    [repDic setValue:[replaceDic objectForKey:@"1"] forKey:@"foodTYpe"];
+                }
+                [repDic setValue:wghTF.text forKey:@"defaultValue"];
+                
+                NSMutableDictionary *chDic = [NSMutableDictionary dictionary];
+                NSArray *chA = @[repDic];
+                [chDic setObject:chA forKey:@"foodTime3"];
+                [chDic setObject:dateTF.text forKey:@"addTime"];
+                [chDic setObject:@"3" forKey:@"code"];
+                [chDic setObject:[_infoDic objectForKey:@"tableName"] forKey:@"tableName"];
+                [changArray addObject:chDic];
+                
+            }
+
+        }
+        
+        
+        if (_indexRow < zaoArray.count) {
+            
+            NSMutableArray *zaoArr = [NSMutableArray array];
+            NSArray *zaomArr = [_infoDic objectForKey:@"foodTime0"];
+            if (zaomArr.count > 0) {
+                zaoArr = [zaomArr mutableCopy];
+            }
+            [zaoArr  removeObjectAtIndex:_indexRow];
+            [_infoDic setValue:zaoArr  forKey:@"foodTime0"];
+            
+            
+        }else if (_indexRow < zaoArray.count+zhongArray.count) {
+            
+            NSMutableArray *zaoArr = [NSMutableArray array];
+            NSArray *zaomArr = [_infoDic objectForKey:@"foodTime1"];
+            if (zaomArr.count > 0) {
+                zaoArr = [zaomArr mutableCopy];
+            }
+            [zaoArr removeObjectAtIndex:_indexRow-zaoArray.count];
+            [_infoDic setValue:zaoArr  forKey:@"foodTime1"];
+            
+        }else if (_indexRow < zaoArray.count+zhongArray.count+wanArray.count) {
+            NSMutableArray *zaoArr = [NSMutableArray array];
+            NSArray *zaomArr = [_infoDic objectForKey:@"foodTime2"];
+            if (zaomArr.count > 0) {
+                zaoArr = [zaomArr mutableCopy];
+            }
+            [zaoArr  removeObjectAtIndex:_indexRow-zaoArray.count-zhongArray.count];
+            [_infoDic setValue:zaoArr  forKey:@"foodTime2"];
+            
+            
+        }else if (_indexRow < zaoArray.count+zhongArray.count+wanArray.count+jiaArray.count) {
+            
+            NSMutableArray *zaoArr = [NSMutableArray array];
+            NSArray *zaomArr = [_infoDic objectForKey:@"foodTime3"];
+            if (zaomArr.count > 0) {
+                zaoArr = [zaomArr mutableCopy];
+            }
+            [zaoArr  removeObjectAtIndex:_indexRow-zaoArray.count-zhongArray.count-wanArray.count];
+            [_infoDic setValue:zaoArr  forKey:@"foodTime3"];
+        }
+        [changArray replaceObjectAtIndex:_indexSection withObject:_infoDic];
+
+
+        
+    }
     
     NSUserDefaults *defaultS =  [NSUserDefaults standardUserDefaults];
-    [defaultS setObject:changArray forKey:@"user_shanshiPDic"];
+    [defaultS setObject:changArray forKey:@"user_shanshiSDic"];
     [defaultS synchronize];
 
     [self.navigationController popViewControllerAnimated:YES];
@@ -139,14 +625,36 @@
         cell.nameLab.text = questionSArray[indexPath.row];
         cell.wTF.delegate = self;
         cell.wTF.tag = 1000 + indexPath.row;
+    
+    NSDictionary *dic = _infoDic;
+    NSMutableArray *dArray = [NSMutableArray array];
+    
+    NSArray *zaoArray = [dic objectForKey:@"foodTime0"];
+    for (NSDictionary *dic in zaoArray) {
+        [dArray addObject:dic];
+    }
+    NSArray *zhongArray = [dic objectForKey:@"foodTime1"];
+    for (NSDictionary *dic in zhongArray) {
+        [dArray addObject:dic];
+    }
+    NSArray *wanArray = [dic objectForKey:@"foodTime2"];
+    for (NSDictionary *dic in wanArray) {
+        [dArray addObject:dic];
+    }
+    NSArray *jiaArray = [dic objectForKey:@"foodTime3"];
+    for (NSDictionary *dic in jiaArray) {
+        [dArray addObject:dic];
+    }
+    
+
     switch (indexPath.row) {
         case 0:
            
-            cell.wTF.text = [_infoDic objectForKey:@"addTime"];
+            cell.wTF.text = [[dArray objectAtIndex:_indexRow] objectForKey:@"addTime"];
             break;
         case 1:{
         
-            NSInteger dinType = [[_infoDic objectForKey:@"addTime"] integerValue];
+            NSInteger dinType = [[[dArray objectAtIndex:_indexRow] objectForKey:@"foodTYpe"] integerValue];
             // 1早餐 2中 3晚 4加餐 5 修改
             switch (dinType) {
                 case 1:
@@ -177,11 +685,11 @@
             break;
         case 2:
             
-            cell.wTF.text = [_infoDic objectForKey:@"caption"];
+            cell.wTF.text = [[dArray objectAtIndex:_indexRow] objectForKey:@"caption"];
             break;
         case 3:
             
-            cell.wTF.text = [_infoDic objectForKey:@"defaultValue"];
+            cell.wTF.text = [[dArray objectAtIndex:_indexRow] objectForKey:@"defaultValue"];
             break;
 
         default:
@@ -224,11 +732,12 @@
         foodVc.block = ^(NSDictionary *dic){
             UITextField *textF = [self.view viewWithTag:1002];
             textF.text = [dic objectForKey:@"caption"];
+            replaceDic = dic;
         };
         [self.navigationController pushViewController:foodVc animated:YES];
         
     }else if (textField.tag == 1003){
-        MKPAlertView *alertView = [[MKPAlertView alloc]initWithTitle:@"待定" type:2 sureBtn:@"确认" cancleBtn:@"取消"];
+        MKPAlertView *alertView = [[MKPAlertView alloc]initWithTitle:@"重量" type:2 sureBtn:@"确认" cancleBtn:@"取消"];
         alertView.resultIndex = ^(NSString * str)
         {
             // 回调 -- 处理

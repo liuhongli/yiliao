@@ -91,7 +91,7 @@
             if (!cell) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIndetifer];
             }
-            cell.textLabel.text = @"常规检测";
+            cell.textLabel.text = @"调查详细";
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         }

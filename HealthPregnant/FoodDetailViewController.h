@@ -13,4 +13,5 @@
 
 @property(nonatomic,strong)NSMutableDictionary *infoDic;
 @property(nonatomic,assign)NSInteger indexRow;
+@property(nonatomic,assign)NSInteger indexSection;
 @end

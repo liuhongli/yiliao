@@ -20,7 +20,7 @@
     NSArray *questionSArray;
     NSArray *imageSeleArray;
     NSInteger selectInt;
-    NSArray *dinerArray;
+    NSMutableArray *dinerArray;
 }
 @property (retain, nonatomic)UITableView *myTabV;
 
@@ -33,6 +33,7 @@
     // Do any additional setup after loading the view.
     self.title = @"膳食调查";
     selectInt = 0;
+    dinerArray = [NSMutableArray array];
     titleArray = @[@"早餐",@"午餐",@"晚餐",@"加餐"];
     imageSArray = @[@"膳食_早餐icon_ct",@"膳食_午餐icon_ct",@"膳食_晚餐icon_ct",@"膳食_加餐icon_ct"];
     imageSeleArray = @[@"膳食_早餐icon_dj",@"膳食_午餐icon_dj",@"膳食_晚餐icon_dj",@"膳食_加餐icon_dj"];
@@ -42,7 +43,28 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
-    dinerArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_shanshiPDic"];
+    [dinerArray removeAllObjects];
+ NSMutableArray  *dinArray = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user_shanshiSDic"] mutableCopy];
+    if (dinArray.count > 0) {
+        NSDictionary *dic = dinArray[0];
+        NSArray *zaoArray = [dic objectForKey:@"foodTime0"];
+        for (NSDictionary *dic in zaoArray) {
+            [dinerArray addObject:dic];
+        }
+        NSArray *zhongArray = [dic objectForKey:@"foodTime1"];
+        for (NSDictionary *dic in zhongArray) {
+            [dinerArray addObject:dic];
+        }
+        NSArray *wanArray = [dic objectForKey:@"foodTime2"];
+        for (NSDictionary *dic in wanArray) {
+            [dinerArray addObject:dic];
+        }
+        NSArray *jiaArray = [dic objectForKey:@"foodTime3"];
+        for (NSDictionary *dic in jiaArray) {
+            [dinerArray addObject:dic];
+        }
+
+    }
     [_myTabV reloadData];
 }
 - (void)initTableView {
@@ -143,7 +165,7 @@
             
             NSDictionary *dic = dinerArray[indexPath.row - 1];
             
-            NSInteger dinType = [[dic objectForKey:@"addTime"] integerValue];
+            NSInteger dinType = [[dic objectForKey:@"foodTYpe"] integerValue];
            // 1早餐 2中 3晚 4加餐 5 修改
             switch (dinType) {
                 case 1:
@@ -208,10 +230,15 @@
             [self.navigationController pushViewController:vc animated:YES];
             
         }else{
+            NSMutableArray  *dinArray = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user_shanshiSDic"] mutableCopy];
+
             FoodDetailViewController *VC = [[FoodDetailViewController alloc] init];
-            NSDictionary *dic = dinerArray[indexPath.row -1];
+            NSDictionary *dic = dinArray[0];
+            
             VC.infoDic = [dic mutableCopy];
-            VC.indexRow = indexPath.row -1;
+            
+            VC.indexRow = indexPath.row;
+            VC.indexSection = 0;
             [self.navigationController pushViewController:VC animated:YES];
         }
     }
@@ -223,28 +250,28 @@
     switch (button.tag) {
         case 10:
         {
-            foodVC.comeType = 0;
+            foodVC.comeType = 1;
         }
             break;
             
         case 11:
         {
-            foodVC.comeType = 1;
+            foodVC.comeType = 2;
         }
             break;
         case 12:
         {
-            foodVC.comeType = 2;
+            foodVC.comeType = 3;
         }
             break;
 
             
         default:{
-            foodVC.comeType = 3;
+            foodVC.comeType = 4;
         }
             break;
     }
-    [_myTabV reloadData];
+
    [self.navigationController pushViewController:foodVC animated:YES];
 
 }

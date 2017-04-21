@@ -33,7 +33,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
-    dinerArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_shanshiPDic"];
+    dinerArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_shanshiSDic"];
     [_myTabV reloadData];
 }
 - (void)initTableView {
@@ -46,12 +46,44 @@
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    return 1;
-}
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return dinerArray.count;
 }
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    NSDictionary *dic = dinerArray[section];
+    NSMutableArray *dArray = [NSMutableArray array];
+  
+        NSArray *zaoArray = [dic objectForKey:@"foodTime0"];
+        for (NSDictionary *dic in zaoArray) {
+            [dArray addObject:dic];
+        }
+        NSArray *zhongArray = [dic objectForKey:@"foodTime1"];
+        for (NSDictionary *dic in zhongArray) {
+            [dArray addObject:dic];
+        }
+        NSArray *wanArray = [dic objectForKey:@"foodTime2"];
+        for (NSDictionary *dic in wanArray) {
+            [dArray addObject:dic];
+        }
+        NSArray *jiaArray = [dic objectForKey:@"foodTime3"];
+        for (NSDictionary *dic in jiaArray) {
+            [dArray addObject:dic];
+        }
+        
 
+    return dArray.count;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UILabel *labe = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 30)];
+    NSDictionary *dic = dinerArray[section];
+    labe.font = [UIFont fontWithName:@"PingFangSC-Light" size:12];
+    labe.textColor = [UIColor colorWithString:@"4A4A4A"];
+    labe.text = [NSString stringWithFormat:@"  %@",[dic objectForKey:@"addTime"]];
+    return labe;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 40;
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     
@@ -62,11 +94,32 @@
                 
                 cell = [[NSBundle mainBundle] loadNibNamed:@"EatTableViewCell" owner:self options:nil].lastObject;
             }
+    
+    
+            NSDictionary *dicS = dinerArray[indexPath.section];
+            NSMutableArray *dArray = [NSMutableArray array];
             
-            NSDictionary *dic = dinerArray[indexPath.row];
-            
-            NSInteger dinType = [[dic objectForKey:@"addTime"] integerValue];
-            // 1早餐 2中 3晚 4加餐 5 修改
+            NSArray *zaoArray = [dicS objectForKey:@"foodTime0"];
+            for (NSDictionary *dic in zaoArray) {
+                [dArray addObject:dic];
+            }
+            NSArray *zhongArray = [dicS objectForKey:@"foodTime1"];
+            for (NSDictionary *dic in zhongArray) {
+                [dArray addObject:dic];
+            }
+            NSArray *wanArray = [dicS objectForKey:@"foodTime2"];
+            for (NSDictionary *dic in wanArray) {
+                [dArray addObject:dic];
+            }
+            NSArray *jiaArray = [dicS objectForKey:@"foodTime3"];
+            for (NSDictionary *dic in jiaArray) {
+                [dArray addObject:dic];
+            }
+
+            NSDictionary *indexDic = dArray[indexPath.row];
+    
+            NSInteger dinType = [[indexDic objectForKey:@"foodTYpe"] integerValue];
+            // 1早餐 2中 3晚 4加餐
             switch (dinType) {
                 case 1:
                 {
@@ -97,8 +150,8 @@
                 default:
                     break;
             }
-            cell.dinerEat.text = [dic objectForKey:@"caption"];
-            cell.dinerWht.text = [dic objectForKey:@"defaultValue"];
+            cell.dinerEat.text = [indexDic objectForKey:@"caption"];
+            cell.dinerWht.text = [NSString stringWithFormat:@"%@g",[indexDic objectForKey:@"defaultValue"]];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             return cell;
@@ -106,10 +159,6 @@
     
 
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 1;
-}
-
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 10;
 }
@@ -122,12 +171,12 @@
     
     FoodDetailViewController *VC = [[FoodDetailViewController alloc] init];
     
-    NSDictionary *dic = dinerArray[indexPath.row];
+    NSDictionary *dic = dinerArray[indexPath.section];
     
     VC.infoDic = [dic mutableCopy];
     
     VC.indexRow = indexPath.row;
-    
+    VC.indexSection = indexPath.section;
     [self.navigationController pushViewController:VC animated:YES];
     
     
