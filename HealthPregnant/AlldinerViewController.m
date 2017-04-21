@@ -28,6 +28,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"膳食调查";
+    self.view.backgroundColor = [UIColor whiteColor];
     [self initTableView];
 }
 
@@ -41,6 +42,7 @@
     _myTabV = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) style:UITableViewStyleGrouped];
     _myTabV.delegate = self;
     _myTabV.dataSource = self;
+    _myTabV.tableFooterView = [[UIView alloc] init];
     [self.view addSubview:_myTabV];
     
 }
@@ -82,6 +84,30 @@
     return labe;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    
+    NSDictionary *dicS = dinerArray[section];
+    NSMutableArray *dArray = [NSMutableArray array];
+    
+    NSArray *zaoArray = [dicS objectForKey:@"foodTime0"];
+    for (NSDictionary *dic in zaoArray) {
+        [dArray addObject:dic];
+    }
+    NSArray *zhongArray = [dicS objectForKey:@"foodTime1"];
+    for (NSDictionary *dic in zhongArray) {
+        [dArray addObject:dic];
+    }
+    NSArray *wanArray = [dicS objectForKey:@"foodTime2"];
+    for (NSDictionary *dic in wanArray) {
+        [dArray addObject:dic];
+    }
+    NSArray *jiaArray = [dicS objectForKey:@"foodTime3"];
+    for (NSDictionary *dic in jiaArray) {
+        [dArray addObject:dic];
+    }
+    
+    if (dArray.count < 1) {
+        return 0.01;
+    }
     return 40;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -128,7 +154,7 @@
                     break;
                 case 2:
                 {
-                    cell.dinerT.text = @"中餐";
+                    cell.dinerT.text = @"午餐";
                 }
                     break;
                 case 3:
@@ -159,11 +185,31 @@
     
 
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 10;
-}
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSDictionary *dicS = dinerArray[indexPath.section];
+    NSMutableArray *dArray = [NSMutableArray array];
     
+    NSArray *zaoArray = [dicS objectForKey:@"foodTime0"];
+    for (NSDictionary *dic in zaoArray) {
+        [dArray addObject:dic];
+    }
+    NSArray *zhongArray = [dicS objectForKey:@"foodTime1"];
+    for (NSDictionary *dic in zhongArray) {
+        [dArray addObject:dic];
+    }
+    NSArray *wanArray = [dicS objectForKey:@"foodTime2"];
+    for (NSDictionary *dic in wanArray) {
+        [dArray addObject:dic];
+    }
+    NSArray *jiaArray = [dicS objectForKey:@"foodTime3"];
+    for (NSDictionary *dic in jiaArray) {
+        [dArray addObject:dic];
+    }
+    
+    if (dArray.count < 1) {
+        return 0.01;
+    }
+
     return 60;
 }
 

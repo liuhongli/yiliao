@@ -175,7 +175,7 @@
                     break;
                 case 2:
                 {
-                    cell.dinerT.text = @"中餐";
+                    cell.dinerT.text = @"午餐";
                 }
                     break;
                 case 3:
@@ -237,7 +237,7 @@
             
             VC.infoDic = [dic mutableCopy];
             
-            VC.indexRow = indexPath.row;
+            VC.indexRow = indexPath.row-1;
             VC.indexSection = 0;
             [self.navigationController pushViewController:VC animated:YES];
         }

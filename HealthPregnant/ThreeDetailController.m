@@ -347,33 +347,30 @@
     NSMutableArray *codeArr = [NSMutableArray array];
     if (_comeType == 0) {
         NSArray *a =[defaults objectForKey:KSleepRecordArr];
-        codeArr = [a mutableCopy];
+        if (a.count > 0) {
+            codeArr = [a mutableCopy];
+        }
+        
         NSMutableDictionary *subDic = [[NSMutableDictionary alloc]initWithDictionary:[children objectAtIndex:row]];
         [subDic setObject:@"1" forKey:@"defaultValue"];
         [children replaceObjectAtIndex:row withObject:subDic];
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        NSDate *theDate = [NSDate date];
-        dateFormatter.dateFormat = @"YYYY-MM-dd ";
-        NSString *dataStr =  [dateFormatter stringFromDate:theDate];
-        [dataDic setObject:children forKey:@"children"];
-        [dataDic setObject:dataStr forKey:@"addTime"];
+         [dataDic setObject:children forKey:@"children"];
+        [dataDic setObject: _dataStr forKey:@"addTime"];
         [dataDic setObject:@"1" forKey:@"code"];
         [codeArr insertObject:dataDic atIndex:0];
         [defaults setObject:codeArr forKey:KSleepRecordArr];
         
     }else if (_comeType == 1){
         NSArray *a = [defaults objectForKey:KJobRecordArr];
-        codeArr = [a mutableCopy];
+        if (a.count > 0) {
+            codeArr = [a mutableCopy];
+        }
         captionS = [NSString stringWithFormat:@"%ld小时",row +1];
         NSMutableDictionary *subDic = [[NSMutableDictionary alloc]initWithDictionary:[children objectAtIndex:0]];
         [subDic setObject:captionS forKey:@"defaultValue"];
         [children replaceObjectAtIndex:0 withObject:subDic];
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        NSDate *theDate = [NSDate date];
-        dateFormatter.dateFormat = @"YYYY-MM-dd ";
-        NSString *dataStr =  [dateFormatter stringFromDate:theDate];
-        [dataDic setObject:children forKey:@"children"];
-        [dataDic setObject:dataStr forKey:@"addTime"];
+         [dataDic setObject:children forKey:@"children"];
+        [dataDic setObject: _dataStr forKey:@"addTime"];
         [dataDic setObject:@"1" forKey:@"code"];
         [codeArr insertObject:dataDic atIndex:0];
         [defaults setObject:codeArr forKey:KJobRecordArr];
@@ -381,8 +378,9 @@
         
     }else if (_comeType == 2){
         NSArray *a = [defaults objectForKey:KSportRecordArr];
-        codeArr = [a mutableCopy];
-        
+        if (a.count > 0) {
+            codeArr = [a mutableCopy];
+        }
             NSArray *array = [dataDic objectForKey:@"children"];
            NSString *caption1 = [array[selFInt] objectForKey:@"caption"];
             
@@ -394,12 +392,8 @@
         NSMutableDictionary *subDic = [[NSMutableDictionary alloc]initWithDictionary:[children objectAtIndex:selFInt]];
         [subDic setObject:caStr forKey:@"defaultValue"];
         [children replaceObjectAtIndex:selFInt withObject:subDic];
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        NSDate *theDate = [NSDate date];
-        dateFormatter.dateFormat = @"YYYY-MM-dd ";
-        NSString *dataStr =  [dateFormatter stringFromDate:theDate];
-        [dataDic setObject:children forKey:@"children"];
-        [dataDic setObject:dataStr forKey:@"addTime"];
+         [dataDic setObject:children forKey:@"children"];
+        [dataDic setObject: _dataStr forKey:@"addTime"];
         [dataDic setObject:@"1" forKey:@"code"];
         [codeArr insertObject:dataDic atIndex:0];
 

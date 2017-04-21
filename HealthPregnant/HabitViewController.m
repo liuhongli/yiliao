@@ -155,7 +155,7 @@
     NSDate *theDate = [NSDate date];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat = @"YYYY-MM-dd ";
+    dateFormatter.dateFormat =@"YYYY-MM-dd";
     
     
     NSArray *parArr =@[@{@"field":paraDic,@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"inspectionOrder":@"1",@"recordTime":[dateFormatter stringFromDate:theDate],@"sign":@"1",@"tableName":tableName}];
@@ -443,7 +443,7 @@
     [children replaceObjectAtIndex:index withObject:subDic];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     NSDate *theDate = [NSDate date];
-    dateFormatter.dateFormat = @"YYYY-MM-dd ";
+    dateFormatter.dateFormat =@"YYYY-MM-dd";
     NSString *dataStr =  [dateFormatter stringFromDate:theDate];
     [chageDic setObject:children forKey:@"children"];
     [chageDic setObject:dataStr forKey:@"addTime"];
@@ -515,7 +515,7 @@
         [chageDic setObject:children forKey:@"children"];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         NSDate *theDate = [NSDate date];
-        dateFormatter.dateFormat = @"YYYY-MM-dd ";
+        dateFormatter.dateFormat =@"YYYY-MM-dd";
         NSString *dataStr =  [dateFormatter stringFromDate:theDate];
         [chageDic setObject:children forKey:@"children"];
         [chageDic setObject:dataStr forKey:@"addTime"];

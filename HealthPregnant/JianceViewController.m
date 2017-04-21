@@ -353,7 +353,7 @@
     NSDate *theDate = [NSDate date];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat = @"YYYY-MM-dd ";
+    dateFormatter.dateFormat =@"YYYY-MM-dd";
     NSDictionary *dic = USERINFO;
     if (!dic) {
         [Alert showWithTitle:@"请重新登录"];
@@ -412,7 +412,7 @@
         [dataDic setObject:children forKey:@"children"];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         NSDate *theDate = [NSDate date];
-        dateFormatter.dateFormat = @"YYYY-MM-dd ";
+        dateFormatter.dateFormat =@"YYYY-MM-dd";
         NSString *dataStr =  [dateFormatter stringFromDate:theDate];
         [dataDic setObject:children forKey:@"children"];
         [dataDic setObject:dataStr forKey:@"addTime"];
@@ -470,7 +470,7 @@
         [dataDic setObject:children forKey:@"children"];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         NSDate *theDate = [NSDate date];
-        dateFormatter.dateFormat = @"YYYY-MM-dd ";
+        dateFormatter.dateFormat =@"YYYY-MM-dd";
         NSString *dataStr =  [dateFormatter stringFromDate:theDate];
         [dataDic setObject:children forKey:@"children"];
         [dataDic setObject:dataStr forKey:@"addTime"];
@@ -556,7 +556,7 @@
     [dataDic setObject:children forKey:@"children"];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     NSDate *theDate = [NSDate date];
-    dateFormatter.dateFormat = @"YYYY-MM-dd ";
+    dateFormatter.dateFormat =@"YYYY-MM-dd";
     NSString *dataStr =  [dateFormatter stringFromDate:theDate];
     [dataDic setObject:children forKey:@"children"];
     [dataDic setObject:dataStr forKey:@"addTime"];

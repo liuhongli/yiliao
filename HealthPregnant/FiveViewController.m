@@ -128,7 +128,7 @@
                 break;
             case 3:
             {
-                if (yingshiPDic == nil) {
+                if (yingshiSDic == nil) {
                     imageV.image = [UIImage imageNamed:imageSArray[i]];
    
                 }else{
@@ -161,7 +161,7 @@
                 break;
             case 6:
             {
-                if (yundongSDic == nil) {
+                if (yjobSDic == nil) {
                     imageV.image = [UIImage imageNamed:imageSArray[i]];
     
                 }else{
@@ -201,7 +201,7 @@
     NSDate *theDate = [NSDate date];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat = @"YYYY-MM-dd ";
+    dateFormatter.dateFormat = @"YYYY-MM-dd";
     NSString *phoneStr = [dic objectForKey:@"mobilePhone"];
     NSString *dateStr = [dateFormatter stringFromDate:theDate];
     NSDictionary *paraDic = @{@"dietarySurveyList":@[@{@"field":@{@"StapleFoodRoundGrainedRice":@"8"},@"foodTime":@"0",@"globalRecordNr":phoneStr,@"inspectionOrder":@"1",@"recordTime":dateStr,@"sign":@"1",@"tableName":@"StapleFoodInspectionO"},@{@"field":@{@"StapleFoodWheatFlourEmbryoIntake":@"2"},@"foodTime":@"3",@"globalRecordNr":phoneStr,@"inspectionOrder":@"1",@"recordTime":dateStr,@"sign":@"1",@"tableName":@"StapleFoodInspectionO"}],@"generalSurveyList":@[@{@"field":@{@"ImmuneOralUlcersTag":@"1",@"SkinRoughSkinTag":@"1"},@"globalRecordNr":phoneStr,@"inspectionOrder":@"1",@"recordTime":dateStr,@"sign":@"1",@"tableName":@"StatementSymptomRecord"},@{@"field":@{@"BloodHypotensionTag":@"1"},@"globalRecordNr":phoneStr,@"inspectionOrder":@"1",@"recordTime":dateStr,@"sign":@"1",@"tableName":@"DiseaseHistoryRecord"},@{@"field":@{@"FundalHeight":@"49",@"HighBloodPressure":@"1 ",@"LowBloodPressure":@"3"},@"globalRecordNr":phoneStr,@"inspectionOrder":@"1",@"recordTime":dateStr,@"sign":@"1",@"tableName":@"PhysiqueCheckRecord"},@{@"field":@{@"LongTimeNoStaple":@"1"},@"globalRecordNr":phoneStr,@"inspectionOrder":@"1",@"recordTime":dateStr,@"sign":@"1",@"tableName":@"DietHabitInspection"},@{@"field":@{@"SmokeHabit":@"1",@"NourishmentYesOrNo":@"1",@"CoffeeHabit":@"3",@"StayUpAllNight":@"1",@"WineHabit":@"1"},@"globalRecordNr":phoneStr,@"inspectionOrder":@"1",@"recordTime":dateStr,@"sign":@"1",@"tableName":@"LifeHabbitInspection"}],@"globalRecordNr":phoneStr,@"recordTime":dateStr,@"sportSurveyList":@[@{@"field":@{@"ProfessionTime":@"4",@"Agriculture":@"1",@"stepCountExceed6000":@"1",@"SleepExceed10Hour":@"1"},@"globalRecordNr":phoneStr,@"inspectionOrder":@"1",@"recordTime":dateStr,@"sign":@"1",@"tableName":@"SportConditionInspectionO"}]};
@@ -300,10 +300,10 @@
 - (void)sendmess{
 
     //去数据进行数据处理
-    NSLog(@"%@,%@,%@,%@,%@,%@,%@",zhusuSDic,jiwangSDic,shiyanPDic,yingshiPDic,shenghuoPDic,shanshiPDic,yundongPDic);
+/*    NSLog(@"%@,%@,%@,%@,%@,%@,%@",zhusuSDic,jiwangSDic,shiyanPDic,yingshiPDic,shenghuoPDic,shanshiPDic,yundongPDic);
     NSMutableDictionary *mudic = [NSMutableDictionary dictionary];
     NSLog(@"%@",zhusuSDic);
- NSDictionary *dic =  [self listType:2 dataArray:@[zhusuSDic,zhusuSDic]];
+ NSDictionary *dic =  [self  dataArray:@[zhusuSDic,zhusuSDic]];
     NSLog(@"%@",dic);
     NSMutableArray *arr = [NSMutableArray array];
     if (zhusuPDic != nil) {
@@ -323,16 +323,16 @@
     if (shanshiPDic != nil) {
     }
     if (yundongPDic != nil) {
-    }
+    }*/
 
     //转json
     NSError *error;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:arr options:NSJSONWritingPrettyPrinted error:&error];//此处data参数是我上面提到的key为"data"的数组
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:nil options:NSJSONWritingPrettyPrinted error:&error];//此处data参数是我上面提到的key为"data"的数组
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding] ;
 
     NSDictionary *para1 = @{@"jsonStr":jsonString};
 
-    
+ 
     
     
     //KEY=jsonStr; VALUE={"dietarySurveyList":[{"field":{"StapleFoodRoundGrainedRice":"8"},"foodTime":"0","globalRecordNr":"15900001111","inspectionOrder":"1","recordTime":"2017-01-16","sign":"1","tableName":"StapleFoodInspectionO"},{"field":{"StapleFoodWheatFlourEmbryoIntake":"2"},"foodTime":"3","globalRecordNr":"15900001111","inspectionOrder":"1","recordTime":"2017-01-16","sign":"1","tableName":"StapleFoodInspectionO"}],"generalSurveyList":[{"field":{"ImmuneOralUlcersTag":"1","SkinRoughSkinTag":"1"},"globalRecordNr":"15900001111","inspectionOrder":"1","recordTime":"2016-11-22","sign":"1","tableName":"StatementSymptomRecord"},{"field":{"BloodHypotensionTag":"1"},"globalRecordNr":"15900001111","inspectionOrder":"1","recordTime":"2016-11-22","sign":"1","tableName":"DiseaseHistoryRecord"},{"field":{"FundalHeight":"49","HighBloodPressure":"1 ","LowBloodPressure":" 3 "},"globalRecordNr":"15900001111","inspectionOrder":"1","recordTime":"2016-11-22","sign":"1","tableName":"PhysiqueCheckRecord"},{"field":{"LongTimeNoStaple":"1"},"globalRecordNr":"15900001111","inspectionOrder":"1","recordTime":"2016-11-22","sign":"1","tableName":"DietHabitInspection"},{"field":{"SmokeHabit":"1","NourishmentYesOrNo":"1","CoffeeHabit":"3","StayUpAllNight":"1","WineHabit":"1"},"globalRecordNr":"15900001111","inspectionOrder":"1","recordTime":"2016-11-22","sign":"1","tableName":"LifeHabbitInspection"}],"globalRecordNr":"15900001111","recordTime":"2016-11-22","sportSurveyList":[{"field":{"ProfessionTime":"4","Agriculture":"1","stepCountExceed6000":"1","SleepExceed10Hour":"1"},"globalRecordNr":"15900001111","inspectionOrder":"1","recordTime":"2017-01-16","sign":"1","tableName":"SportConditionInspectionO"}]}

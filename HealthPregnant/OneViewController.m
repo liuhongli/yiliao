@@ -316,7 +316,7 @@
     NSLog(@"%@",[theDate descriptionWithLocale:[NSLocale currentLocale]]);
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat = @"YYYY-MM-dd ";
+    dateFormatter.dateFormat =@"YYYY-MM-dd";
     NSLog(@"%@",[dateFormatter stringFromDate:theDate]);
     
     
@@ -333,7 +333,7 @@
     NSDate *theDate = datePickers.date;
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat = @"YYYY-MM-dd ";
+    dateFormatter.dateFormat =@"YYYY-MM-dd";
     
     //    UITextField *textF = [self.view viewWithTag:1000];
     //    textF.text = [dateFormatter stringFromDate:theDate];

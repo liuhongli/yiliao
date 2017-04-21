@@ -42,8 +42,13 @@
     imageSArray = @[@"首页_常规调查icon_dj",@"首页_运动调查icon_dj",@"首页_膳食调查icon_dj",@"首页_个人信息icon_dj",@"首页_分析结果icon_dj"];
     
     jobSel = 0;
+    NSDate *theDate = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"YYYY-MM-dd";
+    dateStr =[dateFormatter stringFromDate:theDate];
+    jobStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"MYJOBSTR"];
+
     [self initTableView];
-    
     NSArray *result = [[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] objectForKey:@"result"];
     dataDic = result[15];
 
@@ -79,6 +84,16 @@
         }
         cell.nameLab.text = questionSArray[indexPath.row];
         cell.wTF.tag = 1000+ indexPath.row;
+        if (indexPath.row == 0) {
+            if (dateStr.length > 0) {
+                cell.wTF.text = dateStr;
+            }
+        }
+        if (indexPath.row == 1) {
+            if (jobStr.length > 0) {
+                cell.wTF.text = jobStr;
+            }
+        }
         cell.wTF.delegate = self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
@@ -171,7 +186,7 @@
     }
 
     ThreeDetailController *detailVC = [[ThreeDetailController alloc] init];
-    detailVC.dateStr = dateStr;
+    detailVC.dataStr = dateStr;
     detailVC.job = jobStr;
     
     switch (button.tag) {
@@ -283,7 +298,7 @@
     NSLog(@"%@",[theDate descriptionWithLocale:[NSLocale currentLocale]]);
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat = @"YYYY-MM-dd ";
+    dateFormatter.dateFormat =@"YYYY-MM-dd";
     NSLog(@"%@",[dateFormatter stringFromDate:theDate]);
 
     
@@ -300,7 +315,7 @@
     NSDate *theDate = datePickers.date;
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat = @"YYYY-MM-dd ";
+    dateFormatter.dateFormat =@"YYYY-MM-dd";
 
 //    UITextField *textF = [self.view viewWithTag:1000];
 //    textF.text = [dateFormatter stringFromDate:theDate];
@@ -369,7 +384,17 @@
     
     UITextField *textF = [self.view viewWithTag:1001];
     textF.text = captionS;
-
+    NSMutableDictionary *changDic = [dataDic mutableCopy];
+    NSMutableArray *chageArr = [[changDic objectForKey:@"children"] mutableCopy];
+    NSMutableDictionary *indexDic = [[chageArr objectAtIndex:jobSel] mutableCopy];
+    [indexDic setObject:@"1" forKey:@"defaultValue"];
+    [chageArr replaceObjectAtIndex:jobSel withObject:indexDic];
+    [changDic setObject:chageArr forKey:@"children"];
+    [changDic setObject:dateStr forKey:@"addTime"];
+    NSUserDefaults *staD = [NSUserDefaults standardUserDefaults];
+    [staD setObject:changDic forKey:@"user_yjobSDic"];
+    [staD setObject:captionS forKey:@"MYJOBSTR"];
+    [staD synchronize];
     j_actionV.hidden = YES;
     jobStr  = captionS;
 

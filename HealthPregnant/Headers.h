@@ -27,27 +27,27 @@
 #define kChineseKeyboardHeight 252 //中文键盘输入高度
 #define baseColor [UIColor colorWithRed:103.0/255 green:0.0/255 blue:131.0/255 alpha:1]
 
-//1主诉病症  2既往病史 3实验室检测 4饮食习惯 5生活习惯 6膳食调查 7运动调查
+//1主诉病症  2既往病史 3实验室检测 4饮食习惯 5生活习惯 6膳食调查 7运动调查(职业、睡眠时间、工作时间、运动时间)
 #define zhusuSDic    [[NSUserDefaults standardUserDefaults] objectForKey:@"user_zhusuSDic"]
-#define zhusuPDic    [[NSUserDefaults standardUserDefaults] objectForKey:@"user_zhusuPDic"]
 
 #define jiwangSDic   [[NSUserDefaults standardUserDefaults] objectForKey:@"user_jiwangSDic"]
-#define jiwangPDic   [[NSUserDefaults standardUserDefaults] objectForKey:@"user_jiwangPDic"]
 
 #define shiyanSDic   [[NSUserDefaults standardUserDefaults] objectForKey:@"user_shiyanSDic"]
-#define shiyanPDic   [[NSUserDefaults standardUserDefaults] objectForKey:@"user_shiyanPDic"]
 
 #define yingshiSDic  [[NSUserDefaults standardUserDefaults] objectForKey:@"user_yingshiSDic"]
-#define yingshiPDic  [[NSUserDefaults standardUserDefaults] objectForKey:@"user_yingshiPDic"]
 
 #define shenghuoSDic [[NSUserDefaults standardUserDefaults] objectForKey:@"user_shenghuoSDic"]
-#define shenghuoPDic [[NSUserDefaults standardUserDefaults] objectForKey:@"user_shenghuoPDic"]
 
 #define shanshiSDic  [[NSUserDefaults standardUserDefaults] objectForKey:@"user_shanshiSDic"]
-#define shanshiPDic  [[NSUserDefaults standardUserDefaults] objectForKey:@"user_shanshiPDic"]
 
-#define yundongSDic  [[NSUserDefaults standardUserDefaults] objectForKey:@"user_yundongSDic"]
-#define yundongPDic  [[NSUserDefaults standardUserDefaults] objectForKey:@"user_yundongPDic"]
+#define yjobSDic  [[NSUserDefaults standardUserDefaults] objectForKey:@"user_yjobSDic"]
+
+#define ysleepSDic  [[NSUserDefaults standardUserDefaults] objectForKey:@"KSleepRecordArr"]
+
+#define yjsleepSDic  [[NSUserDefaults standardUserDefaults] objectForKey:@"KJobRecordArr"]
+
+#define yesleepSDic  [[NSUserDefaults standardUserDefaults] objectForKey:@"KSportRecordArr"]
+
 
 
 

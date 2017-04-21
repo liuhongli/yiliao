@@ -44,7 +44,7 @@
     self.title = @"膳食详情";
     replaceDic = [NSDictionary dictionary];
     questionSArray = @[@"日期",@"餐食",@"食物",@"重量"];
-    dinArray = @[@"早餐",@"中餐",@"晚餐",@"加餐"];
+    dinArray = @[@"早餐",@"午餐",@"晚餐",@"加餐"];
     jobStr = @"早餐";
     [self initTableView];
 }
@@ -73,7 +73,7 @@
 
 - (void)deleteInfo{
     
-    NSMutableArray *changArray = [shanshiPDic mutableCopy];
+    NSMutableArray *changArray = [shanshiSDic mutableCopy];
     [changArray removeObjectAtIndex:_indexRow];
     
     NSUserDefaults *defaultS =  [NSUserDefaults standardUserDefaults];
@@ -93,7 +93,7 @@
     NSString *nowType;
     if ([typeTF.text isEqualToString:@"早餐"]) {
         nowType = @"1";
-    }else if ([typeTF.text isEqualToString:@"中餐"]) {
+    }else if ([typeTF.text isEqualToString:@"午餐"]) {
         
         nowType = @"2";
     }else if ([typeTF.text isEqualToString:@"晚餐"]) {
@@ -227,13 +227,14 @@
                     [repDic setValue:[replaceDic objectForKey:@"fieldName"] forKey:@"fieldName"];
                     [repDic setValue:[replaceDic objectForKey:@"remark"] forKey:@"remark"];
                     
-                    [repDic setValue:[replaceDic objectForKey:@"1"] forKey:@"foodTYpe"];
                 }
+                [repDic setObject:nowType forKey:@"foodTYpe"];
+
                 [repDic setValue:wghTF.text forKey:@"defaultValue"];
                 [zaoArr  addObject:repDic];
                 [_infoDic setValue:zaoArr  forKey:@"foodTime0"];
 
-            }else if ([typeTF.text isEqualToString:@"中餐"]) {
+            }else if ([typeTF.text isEqualToString:@"午餐"]) {
                 
                 NSMutableArray *zaoArr = [NSMutableArray array];
                 NSArray *zaomArr = [_infoDic objectForKey:@"foodTime1"];
@@ -248,9 +249,10 @@
                     [repDic setValue:[replaceDic objectForKey:@"fieldName"] forKey:@"fieldName"];
                     [repDic setValue:[replaceDic objectForKey:@"remark"] forKey:@"remark"];
                     
-                    [repDic setValue:[replaceDic objectForKey:@"2"] forKey:@"foodTYpe"];
 
                 }
+                [repDic setObject:nowType forKey:@"foodTYpe"];
+
                 [repDic setValue:wghTF.text forKey:@"defaultValue"];
                 [zaoArr  addObject:repDic];
                 [_infoDic setValue:zaoArr  forKey:@"foodTime1"];
@@ -270,9 +272,10 @@
                     
                     [repDic setValue:[replaceDic objectForKey:@"fieldName"] forKey:@"fieldName"];
                     [repDic setValue:[replaceDic objectForKey:@"remark"] forKey:@"remark"];
-                    [repDic setObject:@"3" forKey:@"foodTYpe"];
                     
                 }
+                [repDic setObject:nowType forKey:@"foodTYpe"];
+
                 [repDic setValue:wghTF.text forKey:@"defaultValue"];
                 [zaoArr  addObject:repDic];
                 [_infoDic setValue:zaoArr  forKey:@"foodTime2"];
@@ -292,10 +295,11 @@
                     
                     [repDic setValue:[replaceDic objectForKey:@"fieldName"] forKey:@"fieldName"];
                     [repDic setValue:[replaceDic objectForKey:@"remark"] forKey:@"remark"];
-                    [repDic setObject:@"4" forKey:@"foodTYpe"];
 
                     
                 }
+                [repDic setObject:nowType forKey:@"foodTYpe"];
+
                 [repDic setValue:wghTF.text forKey:@"defaultValue"];
                 [zaoArr  addObject:repDic];
                 [_infoDic setValue:zaoArr  forKey:@"foodTime3"];
@@ -360,7 +364,7 @@
                 sameNum = i;
             }
         }
-        if (sameNum > 0) {
+        if (sameNum > -1) {
             
             
             NSMutableDictionary *repDic = [[dArray objectAtIndex:_indexRow] mutableCopy];
@@ -374,8 +378,9 @@
                     [repDic setValue:[replaceDic objectForKey:@"fieldName"] forKey:@"fieldName"];
                     [repDic setValue:[replaceDic objectForKey:@"remark"] forKey:@"remark"];
                     
-                    [repDic setValue:[replaceDic objectForKey:@"1"] forKey:@"foodTYpe"];
                 }
+                [repDic setObject:nowType forKey:@"foodTYpe"];
+
                 [repDic setValue:wghTF.text forKey:@"defaultValue"];
                 
                 NSMutableDictionary *chDic = [[changArray objectAtIndex:sameNum] mutableCopy];
@@ -387,7 +392,7 @@
                 [chmA addObject:repDic];
                 [chDic setObject:chmA forKey:@"foodTime0"];
                 [changArray replaceObjectAtIndex:sameNum withObject:chDic];
-            }else if ([typeTF.text isEqualToString:@"中餐"]) {
+            }else if ([typeTF.text isEqualToString:@"午餐"]) {
                 
                 if (replaceDic.allKeys.count > 0) {
                     [repDic setValue:[replaceDic objectForKey:@"caption"] forKey:@"caption"];
@@ -396,8 +401,10 @@
                     [repDic setValue:[replaceDic objectForKey:@"fieldName"] forKey:@"fieldName"];
                     [repDic setValue:[replaceDic objectForKey:@"remark"] forKey:@"remark"];
                     
-                    [repDic setValue:[replaceDic objectForKey:@"1"] forKey:@"foodTYpe"];
+                    
                 }
+                [repDic setObject:nowType forKey:@"foodTYpe"];
+
                 [repDic setValue:wghTF.text forKey:@"defaultValue"];
                 
                 NSMutableDictionary *chDic = [[changArray objectAtIndex:sameNum] mutableCopy];
@@ -420,8 +427,9 @@
                     [repDic setValue:[replaceDic objectForKey:@"fieldName"] forKey:@"fieldName"];
                     [repDic setValue:[replaceDic objectForKey:@"remark"] forKey:@"remark"];
                     
-                    [repDic setValue:[replaceDic objectForKey:@"1"] forKey:@"foodTYpe"];
                 }
+                [repDic setObject:nowType forKey:@"foodTYpe"];
+
                 [repDic setValue:wghTF.text forKey:@"defaultValue"];
                 
                 NSMutableDictionary *chDic = [[changArray objectAtIndex:sameNum] mutableCopy];
@@ -442,8 +450,9 @@
                     [repDic setValue:[replaceDic objectForKey:@"fieldName"] forKey:@"fieldName"];
                     [repDic setValue:[replaceDic objectForKey:@"remark"] forKey:@"remark"];
                     
-                    [repDic setValue:[replaceDic objectForKey:@"1"] forKey:@"foodTYpe"];
                 }
+                [repDic setObject:nowType forKey:@"foodTYpe"];
+
                 [repDic setValue:wghTF.text forKey:@"defaultValue"];
                 
                 NSMutableDictionary *chDic = [[changArray objectAtIndex:sameNum] mutableCopy];
@@ -471,8 +480,10 @@
                     [repDic setValue:[replaceDic objectForKey:@"fieldName"] forKey:@"fieldName"];
                     [repDic setValue:[replaceDic objectForKey:@"remark"] forKey:@"remark"];
                     
-                    [repDic setValue:[replaceDic objectForKey:@"1"] forKey:@"foodTYpe"];
+                    
                 }
+                [repDic setObject:nowType forKey:@"foodTYpe"];
+
                 [repDic setValue:wghTF.text forKey:@"defaultValue"];
                 
                 NSMutableDictionary *chDic = [NSMutableDictionary dictionary];
@@ -482,7 +493,7 @@
                 [chDic setObject:@"3" forKey:@"code"];
                 [chDic setObject:[_infoDic objectForKey:@"tableName"] forKey:@"tableName"];
                 [changArray addObject:chDic];
-            }else if ([typeTF.text isEqualToString:@"中餐"]) {
+            }else if ([typeTF.text isEqualToString:@"午餐"]) {
                 
                 if (replaceDic.allKeys.count > 0) {
                     [repDic setValue:[replaceDic objectForKey:@"caption"] forKey:@"caption"];
@@ -491,8 +502,9 @@
                     [repDic setValue:[replaceDic objectForKey:@"fieldName"] forKey:@"fieldName"];
                     [repDic setValue:[replaceDic objectForKey:@"remark"] forKey:@"remark"];
                     
-                    [repDic setValue:[replaceDic objectForKey:@"1"] forKey:@"foodTYpe"];
                 }
+                [repDic setObject:nowType forKey:@"foodTYpe"];
+
                 [repDic setValue:wghTF.text forKey:@"defaultValue"];
                 
                 NSMutableDictionary *chDic = [NSMutableDictionary dictionary];
@@ -513,8 +525,9 @@
                     [repDic setValue:[replaceDic objectForKey:@"fieldName"] forKey:@"fieldName"];
                     [repDic setValue:[replaceDic objectForKey:@"remark"] forKey:@"remark"];
                     
-                    [repDic setValue:[replaceDic objectForKey:@"1"] forKey:@"foodTYpe"];
                 }
+                [repDic setObject:nowType forKey:@"foodTYpe"];
+
                 [repDic setValue:wghTF.text forKey:@"defaultValue"];
                 
                 NSMutableDictionary *chDic = [NSMutableDictionary dictionary];
@@ -533,8 +546,9 @@
                     [repDic setValue:[replaceDic objectForKey:@"fieldName"] forKey:@"fieldName"];
                     [repDic setValue:[replaceDic objectForKey:@"remark"] forKey:@"remark"];
                     
-                    [repDic setValue:[replaceDic objectForKey:@"1"] forKey:@"foodTYpe"];
                 }
+                [repDic setObject:nowType forKey:@"foodTYpe"];
+
                 [repDic setValue:wghTF.text forKey:@"defaultValue"];
                 
                 NSMutableDictionary *chDic = [NSMutableDictionary dictionary];
@@ -596,7 +610,8 @@
 
         
     }
-    
+    NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"addTime" ascending:NO]];
+    [changArray sortUsingDescriptors:sortDescriptors];
     NSUserDefaults *defaultS =  [NSUserDefaults standardUserDefaults];
     [defaultS setObject:changArray forKey:@"user_shanshiSDic"];
     [defaultS synchronize];
@@ -664,7 +679,7 @@
                     break;
                 case 2:
                 {
-                    cell.wTF.text = @"中餐";
+                    cell.wTF.text = @"午餐";
                 }
                     break;
                 case 3:
@@ -828,7 +843,7 @@
     NSDate *theDate = datePicker.date;
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat = @"YYYY-MM-dd ";
+    dateFormatter.dateFormat =@"YYYY-MM-dd";
     
     
     UITextField *textF = [self.view viewWithTag:1000];
@@ -843,7 +858,7 @@
     NSDate *theDate = datePickers.date;
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat = @"YYYY-MM-dd ";
+    dateFormatter.dateFormat =@"YYYY-MM-dd";
     NSLog(@"%@",[dateFormatter stringFromDate:theDate]);
 //    UITextField *textF = [self.view viewWithTag:1000];
 //    textF.text = [dateFormatter stringFromDate:theDate];

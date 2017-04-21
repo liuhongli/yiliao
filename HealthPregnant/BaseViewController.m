@@ -80,7 +80,7 @@
     NSDate *theDate = [NSDate date];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat = @"YYYY-MM-dd ";
+    dateFormatter.dateFormat = @"YYYY-MM-dd";
     NSMutableArray *generM = [NSMutableArray array];
     NSMutableArray *sportM = [NSMutableArray array];
     NSMutableArray *dietrM = [NSMutableArray array];

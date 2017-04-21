@@ -205,113 +205,19 @@
             NSDictionary *dic = dataArray[leftSelected];
             NSArray *childArr = [dic objectForKey:@"children"];
             NSDictionary *childDic = childArr[rightSelected];
-            //保存提交字典
-            NSMutableDictionary *saveMdic = [NSMutableDictionary dictionary];
-            
-            NSMutableArray *dinerArray = [NSMutableArray array];
             NSMutableDictionary *codeDic = [[NSMutableDictionary alloc] initWithDictionary:childDic];
             
             NSDate *theDate = [NSDate date];
             NSLog(@"%@",[theDate descriptionWithLocale:[NSLocale currentLocale]]);
             
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            dateFormatter.dateFormat = @"YYYY-MM-dd ";
+            dateFormatter.dateFormat =@"YYYY-MM-dd";
  
             [codeDic setObject:[dateFormatter stringFromDate:theDate] forKey:@"addTime"];
-
+            [codeDic setObject:[dic objectForKey:@"tableName"] forKey:@"tableName"];
+            [codeDic setObject:[NSString stringWithFormat:@"%ld",_comeType] forKey:@"foodTYpe"];
             [codeDic setObject:str forKey:@"defaultValue"];
-            NSString *dineTime = [NSString stringWithFormat:@"%ld",_comeType];
-            [codeDic setObject:dineTime forKey:@"foodTYpe"];
-            NSUserDefaults *defaultS =  [NSUserDefaults standardUserDefaults];
-            NSMutableArray *mutableArray =[NSMutableArray array];
-            NSMutableDictionary *todayDic = [NSMutableDictionary dictionary];
-            if (shanshiSDic) {
-                mutableArray = [shanshiSDic mutableCopy];
-
-            }
-            if (mutableArray.count > 0) {
-                todayDic = [[NSMutableDictionary alloc] initWithDictionary:mutableArray[0]];
-            }
-            [dinerArray addObject:codeDic];
-
-            BOOL dataSame = [[todayDic objectForKey:@"addTime"] isEqualToString:[dateFormatter stringFromDate:theDate]];
-            if ( dataSame == NO) {
-                
-            [saveMdic setObject:[dateFormatter stringFromDate:theDate] forKey:@"addTime"];
-            [saveMdic setObject:[dic objectForKey:@"tableName"] forKey:@"tableName"];
-            [saveMdic setObject:@"2" forKey:@"code"];
-
-            if (_comeType == 1) {
-                [saveMdic setObject:dinerArray forKey:@"foodTime0"];
-            }
-            if (_comeType == 2) {
-                [saveMdic setObject:dinerArray forKey:@"foodTime1"];
-
-            }
-            if (_comeType == 3) {
-                [saveMdic setObject:dinerArray forKey:@"foodTime2"];
-
-            }
-            if (_comeType == 4) {
-                [saveMdic setObject:dinerArray forKey:@"foodTime3"];
-
-            }
-
-            
-                [mutableArray addObject:saveMdic];
-            }
-            if (dataSame) {
-                
-                if (_comeType == 1) {
-                    
-                    NSMutableArray *zaoArr = [NSMutableArray array];
-                   NSArray *zaomArr = [todayDic objectForKey:@"foodTime0"];
-                    if (zaomArr.count > 0) {
-                        zaoArr = [zaomArr mutableCopy];
-                    }
-                    [zaoArr addObject:codeDic];
-                    [todayDic setObject:zaoArr forKey:@"foodTime0"];
-                }
-                if (_comeType == 2) {
-                    
-                    NSMutableArray *zhongArr = [NSMutableArray array];
-                    NSArray *zhongmArr = [todayDic objectForKey:@"foodTime1"];
-                    if (zhongmArr.count > 0) {
-                        zhongArr = [zhongmArr mutableCopy];
-                    }
-                    
-                    [zhongArr addObject:codeDic];
-                    [todayDic setObject:zhongArr forKey:@"foodTime1"];
-
-                    
-                }
-                if (_comeType == 3) {
-                    
-                    NSMutableArray *wanArr = [NSMutableArray array];
-                   NSArray *wanmArr = [todayDic objectForKey:@"foodTime2"];
-                    if (wanmArr.count > 0) {
-                        wanArr = [wanmArr mutableCopy];
-                    }
-                    [wanArr addObject:codeDic];
-                    [todayDic setObject:wanArr forKey:@"foodTime2"];
-
-                }
-                if (_comeType == 4) {
-                    NSMutableArray *jiaArr = [NSMutableArray array];
-                   NSArray *jiamArr = [todayDic objectForKey:@"foodTime3"];
-                    if (jiamArr.count > 0) {
-                        jiaArr = [jiamArr mutableCopy];
-                    }
-                    [jiaArr addObject:codeDic];
-                    [todayDic setObject:jiaArr forKey:@"foodTime3"];
-
-                }
-                [mutableArray replaceObjectAtIndex:0 withObject:todayDic];
-            }
-             NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"addTime" ascending:YES]];
-             [mutableArray sortUsingDescriptors:sortDescriptors];
-            [defaultS setObject:mutableArray forKey:@"user_shanshiSDic"];
-            [defaultS synchronize];
+            [self saveInfo:codeDic];
             [self.navigationController popViewControllerAnimated:YES];
         
         };
@@ -320,6 +226,138 @@
     }
 }
 
+- (void)saveInfo:(NSDictionary *)myDic {
+  
+    NSMutableArray *changArray = [NSMutableArray  array];
+        
+      NSMutableArray *cArray = [shanshiSDic mutableCopy];
+        if (cArray.count > 0) {
+            changArray = cArray;
+        }
+        //日期不同:日期存在（添加进日餐）、日期不存在（添加一个日期）
+        NSInteger sameNum = -1;
+    NSDate *theDate = [NSDate date];
+    NSLog(@"%@",[theDate descriptionWithLocale:[NSLocale currentLocale]]);
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat =@"YYYY-MM-dd";
+    
+        for (int i = 0; i < changArray.count; i++) {
+            NSString *timeStr = [[changArray objectAtIndex:i] objectForKey:@"addTime"];
+            if ([[dateFormatter stringFromDate:theDate] isEqualToString:timeStr]) {
+                sameNum = i;
+            }
+        }
+        if (sameNum > -1) {
+            
+            
+
+            
+            if (_comeType == 1) {
+                
+                
+                NSMutableDictionary *chDic = [[changArray objectAtIndex:sameNum] mutableCopy];
+                NSArray *chA = [chDic objectForKey:@"foodTime0"];
+                NSMutableArray *chmA = [NSMutableArray array];
+                if (chA.count > 0) {
+                    chmA = [chA mutableCopy];
+                }
+                [chmA addObject:myDic];
+                [chDic setObject:chmA forKey:@"foodTime0"];
+                [changArray replaceObjectAtIndex:sameNum withObject:chDic];
+            }else if (_comeType == 2) {
+                
+                NSMutableDictionary *chDic = [[changArray objectAtIndex:sameNum] mutableCopy];
+                NSArray *chA = [chDic objectForKey:@"foodTime1"];
+                NSMutableArray *chmA = [NSMutableArray array];
+                if (chA.count > 0) {
+                    chmA = [chA mutableCopy];
+                }
+                [chmA addObject:myDic];
+                [chDic setObject:chmA forKey:@"foodTime1"];
+                [changArray replaceObjectAtIndex:sameNum withObject:chDic];
+                
+                
+            }else if (_comeType == 3) {
+                
+                
+                NSMutableDictionary *chDic = [[changArray objectAtIndex:sameNum] mutableCopy];
+                NSArray *chA = [chDic objectForKey:@"foodTime2"];
+                NSMutableArray *chmA = [NSMutableArray array];
+                if (chA.count > 0) {
+                    chmA = [chA mutableCopy];
+                }
+                [chmA addObject:myDic];
+                [chDic setObject:chmA forKey:@"foodTime2"];
+                [changArray replaceObjectAtIndex:sameNum withObject:chDic];
+                
+            }else    if (_comeType == 4) {
+
+                NSMutableDictionary *chDic = [[changArray objectAtIndex:sameNum] mutableCopy];
+                NSArray *chA = [chDic objectForKey:@"foodTime3"];
+                NSMutableArray *chmA = [NSMutableArray array];
+                if (chA.count > 0) {
+                    chmA = [chA mutableCopy];
+                }
+                [chmA addObject:myDic];
+                [chDic setObject:chmA forKey:@"foodTime3"];
+                [changArray replaceObjectAtIndex:sameNum withObject:chDic];
+                
+            }
+            
+        }else{
+            //日期不存在（添加一个日期）
+            if (_comeType == 1) {
+                
+                NSMutableDictionary *chDic = [NSMutableDictionary dictionary];
+                NSArray *chA = @[myDic];
+                [chDic setObject:chA forKey:@"foodTime0"];
+                [chDic setObject:[dateFormatter stringFromDate:theDate] forKey:@"addTime"];
+                [chDic setObject:@"3" forKey:@"code"];
+                [chDic setObject:[myDic objectForKey:@"tableName"] forKey:@"tableName"];
+                [changArray addObject:chDic];
+            }else if (_comeType == 2) {
+                
+                NSMutableDictionary *chDic = [NSMutableDictionary dictionary];
+                NSArray *chA = @[myDic];
+                [chDic setObject:chA forKey:@"foodTime1"];
+                [chDic setObject:[dateFormatter stringFromDate:theDate] forKey:@"addTime"];
+                [chDic setObject:@"3" forKey:@"code"];
+                [chDic setObject:[myDic objectForKey:@"tableName"] forKey:@"tableName"];
+                [changArray addObject:chDic];
+                
+                
+            }else if (_comeType == 3) {
+                
+                NSMutableDictionary *chDic = [NSMutableDictionary dictionary];
+                NSArray *chA = @[myDic];
+                [chDic setObject:chA forKey:@"foodTime2"];
+                [chDic setObject:[dateFormatter stringFromDate:theDate] forKey:@"addTime"];
+                [chDic setObject:@"3" forKey:@"code"];
+                [chDic setObject:[myDic objectForKey:@"tableName"] forKey:@"tableName"];
+                [changArray addObject:chDic];
+                
+            }else    if (_comeType == 4) {
+                NSMutableDictionary *chDic = [NSMutableDictionary dictionary];
+                NSArray *chA = @[myDic];
+                [chDic setObject:chA forKey:@"foodTime3"];
+                [chDic setObject:[dateFormatter stringFromDate:theDate] forKey:@"addTime"];
+                [chDic setObject:@"3" forKey:@"code"];
+                [chDic setObject:[myDic objectForKey:@"tableName"] forKey:@"tableName"];
+                [changArray addObject:chDic];
+                
+            }
+            
+        }
+    
+    NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"addTime" ascending:NO]];
+    [changArray sortUsingDescriptors:sortDescriptors];
+    NSUserDefaults *defaultS =  [NSUserDefaults standardUserDefaults];
+    [defaultS setObject:changArray forKey:@"user_shanshiSDic"];
+    [defaultS synchronize];
+    
+    
+}
 
 - (UITableView *)leftTableView
 {

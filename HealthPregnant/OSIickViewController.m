@@ -79,7 +79,7 @@
     NSDate *theDate = [NSDate date];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat = @"YYYY-MM-dd ";
+    dateFormatter.dateFormat =@"YYYY-MM-dd";
     
     NSArray *parArr = @[@{@"field":paraDic,@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"inspectionOrder":@"1",@"recordTime":[dateFormatter stringFromDate:theDate]
 ,@"sign":@"1",@"tableName":tableName}];
@@ -166,7 +166,7 @@
     [children replaceObjectAtIndex:indexPath.row withObject:subDic];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     NSDate *theDate = [NSDate date];
-    dateFormatter.dateFormat = @"YYYY-MM-dd ";
+    dateFormatter.dateFormat =@"YYYY-MM-dd";
     NSString *dataStr =  [dateFormatter stringFromDate:theDate];
     [dataDic setObject:children forKey:@"children"];
     [dataDic setObject:dataStr forKey:@"addTime"];
