@@ -71,7 +71,7 @@
     return theImage;
 }
 
-- (NSDictionary *)listType:(NSInteger )type dataArray:(NSArray *)array {
+- (NSDictionary *)dataArray:(NSArray *)array {
     NSDictionary *dic = USERINFO;
     if (!dic) {
         [Alert showWithTitle:@"请重新登录"];
@@ -109,15 +109,15 @@
             
             NSArray *parArr =@[@{@"field":paraDic,@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"inspectionOrder":@"1",@"recordTime":[paraDic objectForKey:@"addTime"],@"sign":@"1",@"tableName":tableName}];
             
-                if (type == 0) {
+                if ([[dataDic objectForKey:@"code"] integerValue] == 0) {
                     
                     [generM addObject:parArr];
                 }
-                if (type == 1) {
+                if ([[dataDic objectForKey:@"code"] integerValue] == 1) {
                     
                     [sportM addObject:parArr];
                 }
-                if (type == 2) {
+                if ([[dataDic objectForKey:@"code"] integerValue] == 2) {
                     
                     [dietrM addObject:parArr];
                 }

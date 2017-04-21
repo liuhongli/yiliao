@@ -541,7 +541,7 @@
                 NSArray *chA = @[repDic];
                 [chDic setObject:chA forKey:@"foodTime3"];
                 [chDic setObject:dateTF.text forKey:@"addTime"];
-                [chDic setObject:@"3" forKey:@"code"];
+                [chDic setObject:@"2" forKey:@"code"];
                 [chDic setObject:[_infoDic objectForKey:@"tableName"] forKey:@"tableName"];
                 [changArray addObject:chDic];
                 
