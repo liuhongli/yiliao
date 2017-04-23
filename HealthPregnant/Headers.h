@@ -39,6 +39,7 @@
 #define shenghuoSDic [[NSUserDefaults standardUserDefaults] objectForKey:@"user_shenghuoSDic"]
 
 #define shanshiSDic  [[NSUserDefaults standardUserDefaults] objectForKey:@"user_shanshiSDic"]
+//运动数据
 
 #define yjobSDic  [[NSUserDefaults standardUserDefaults] objectForKey:@"user_yjobSDic"]
 

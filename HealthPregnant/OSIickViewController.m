@@ -26,8 +26,13 @@
 
     NSDictionary *dic1 = result[5];
     
+    NSArray  *arr =  jiwangSDic;
+    if (arr.count > 0) {
+        dataDic = [[NSMutableDictionary alloc] initWithDictionary:arr[0]];
+
+    }else{
     dataDic = [[NSMutableDictionary alloc] initWithDictionary:dic1];
-    
+    }
     [_tableView reloadData];
     [self initFootView];
 
@@ -49,8 +54,12 @@
 }
 #pragma mark ------------------ 提交信息 -------------------------
 - (void)postInfo:(UIButton *)button {
+ 
     
-    
+    NSUserDefaults *stand = [NSUserDefaults standardUserDefaults];
+    [stand setObject:@[dataDic] forKey:@"user_jiwangSDic"];
+    [self.navigationController popViewControllerAnimated:YES];
+ /*
     NSDictionary *para ;
     NSMutableDictionary *paraDic = [NSMutableDictionary dictionary];
     
@@ -104,7 +113,7 @@
         [Alert showWithTitle:[NSString stringWithFormat:@"%@",error.userInfo]];
         
         
-    }];
+    }];*/
     
     
 }

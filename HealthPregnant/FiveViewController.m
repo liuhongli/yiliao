@@ -188,7 +188,7 @@
     [sendbtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     sendbtn.backgroundColor = [UIColor colorWithHexString:@"FF8698" alpha:1];
     [sendbtn setTitle:@"提交" forState:UIControlStateNormal];
-    [sendbtn addTarget:self action:@selector(sendmess) forControlEvents:UIControlEventTouchUpInside];
+    [sendbtn addTarget:self action:@selector(postInfo) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview: sendbtn];
 
 }
@@ -196,7 +196,10 @@
 
 - (void)postInfo {
     
-    NSDictionary *dic = USERINFO;
+    NSArray *arry = @[zhusuSDic,jiwangSDic,shiyanSDic,yingshiSDic,shenghuoSDic,shanshiSDic,ysleepSDic,yingshiSDic,yjobSDic];
+    NSDictionary *para = [self dataArray:arry];
+    
+   /* NSDictionary *dic = USERINFO;
     
     NSDate *theDate = [NSDate date];
     
@@ -205,8 +208,8 @@
     NSString *phoneStr = [dic objectForKey:@"mobilePhone"];
     NSString *dateStr = [dateFormatter stringFromDate:theDate];
     NSDictionary *paraDic = @{@"dietarySurveyList":@[@{@"field":@{@"StapleFoodRoundGrainedRice":@"8"},@"foodTime":@"0",@"globalRecordNr":phoneStr,@"inspectionOrder":@"1",@"recordTime":dateStr,@"sign":@"1",@"tableName":@"StapleFoodInspectionO"},@{@"field":@{@"StapleFoodWheatFlourEmbryoIntake":@"2"},@"foodTime":@"3",@"globalRecordNr":phoneStr,@"inspectionOrder":@"1",@"recordTime":dateStr,@"sign":@"1",@"tableName":@"StapleFoodInspectionO"}],@"generalSurveyList":@[@{@"field":@{@"ImmuneOralUlcersTag":@"1",@"SkinRoughSkinTag":@"1"},@"globalRecordNr":phoneStr,@"inspectionOrder":@"1",@"recordTime":dateStr,@"sign":@"1",@"tableName":@"StatementSymptomRecord"},@{@"field":@{@"BloodHypotensionTag":@"1"},@"globalRecordNr":phoneStr,@"inspectionOrder":@"1",@"recordTime":dateStr,@"sign":@"1",@"tableName":@"DiseaseHistoryRecord"},@{@"field":@{@"FundalHeight":@"49",@"HighBloodPressure":@"1 ",@"LowBloodPressure":@"3"},@"globalRecordNr":phoneStr,@"inspectionOrder":@"1",@"recordTime":dateStr,@"sign":@"1",@"tableName":@"PhysiqueCheckRecord"},@{@"field":@{@"LongTimeNoStaple":@"1"},@"globalRecordNr":phoneStr,@"inspectionOrder":@"1",@"recordTime":dateStr,@"sign":@"1",@"tableName":@"DietHabitInspection"},@{@"field":@{@"SmokeHabit":@"1",@"NourishmentYesOrNo":@"1",@"CoffeeHabit":@"3",@"StayUpAllNight":@"1",@"WineHabit":@"1"},@"globalRecordNr":phoneStr,@"inspectionOrder":@"1",@"recordTime":dateStr,@"sign":@"1",@"tableName":@"LifeHabbitInspection"}],@"globalRecordNr":phoneStr,@"recordTime":dateStr,@"sportSurveyList":@[@{@"field":@{@"ProfessionTime":@"4",@"Agriculture":@"1",@"stepCountExceed6000":@"1",@"SleepExceed10Hour":@"1"},@"globalRecordNr":phoneStr,@"inspectionOrder":@"1",@"recordTime":dateStr,@"sign":@"1",@"tableName":@"SportConditionInspectionO"}]};
-    
-    [RBaseHttpTool postWithUrl:@"data/upload2" parameters:paraDic sucess:^(id json) {
+    */
+    [RBaseHttpTool postWithUrl:@"data/upload2" parameters:para sucess:^(id json) {
 
         NSInteger success = [[json objectForKey:@"success"] integerValue];
         [Alert showWithTitle:[json objectForKey:@"message"]];

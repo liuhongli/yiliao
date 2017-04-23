@@ -133,7 +133,7 @@
 
 - (void)postInfo:(UIButton *)button {
     
-    NSDictionary *para ;
+ /*   NSDictionary *para ;
     NSMutableDictionary *paraDic = [NSMutableDictionary dictionary];
     for (NSDictionary *dic in dataArray) {
        
@@ -196,7 +196,25 @@
         
         
     }];
-
+*/
+    NSUserDefaults *defaut = [NSUserDefaults standardUserDefaults];
+    
+    if (_comeType == 1) {
+        
+        [defaut setObject:dataArray forKey:@"user_zhusuSDic"];
+        
+    }else if (_comeType == 2) {
+        
+        [defaut setObject:dataArray forKey:@"user_yingshiSDic"];
+        
+    }if (_comeType == 3) {
+        
+        [defaut setObject:dataArray forKey:@"user_shenghuoSDic"];
+        
+    }
+    
+    [defaut synchronize];
+    [self.navigationController popViewControllerAnimated:YES];
     
 }
 #pragma mark ------------------tab V -------------------------
@@ -525,23 +543,6 @@
 
     }
     
-    NSUserDefaults *defaut = [NSUserDefaults standardUserDefaults];
-    
-    if (_comeType == 1) {
-        
-        [defaut setObject:dataArray forKey:@"user_zhusuSDic"];
-        
-    }else if (_comeType == 2) {
-        
-        [defaut setObject:dataArray forKey:@"user_yingshiSDic"];
-        
-    }if (_comeType == 3) {
-        
-        [defaut setObject:dataArray forKey:@"user_shenghuoSDic"];
-        
-    }
-    
-    [defaut synchronize];
 
     
 }

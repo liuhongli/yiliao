@@ -392,7 +392,7 @@
     [changDic setObject:chageArr forKey:@"children"];
     [changDic setObject:dateStr forKey:@"addTime"];
     NSUserDefaults *staD = [NSUserDefaults standardUserDefaults];
-    [staD setObject:changDic forKey:@"user_yjobSDic"];
+    [staD setObject:@[changDic] forKey:@"user_yjobSDic"];
     [staD setObject:captionS forKey:@"MYJOBSTR"];
     [staD synchronize];
     j_actionV.hidden = YES;

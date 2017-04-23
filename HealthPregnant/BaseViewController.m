@@ -87,27 +87,111 @@
 
     for (int num = 0; num < array.count; num ++) {
         NSArray *contArray = array[num];
+        NSLog(@"num  == %ld",num);
         for (int subNum = 0; subNum < contArray.count; subNum++) {
-    
-            NSDictionary *dataDic = contArray[num];
+//            NSLog(@"subNum  == %ld",subNum);
+
+            NSDictionary *dataDic = contArray[subNum];
 
 
             NSString *tableName = [dataDic objectForKey:@"tableName"];
             
-            NSMutableDictionary *paraDic = [NSMutableDictionary dictionary];
             
+            if ([[dataDic objectForKey:@"code"] integerValue] == 3) {
+                NSMutableDictionary *paraAADic = [NSMutableDictionary dictionary];
+
+                NSArray *zaoA = [dataDic objectForKey:@"foodTime0"];
+                for (NSDictionary *chidDic in zaoA) {
+                    NSInteger defaultValue = [[chidDic objectForKey:@"defaultValue"] integerValue];
+                    if (defaultValue != 0) {
+                        NSLog(@"1111");
+                        [paraAADic setObject:[chidDic objectForKey:@"defaultValue"] forKey:[chidDic objectForKey:@"fieldName"]];
+                        
+                    }    }
+                if (paraAADic.allKeys.count > 0) {
+                    
+                    NSLog(@"%@",[dataDic objectForKey:@"addTime"]);
+                    
+                    NSArray *parArr =@[@{@"field":paraAADic,@"foodTime":@"0",@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"inspectionOrder":@"1",@"recordTime":[dataDic objectForKey:@"addTime"],@"sign":@"1",@"tableName":tableName}];
+                    [dietrM addObject:parArr];
+                }
+//中餐
+                NSArray *zhonA = [dataDic objectForKey:@"foodTime1"];
+                NSMutableDictionary *paraBBDic = [NSMutableDictionary dictionary];
+              
+                for (NSDictionary *chidDic in zhonA) {
+                    NSInteger defaultValue = [[chidDic objectForKey:@"defaultValue"] integerValue];
+                    if (defaultValue != 0) {
+                        NSLog(@"1111");
+                        [paraAADic setObject:[chidDic objectForKey:@"defaultValue"] forKey:[chidDic objectForKey:@"fieldName"]];
+                        
+                    }    }
+                if (paraBBDic.allKeys.count > 0) {
+                    
+                    NSLog(@"%@",[dataDic objectForKey:@"addTime"]);
+                    
+                    NSArray *parArr =@[@{@"field":paraBBDic,@"foodTime":@"1",@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"inspectionOrder":@"1",@"recordTime":[dataDic objectForKey:@"addTime"],@"sign":@"1",@"tableName":tableName}];
+                    [dietrM addObject:parArr];
+                }
+
+                
+                
+                //晚餐
+                NSArray *wanA = [dataDic objectForKey:@"foodTime2"];
+                NSMutableDictionary *paraCCDic = [NSMutableDictionary dictionary];
+                
+                for (NSDictionary *chidDic in wanA) {
+                    NSInteger defaultValue = [[chidDic objectForKey:@"defaultValue"] integerValue];
+                    if (defaultValue != 0) {
+                        NSLog(@"1111");
+                        [paraAADic setObject:[chidDic objectForKey:@"defaultValue"] forKey:[chidDic objectForKey:@"fieldName"]];
+                        
+                    }    }
+                if (paraCCDic.allKeys.count > 0) {
+                    
+                    NSLog(@"%@",[dataDic objectForKey:@"addTime"]);
+                    
+                    NSArray *parArr =@[@{@"field":paraCCDic,@"foodTime":@"2",@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"inspectionOrder":@"1",@"recordTime":[dataDic objectForKey:@"addTime"],@"sign":@"1",@"tableName":tableName}];
+                    [dietrM addObject:parArr];
+                }
+                
+                //加餐
+                NSArray *jiaA = [dataDic objectForKey:@"foodTime3"];
+                NSMutableDictionary *paraDDDic = [NSMutableDictionary dictionary];
+                
+                for (NSDictionary *chidDic in jiaA) {
+                    NSInteger defaultValue = [[chidDic objectForKey:@"defaultValue"] integerValue];
+                    if (defaultValue != 0) {
+                        NSLog(@"1111");
+                        [paraAADic setObject:[chidDic objectForKey:@"defaultValue"] forKey:[chidDic objectForKey:@"fieldName"]];
+                        
+                    }    }
+                if (paraDDDic.allKeys.count > 0) {
+                    
+                    NSLog(@"%@",[dataDic objectForKey:@"addTime"]);
+                    
+                    NSArray *parArr =@[@{@"field":paraDDDic,@"foodTime":@"3",@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"inspectionOrder":@"1",@"recordTime":[dataDic objectForKey:@"addTime"],@"sign":@"1",@"tableName":tableName}];
+                    [dietrM addObject:parArr];
+                }
+
+            
+            }else{
+
+            NSMutableDictionary *paraDic = [NSMutableDictionary dictionary];
+
             NSArray *chidArr = [dataDic objectForKey:@"children"];
             for (NSDictionary *chidDic in chidArr) {
                 NSInteger defaultValue = [[chidDic objectForKey:@"defaultValue"] integerValue];
                 if (defaultValue != 0) {
-                    
+                    NSLog(@"1111");
                     [paraDic setObject:[chidDic objectForKey:@"defaultValue"] forKey:[chidDic objectForKey:@"fieldName"]];
                     
                 }    }
+            if (paraDic.allKeys.count > 0) {
+                
+                NSLog(@"%@",[dataDic objectForKey:@"addTime"]);
             
-
-            
-            NSArray *parArr =@[@{@"field":paraDic,@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"inspectionOrder":@"1",@"recordTime":[paraDic objectForKey:@"addTime"],@"sign":@"1",@"tableName":tableName}];
+            NSArray *parArr =@[@{@"field":paraDic,@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"inspectionOrder":@"1",@"recordTime":[dataDic objectForKey:@"addTime"],@"sign":@"1",@"tableName":tableName}];
             
                 if ([[dataDic objectForKey:@"code"] integerValue] == 0) {
                     
@@ -117,11 +201,8 @@
                     
                     [sportM addObject:parArr];
                 }
-                if ([[dataDic objectForKey:@"code"] integerValue] == 2) {
-                    
-                    [dietrM addObject:parArr];
-                }
-
+            }
+        }
         }
     }
     NSString *listStr;
@@ -135,7 +216,7 @@
     if (sportM.count > 0) {
         
         listStr = @"sportSurveyList";
-        [para setObject:sportM forKey:@"generalSurveyList"];
+        [para setObject:sportM forKey:@"sportSurveyList"];
 
     }
     if (dietrM.count > 0) {
