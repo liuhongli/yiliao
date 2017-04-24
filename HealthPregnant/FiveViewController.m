@@ -195,7 +195,14 @@
 
 
 - (void)postInfo {
-    
+    if (!zhusuSDic||!zhusuSDic||!jiwangSDic||!shiyanSDic||!yingshiSDic||!shenghuoSDic||!shanshiSDic) {
+        [Alert showWithTitle:@"请填写必要信息"];
+        return;
+    }
+    if (!ysleepSDic||!yingshiSDic||!yjobSDic) {
+        [Alert showWithTitle:@"请填写运动调查数据"];
+        return;
+    }
     NSArray *arry = @[zhusuSDic,jiwangSDic,shiyanSDic,yingshiSDic,shenghuoSDic,shanshiSDic,ysleepSDic,yingshiSDic,yjobSDic];
     NSDictionary *para = [self dataArray:arry];
     

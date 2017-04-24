@@ -92,20 +92,20 @@
 }
 - (void)saveInfo {
 
-//    if (imageDic.allKeys.count < 3) {
-//        [Alert showWithTitle:@"请选择B超，血常规，尿常规图片"];
-//
-//        return;
-//    }
-//    NSDictionary *para1 = @{@"generalSurveyList":@[@{@"field":@{@"FundalHeight":@"23",@"HighBloodPressure":@"98",@"LowBloodPressure":@"56"},@"globalRecordNr":@"18911475023",@"inspectionOrder":@"1",@"recordTime":@"2016-11-22",@"sign":@"1",@"tableName":@"PhysiqueCheckRecord"}],@"globalRecordNr":@"18911475023",@"recordTime":@"2016-11-22"};
+    if (imageDic.allKeys.count < 3) {
+        [Alert showWithTitle:@"请选择B超，血常规，尿常规图片"];
+
+        return;
+    }
+  /*  NSDictionary *para1 = @{@"generalSurveyList":@[@{@"field":@{@"FundalHeight":@"23",@"HighBloodPressure":@"98",@"LowBloodPressure":@"56"},@"globalRecordNr":@"18911475023",@"inspectionOrder":@"1",@"recordTime":@"2016-11-22",@"sign":@"1",@"tableName":@"PhysiqueCheckRecord"}],@"globalRecordNr":@"18911475023",@"recordTime":@"2016-11-22"};
   
-//      NSDictionary *para =   @{@"field":@{@"FundalHeight":@"49",@"HighBloodPressure":@"1 ",@"LowBloodPressure":@"3"},@"globalRecordNr":@"18911475023",@"inspectionOrder":@"1",@"recordTime":@"2017-4-19",@"sign":@"1",@"tableName":@"PhysiqueCheckRecord"};
+      NSDictionary *para =   @{@"field":@{@"FundalHeight":@"49",@"HighBloodPressure":@"1 ",@"LowBloodPressure":@"3"},@"globalRecordNr":@"18911475023",@"inspectionOrder":@"1",@"recordTime":@"2017-4-19",@"sign":@"1",@"tableName":@"PhysiqueCheckRecord"};
     
-//    [RBaseHttpTool postWithUrl:@"data/uploadFile" parameters:para image:imageDic sucess:^(id json) {
-//        
-//    } failur:^(NSError *error) {
-//        
-//    }];
+    [RBaseHttpTool postWithUrl:@"data/uploadImg" parameters:para image:[UIImage imageNamed:@"icon120"] sucess:^(id json) {
+        
+    } failur:^(NSError *error) {
+        
+    }];*/
     
     NSUserDefaults *defaut = [NSUserDefaults standardUserDefaults];
     
