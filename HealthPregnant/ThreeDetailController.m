@@ -134,8 +134,22 @@
         NSArray *array = [dic objectForKey:@"children"];
 
         for (NSDictionary *chidDic in array) {
-            if ([[chidDic objectForKey:@"defaultValue"] integerValue] != 0) {
-                cell.nameLab.text = [chidDic objectForKey:@"caption"];
+            if (_comeType != 2) {
+               
+                if ([[chidDic objectForKey:@"defaultValue"] integerValue] != 0) {
+                    cell.nameLab.text = [chidDic objectForKey:@"caption"];
+                    
+                }
+
+            }else{
+                
+                if ([[chidDic objectForKey:@"defaultValue"] integerValue] != 0) {
+                    cell.nameLab.text = [NSString stringWithFormat:@"%@/%@分钟",[chidDic objectForKey:@"caption"],[chidDic objectForKey:@"defaultValue"]];
+                    
+                }else{
+                    
+                    cell.nameLab.text = [NSString stringWithFormat:@"%@/0分钟",[chidDic objectForKey:@"caption"]];
+                }
 
             }
         }

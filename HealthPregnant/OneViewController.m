@@ -193,7 +193,7 @@
         {
             HabitViewController *jianceVC = [[HabitViewController alloc] init];
             jianceVC.title = @"饮食习惯";
-            jianceVC.mutilSetlecd = 1;
+            jianceVC.mutilSetlecd = 2;
             jianceVC.comeType = 2;
             [self.navigationController pushViewController:jianceVC animated:NO];
         }
@@ -241,6 +241,8 @@
         [self seleJob];
 
     }
+    
+    
 
     return NO;
 }

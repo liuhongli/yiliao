@@ -74,10 +74,71 @@
 - (void)deleteInfo{
     
     NSMutableArray *changArray = [shanshiSDic mutableCopy];
-    [changArray removeObjectAtIndex:_indexRow];
+    NSMutableArray *dArray = [NSMutableArray array];
     
+    NSArray *zaoArray = [_infoDic objectForKey:@"foodTime0"];
+    for (NSDictionary *dic in zaoArray) {
+        [dArray addObject:dic];
+    }
+    NSArray *zhongArray = [_infoDic objectForKey:@"foodTime1"];
+    for (NSDictionary *dic in zhongArray) {
+        [dArray addObject:dic];
+    }
+    NSArray *wanArray = [_infoDic objectForKey:@"foodTime2"];
+    for (NSDictionary *dic in wanArray) {
+        [dArray addObject:dic];
+    }
+    NSArray *jiaArray = [_infoDic objectForKey:@"foodTime3"];
+    for (NSDictionary *dic in jiaArray) {
+        [dArray addObject:dic];
+    }
+    
+    
+    if (_indexRow < zaoArray.count) {
+        NSMutableArray *zaoArr = [NSMutableArray array];
+        NSArray *zaomArr = [_infoDic objectForKey:@"foodTime0"];
+        if (zaomArr.count > 0) {
+            zaoArr = [zaomArr mutableCopy];
+        }
+        [zaoArr removeObjectAtIndex:_indexRow];
+        [_infoDic setValue:zaoArr  forKey:@"foodTime0"];
+        
+    }else if (_indexRow < zaoArray.count+zhongArray.count) {
+        NSMutableArray *zaoArr = [NSMutableArray array];
+        NSArray *zaomArr = [_infoDic objectForKey:@"foodTime1"];
+        if (zaomArr.count > 0) {
+            zaoArr = [zaomArr mutableCopy];
+        }
+        [zaoArr removeObjectAtIndex:_indexRow-zaoArray.count];
+        [_infoDic setValue:zaoArr  forKey:@"foodTime1"];
+        
+    }else if (_indexRow < zaoArray.count+zhongArray.count+wanArray.count) {
+        NSMutableArray *zaoArr = [NSMutableArray array];
+        NSArray *zaomArr = [_infoDic objectForKey:@"foodTime2"];
+        if (zaomArr.count > 0) {
+            zaoArr = [zaomArr mutableCopy];
+        }
+        
+        [zaoArr removeObjectAtIndex:_indexRow-zaoArray.count-zhongArray.count];
+
+        [_infoDic setValue:zaoArr  forKey:@"foodTime2"];
+        
+    }else if (_indexRow < zaoArray.count+zhongArray.count+wanArray.count+jiaArray.count) {
+        NSMutableArray *zaoArr = [NSMutableArray array];
+        NSArray *zaomArr = [_infoDic objectForKey:@"foodTime3"];
+        if (zaomArr.count > 0) {
+            zaoArr = [zaomArr mutableCopy];
+        }
+        [zaoArr removeObjectAtIndex:_indexRow-zaoArray.count-zhongArray.count-wanArray.count];
+        [_infoDic setValue:zaoArr  forKey:@"foodTime3"];
+        
+    }
+    
+    [changArray replaceObjectAtIndex:_indexSection withObject:_infoDic];
+    
+
     NSUserDefaults *defaultS =  [NSUserDefaults standardUserDefaults];
-    [defaultS setObject:changArray forKey:@"user_shanshiPDic"];
+    [defaultS setObject:changArray forKey:@"user_shanshiSDic"];
     [defaultS synchronize];
     [self.navigationController popViewControllerAnimated:YES];
 
