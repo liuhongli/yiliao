@@ -8,6 +8,7 @@
 
 #import "FourViewController.h"
 #import "ToLunchTableViewCell.h"
+#import "AppDelegate.h"
 
 @interface FourViewController ()<UITableViewDelegate,UITableViewDataSource>{
     
@@ -162,7 +163,7 @@
                 if ([NSString stringWithFormat:@"%@",[mymess objectForKey:@"lastMenses"]].length < 1) {
                     cell.subLab.text = @"未填写";
                 }else {
-                    cell.subLab.text = [NSString stringWithFormat:@"%@",[mymess objectForKey:@"lastMenses"]];
+                    cell.subLab.text = [NSString stringWithFormat:@"%@",[NSString dateString:[mymess objectForKey:@"lastMenses"]]];
                     cell.subLab.textColor =[UIColor colorWithHexString:@"FF8698" alpha:1];
                 }
 
@@ -423,23 +424,26 @@
 - (void)savemess{
 //http://test.kpjkgl.com:8090/pregnant/user/edit?mobilePhone=11111111&name=吴江&birthdate=1990-01-01&height=60&lastMenses=2016-01-01&bloodType=O&nationality=汉& profession=IT&email=161231233@qq.com&education=大学
     
-    if ([mymess allKeys].count!= 10) {
+    if (![mymess objectForKey:@"mobilePhone"] || ![mymess objectForKey:@"name"] ||![mymess objectForKey:@"birthDate"]||![mymess objectForKey:@"height"]||![mymess objectForKey:@"lastMenses"]||![mymess objectForKey:@"bloodType"]||![mymess objectForKey:@"nationality"]||![mymess objectForKey:@"profession"]||![mymess objectForKey:@"email"]||![mymess objectForKey:@"education"] ) {
         [Alert showWithTitle:@"请完善全部信息"];
         return;
     }
     
-    NSDictionary *para = @{@"mobilePhone":[mymess objectForKey:@"mobilePhone"],@"name":[mymess objectForKey:@"name"],@"birthDate":[mymess objectForKey:@"birthDate"],@"height":[mymess objectForKey:@"height"],@"lastMenses":[mymess objectForKey:@"lastMenses"],@"bloodType":[mymess objectForKey:@"bloodType"],@"nationality":[mymess objectForKey:@"nationality"],@"profession":[mymess objectForKey:@"profession"],@"email":[mymess objectForKey:@"email"],@"education":[mymess objectForKey:@"education"]};
-    
+    NSDictionary *para = @{@"mobilePhone":[mymess objectForKey:@"mobilePhone"],@"name":[mymess objectForKey:@"name"],@"birthDate": [NSString dateString:[mymess objectForKey:@"birthDate"]],@"height":[mymess objectForKey:@"height"],@"lastMenses": [NSString dateString:[mymess objectForKey:@"lastMenses"]],@"bloodType":[mymess objectForKey:@"bloodType"],@"nationality":[mymess objectForKey:@"nationality"],@"profession":[mymess objectForKey:@"profession"],@"email":[mymess objectForKey:@"email"],@"education":[mymess objectForKey:@"education"]};
+    [self showHUD:@"数据提交中..."];
+
     [RBaseHttpTool postWithUrl:@"user/edit" parameters:para sucess:^(id json){
-        
+        [super hideHUD];
+   
         if ([[json objectForKey:@"success"] floatValue]== 1) {
             NSUserDefaults *userDetaults = [NSUserDefaults standardUserDefaults];
             
 //            [userDetaults setBool:YES forKey:@"showGuide"];
-            [userDetaults setObject:mymess forKey:@"mymess"];
+            
+            [userDetaults setObject:mymess forKey:@"USERINFO"];
             //将数据同步到本地的文件中
             [userDetaults synchronize];
-            
+            [tableV reloadData];
             [Alert showWithTitle:@"保存成功"];
         }else{
             [Alert showWithTitle:[NSString stringWithFormat:@"%@",[json objectForKey:@"message"]]];
@@ -448,7 +452,7 @@
         
         
     } failur:^(NSError *error) {
-        
+        [super hideHUD];
         [Alert showWithTitle:[NSString stringWithFormat:@"%@",error.userInfo]];
         
         

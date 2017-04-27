@@ -83,7 +83,10 @@
     
     
     NSDictionary *para = @{@"mobilePhone":self.mobileLab.text};
+    [self showHUD:@"数据提交中..."];
+
     [RBaseHttpTool postWithUrl:@"user/login" parameters:para sucess:^(id json) {
+        [super hideHUD];
         if ([[json objectForKey:@"success"] floatValue]== 1) {
             NSUserDefaults *userDetaults = [NSUserDefaults standardUserDefaults];
             
@@ -106,7 +109,7 @@
 
     } failur:^(NSError *error) {
         
-        
+        [super hideHUD];
         [Alert showWithTitle:[NSString stringWithFormat:@"%@",error.userInfo]];
 
     }];

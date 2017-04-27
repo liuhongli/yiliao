@@ -92,20 +92,17 @@
 }
 - (void)saveInfo {
 
-    if (imageDic.allKeys.count < 3) {
-        [Alert showWithTitle:@"请选择B超，血常规，尿常规图片"];
-
-        return;
-    }
-  /*  NSDictionary *para1 = @{@"generalSurveyList":@[@{@"field":@{@"FundalHeight":@"23",@"HighBloodPressure":@"98",@"LowBloodPressure":@"56"},@"globalRecordNr":@"18911475023",@"inspectionOrder":@"1",@"recordTime":@"2016-11-22",@"sign":@"1",@"tableName":@"PhysiqueCheckRecord"}],@"globalRecordNr":@"18911475023",@"recordTime":@"2016-11-22"};
+ 
+   /* NSDictionary *para = @{@"imgFile":@"B_modeUltrasound"};
   
-      NSDictionary *para =   @{@"field":@{@"FundalHeight":@"49",@"HighBloodPressure":@"1 ",@"LowBloodPressure":@"3"},@"globalRecordNr":@"18911475023",@"inspectionOrder":@"1",@"recordTime":@"2017-4-19",@"sign":@"1",@"tableName":@"PhysiqueCheckRecord"};
+
     
     [RBaseHttpTool postWithUrl:@"data/uploadImg" parameters:para image:[UIImage imageNamed:@"icon120"] sucess:^(id json) {
         
     } failur:^(NSError *error) {
         
     }];*/
+    [self.navigationController popViewControllerAnimated:YES];
     
     NSUserDefaults *defaut = [NSUserDefaults standardUserDefaults];
     
@@ -208,7 +205,7 @@
         if (saveIM) {
             SIMAGE.image = saveIM;
         }else{
-            SIMAGE.image = [UIImage imageNamed:@"上传图片默认图@3x"];
+            SIMAGE.image = [UIImage imageNamed:@"savIM.jpg"];
         }
         SIMAGE.contentMode = UIViewContentModeScaleAspectFit;
         [cell.contentView addSubview:SIMAGE];
@@ -282,7 +279,7 @@
     if (image1) {
         SIMAGE.image = [imageDic objectForKey:[NSString stringWithFormat:@"%ld",seleImage]];
     }else{
-        SIMAGE.image = [UIImage imageNamed:@"上传图片默认图@3x"];
+        SIMAGE.image = [UIImage imageNamed:@"savIM.jpg"];
     }
 
     
@@ -362,33 +359,26 @@
 
 
     NSDictionary *para;
-    if (index == 1000) {
-        
-        para = @{@"imgType":@"B_modeUltrasound",@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"recordTime":[dateFormatter stringFromDate:theDate]};
-    }
-    if (index == 1001) {
-        
-        para = @{@"imgType":@"BooldConventionCheck",@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"recordTime":[dateFormatter stringFromDate:theDate]};
-    }
-    if (index == 1002) {
-        
-        para = @{@"imgType":@"UrineConventionCheck",@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"recordTime":[dateFormatter stringFromDate:theDate]};
-    }
+    [self showHUD:@"数据提交中..."];
 
-
-    [RBaseHttpTool postWithUrl:@"data/uploadFile" parameters:para image:image sucess:^(id json) {
+    [RBaseHttpTool postWithUrl:@"data/uploadImg" parameters:para image:image sucess:^(id json) {
+        [super hideHUD];
         if ([[json objectForKey:@"sucess"] integerValue] !=1) {
             [Alert showWithTitle:[json objectForKey:@"message"]];
             return ;
         }
-        NSString *str = [json objectForKey:@"result"];
+        NSString *str = [[json objectForKey:@"result"] objectForKey:@"fileName"];
+        NSString *str2 = [[json objectForKey:@"result"] objectForKey:@"uuid"];
         NSMutableArray *children =[NSMutableArray arrayWithArray:[dataDic objectForKey:@"children"]];
        
         if (index == 1000) {
             NSMutableDictionary *Dic = [[NSMutableDictionary alloc]initWithDictionary:[children objectAtIndex:2]];
             [Dic setObject:str forKey:@"defaultValue"];
-            
             [children replaceObjectAtIndex:2 withObject:Dic];
+            
+            NSMutableDictionary *Dic2 = [[NSMutableDictionary alloc]initWithDictionary:[children objectAtIndex:5]];
+            [Dic2 setObject:str2 forKey:@"defaultValue"];
+            [children replaceObjectAtIndex:5 withObject:Dic];
   
         }
         if (index == 1001) {
@@ -397,6 +387,9 @@
             
             [children replaceObjectAtIndex:3 withObject:Dic];
 
+            NSMutableDictionary *Dic2 = [[NSMutableDictionary alloc]initWithDictionary:[children objectAtIndex:6]];
+            [Dic2 setObject:str2 forKey:@"defaultValue"];
+            [children replaceObjectAtIndex:6 withObject:Dic];
 
         }
         if (index == 1002) {
@@ -404,6 +397,10 @@
             [Dic setObject:str forKey:@"defaultValue"];
             
             [children replaceObjectAtIndex:4 withObject:Dic];
+           
+            NSMutableDictionary *Dic2 = [[NSMutableDictionary alloc]initWithDictionary:[children objectAtIndex:7]];
+            [Dic2 setObject:str2 forKey:@"defaultValue"];
+            [children replaceObjectAtIndex:7 withObject:Dic];
 
         }
 
@@ -420,7 +417,7 @@
 
         
     } failur:^(NSError *error) {
-        
+        [super hideHUD];
     }];
 
 }
@@ -547,7 +544,8 @@
     
     NSMutableArray *children =[NSMutableArray arrayWithArray:[dataDic objectForKey:@"children"]];
     NSMutableDictionary *gongDic = [[NSMutableDictionary alloc]initWithDictionary:[children objectAtIndex:0]];
-    [gongDic setObject:captionS forKey:@"defaultValue"];
+    NSString *s = [NSString stringWithFormat:@"%ld",xueSel];
+    [gongDic setObject:s forKey:@"defaultValue"];
     
    
     

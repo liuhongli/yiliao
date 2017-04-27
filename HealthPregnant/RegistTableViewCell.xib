@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -16,34 +20,31 @@
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="手机号码" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5K1-IC-pmH">
                         <rect key="frame" x="8" y="25" width="112" height="21"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="QbV-Ra-AbK"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" red="0.22352941176470589" green="0.22352941176470589" blue="0.22352941176470589" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" red="0.22352941176470589" green="0.22352941176470589" blue="0.22352941176470589" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="*必填" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OwL-At-Qjb">
                         <rect key="frame" x="123" y="23" width="174" height="29"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="150" id="4Fe-38-fl0"/>
                             <constraint firstAttribute="height" constant="30" id="LzM-mo-qUu"/>
                         </constraints>
+                        <color key="textColor" red="0.99607843139999996" green="0.58039215690000001" blue="0.63137254899999995" alpha="1" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits"/>
                     </textField>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gd@2x.png" translatesAutoresizingMaskIntoConstraints="NO" id="m2w-M0-nyx">
                         <rect key="frame" x="305" y="30.5" width="7" height="11"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="7" id="0Fd-Ye-9VC"/>
                             <constraint firstAttribute="height" constant="11" id="qac-0H-m6s"/>
                         </constraints>
                     </imageView>
                 </subviews>
-                <animations/>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="m2w-M0-nyx" secondAttribute="trailing" constant="8" id="CJO-OH-zlQ"/>
                     <constraint firstItem="5K1-IC-pmH" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="CqC-b7-3MK"/>
@@ -54,7 +55,6 @@
                     <constraint firstItem="5K1-IC-pmH" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="qUw-oR-7Gk"/>
                 </constraints>
             </tableViewCellContentView>
-            <animations/>
             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="nameLab" destination="5K1-IC-pmH" id="sXd-36-DNV"/>

@@ -13,7 +13,8 @@
 #import "JianceViewController.h"
 #import "TwoViewController.h"
 #import "ThreeViewController.h"
-
+#import "ResultViewController.h"
+#import "AppDelegate.h"
 
 @interface FiveViewController ()
 {
@@ -36,12 +37,6 @@
     self.title = @"分析结果";
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     
-//    [self loadmainview];
-    
-    
-//    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
-//    [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://test.kpjkgl.com:8083/chart.aspx?basicid=15900001111&order=1"]]];
-//    [self.view addSubview:webView];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -57,7 +52,10 @@
 
     UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(0, 20, kScreenWidth, 40)];
     lab.text = @"  调查结果";
+    lab.font = [UIFont fontWithName:@"PingFangSC" size:16];
+    lab.textColor = [UIColor colorWithString:@"4A4A4A"];
     lab.backgroundColor = [UIColor whiteColor];
+    lab.alpha = 0.7;
     [self.view addSubview:lab];
     
     UIView *lineview = [[UIView alloc]initWithFrame:CGRectMake(0, 60, kScreenWidth, 1)];
@@ -178,7 +176,9 @@
         
         UILabel *titleLa = [[UILabel alloc] initWithFrame:CGRectMake(0, imageV.bottom + 10, kScreenWidth/4, 20)];
         titleLa.textAlignment = NSTextAlignmentCenter;
-        titleLa.font = [UIFont systemFontOfSize:13];
+        titleLa.font = [UIFont fontWithName:@"PingFangSC-Light" size:12];
+        titleLa.textColor = [UIColor colorWithString:@"4A4A4A"];
+        
         titleLa.text  = titleArray[i];
         [button addSubview:titleLa];
     }
@@ -187,46 +187,93 @@
     sendbtn.frame = CGRectMake(40, 290, kScreenWidth-80, 40);
     [sendbtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     sendbtn.backgroundColor = [UIColor colorWithHexString:@"FF8698" alpha:1];
-    [sendbtn setTitle:@"提交" forState:UIControlStateNormal];
-    [sendbtn addTarget:self action:@selector(postInfo) forControlEvents:UIControlEventTouchUpInside];
+    [sendbtn setTitle:@"提交并分析" forState:UIControlStateNormal];
+    [sendbtn addTarget:self action:@selector(postInfo:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview: sendbtn];
 
 }
 
 
-- (void)postInfo {
+- (void)postInfo:(UIButton *)button {
     if (!zhusuSDic||!zhusuSDic||!jiwangSDic||!shiyanSDic||!yingshiSDic||!shenghuoSDic||!shanshiSDic) {
         [Alert showWithTitle:@"请填写必要信息"];
         return;
     }
-    if (!ysleepSDic||!yingshiSDic||!yjobSDic) {
+    
+    if (!ysleepSDic||!yjsleepSDic||!yesleepSDic||!yjobSDic) {
         [Alert showWithTitle:@"请填写运动调查数据"];
         return;
     }
-    NSArray *arry = @[zhusuSDic,jiwangSDic,shiyanSDic,yingshiSDic,shenghuoSDic,shanshiSDic,ysleepSDic,yingshiSDic,yjobSDic];
-    NSDictionary *para = [self dataArray:arry];
-    
-   /* NSDictionary *dic = USERINFO;
-    
-    NSDate *theDate = [NSDate date];
-    
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat = @"YYYY-MM-dd";
-    NSString *phoneStr = [dic objectForKey:@"mobilePhone"];
-    NSString *dateStr = [dateFormatter stringFromDate:theDate];
-    NSDictionary *paraDic = @{@"dietarySurveyList":@[@{@"field":@{@"StapleFoodRoundGrainedRice":@"8"},@"foodTime":@"0",@"globalRecordNr":phoneStr,@"inspectionOrder":@"1",@"recordTime":dateStr,@"sign":@"1",@"tableName":@"StapleFoodInspectionO"},@{@"field":@{@"StapleFoodWheatFlourEmbryoIntake":@"2"},@"foodTime":@"3",@"globalRecordNr":phoneStr,@"inspectionOrder":@"1",@"recordTime":dateStr,@"sign":@"1",@"tableName":@"StapleFoodInspectionO"}],@"generalSurveyList":@[@{@"field":@{@"ImmuneOralUlcersTag":@"1",@"SkinRoughSkinTag":@"1"},@"globalRecordNr":phoneStr,@"inspectionOrder":@"1",@"recordTime":dateStr,@"sign":@"1",@"tableName":@"StatementSymptomRecord"},@{@"field":@{@"BloodHypotensionTag":@"1"},@"globalRecordNr":phoneStr,@"inspectionOrder":@"1",@"recordTime":dateStr,@"sign":@"1",@"tableName":@"DiseaseHistoryRecord"},@{@"field":@{@"FundalHeight":@"49",@"HighBloodPressure":@"1 ",@"LowBloodPressure":@"3"},@"globalRecordNr":phoneStr,@"inspectionOrder":@"1",@"recordTime":dateStr,@"sign":@"1",@"tableName":@"PhysiqueCheckRecord"},@{@"field":@{@"LongTimeNoStaple":@"1"},@"globalRecordNr":phoneStr,@"inspectionOrder":@"1",@"recordTime":dateStr,@"sign":@"1",@"tableName":@"DietHabitInspection"},@{@"field":@{@"SmokeHabit":@"1",@"NourishmentYesOrNo":@"1",@"CoffeeHabit":@"3",@"StayUpAllNight":@"1",@"WineHabit":@"1"},@"globalRecordNr":phoneStr,@"inspectionOrder":@"1",@"recordTime":dateStr,@"sign":@"1",@"tableName":@"LifeHabbitInspection"}],@"globalRecordNr":phoneStr,@"recordTime":dateStr,@"sportSurveyList":@[@{@"field":@{@"ProfessionTime":@"4",@"Agriculture":@"1",@"stepCountExceed6000":@"1",@"SleepExceed10Hour":@"1"},@"globalRecordNr":phoneStr,@"inspectionOrder":@"1",@"recordTime":dateStr,@"sign":@"1",@"tableName":@"SportConditionInspectionO"}]};
-    */
-    [RBaseHttpTool postWithUrl:@"data/upload2" parameters:para sucess:^(id json) {
 
+
+    NSArray *yuArray = @[ysleepSDic,yjsleepSDic,yesleepSDic,yjobSDic];
+    NSMutableArray *yuM = [NSMutableArray array];
+    NSMutableDictionary *yuDIc = [NSMutableDictionary dictionary];
+    for (NSArray *arr in yuArray) {
+        for (NSDictionary *dic in arr) {
+            NSString *addTime = [dic objectForKey:@"addTime"];
+            NSLog(@"%d",yuDIc.allKeys.count);
+            if ([yuDIc objectForKey:addTime] == nil) {
+                    [yuDIc setObject:@[dic] forKey:addTime];
+            }else{
+                NSMutableArray *ma = [[yuDIc objectForKey:addTime] mutableCopy];
+                [ma addObject:dic];
+                
+                [yuDIc setObject:ma forKey:addTime];
+            }
+
+        }
+    }
+    NSArray *keyArray = [yuDIc allKeys];
+    for (NSString *str in keyArray) {
+        NSArray *subA = [yuDIc objectForKey:str];
+        NSMutableDictionary *subMD = [NSMutableDictionary dictionary];
+        NSMutableArray *child = [NSMutableArray array];
+        for (NSDictionary *dic in subA) {
+            [subMD setObject:[dic objectForKey:@"addTime"] forKey:@"addTime"];
+            [subMD setObject:@"1" forKey:@"code"];
+
+            [subMD setObject:[dic objectForKey:@"tableName"] forKey:@"tableName"];
+            NSArray *subChidArr = [dic objectForKey:@"children"];
+            for (NSDictionary *su in subChidArr) {
+                [child addObject:su];
+            }
+
+        }
+        [subMD setObject:child forKey:@"children"];
+        [yuM addObject:subMD];
+    }
+    
+    NSArray *arry = @[zhusuSDic,jiwangSDic,shiyanSDic,yingshiSDic,shenghuoSDic,shanshiSDic,yuM];
+    NSDictionary *para = [self dataArray:arry];
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:para options:NSJSONWritingPrettyPrinted error:&error];//此处data参数是我上面提到的key为"data"的数组
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding] ;
+    
+    NSDictionary *para1 = @{@"jsonStr":jsonString};
+    [self showHUD:@"数据提交中..."];
+    [RBaseHttpTool postWithUrl:@"data/upload2" parameters:para1 sucess:^(id json) {
+        [super hideHUD];
         NSInteger success = [[json objectForKey:@"success"] integerValue];
-        [Alert showWithTitle:[json objectForKey:@"message"]];
         
         if (success == 1) {
+            [button setTitle:@"查看分析结果" forState:UIControlStateNormal];
+            ResultViewController *vc = [[ResultViewController alloc]init];
             
+            
+            vc.orderId = [NSString stringWithFormat:@"%@",[[json objectForKey:@"result"] objectForKey:@"InspectionOrder"]];
+            [self.navigationController pushViewController:vc animated:YES];
+            AppDelegate *dele = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            [dele lodInfo];
+        }else{
+            
+            [Alert showWithTitle:[json objectForKey:@"message"]];
+            return ;
         }
 
     } failur:^(NSError *error) {
-        
+        [super hideHUD];
+  
     }];
 }
 

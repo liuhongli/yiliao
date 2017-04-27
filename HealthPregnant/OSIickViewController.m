@@ -43,7 +43,7 @@
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 80)];
     UIButton *buton  = [[UIButton alloc] initWithFrame:CGRectMake(10, 20, kScreenWidth-20, 40)];
-    [buton setTitle:@"提交" forState:UIControlStateNormal];
+    [buton setTitle:@"保存" forState:UIControlStateNormal];
     [buton addTarget:self action:@selector(postInfo:) forControlEvents:UIControlEventTouchUpInside];
     
     [buton setBackgroundColor:[UIColor colorWithHexString:@"FF8698" alpha:1]];
@@ -59,62 +59,6 @@
     NSUserDefaults *stand = [NSUserDefaults standardUserDefaults];
     [stand setObject:@[dataDic] forKey:@"user_jiwangSDic"];
     [self.navigationController popViewControllerAnimated:YES];
- /*
-    NSDictionary *para ;
-    NSMutableDictionary *paraDic = [NSMutableDictionary dictionary];
-    
-        NSArray *chidArr = [dataDic objectForKey:@"children"];
-        for (NSDictionary *chidDic in chidArr) {
-            NSInteger defaultValue = [[chidDic objectForKey:@"defaultValue"] integerValue];
-            if (defaultValue == 1) {
-               
-                [paraDic setObject:@"1" forKey:[chidDic objectForKey:@"fieldName"]];
-          
-            }else{
-                
-                [paraDic setObject:@"0" forKey:[chidDic objectForKey:@"fieldName"]];
-            }
-        }
-    
-    
-    NSString *tableName = [dataDic objectForKey:@"tableName"];
-    
-    NSDictionary *dic = USERINFO;
-    if (!dic) {
-        [Alert showWithTitle:@"请重新登录"];
-        return;
-    }
-
-    NSDate *theDate = [NSDate date];
-    
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat =@"YYYY-MM-dd";
-    
-    NSArray *parArr = @[@{@"field":paraDic,@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"inspectionOrder":@"1",@"recordTime":[dateFormatter stringFromDate:theDate]
-,@"sign":@"1",@"tableName":tableName}];
-    para = @{@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"recordTime":[dateFormatter stringFromDate:theDate]
-,@"generalSurveyList":parArr};
-    
-    [RBaseHttpTool postWithUrl:@"data/upload2" parameters:para sucess:^(id json) {
-        
-        NSInteger success = [[json objectForKey:@"success"] integerValue];
-        
-        [Alert showWithTitle:[json objectForKey:@"message"]];
-
-        if (success == 1) {
-           
-            [self.navigationController popViewControllerAnimated:YES];
-            
-        }
-        
-        
-    } failur:^(NSError *error) {
-        
-        [Alert showWithTitle:[NSString stringWithFormat:@"%@",error.userInfo]];
-        
-        
-    }];*/
-    
     
 }
 

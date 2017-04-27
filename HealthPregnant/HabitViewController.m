@@ -100,17 +100,67 @@
 - (void)dataShen:(NSArray *)result{
     
     NSDictionary *dic1 = result[10];
-    NSDictionary *dic2 = result[11];
-    NSDictionary *dic3 = result[12];
-    NSDictionary *dic4 = result[13];
-    NSDictionary *dic5 = result[14];
-    NSDictionary *dic6 = result[7];
-    NSDictionary *dic7 = result[8];
-    NSDictionary *dic8 = result[9];
-
+    NSMutableDictionary *mdic1 =  [dic1 mutableCopy];
+    NSArray *children = [mdic1 objectForKey:@"children"];
+    NSMutableArray *m1 = [NSMutableArray array];
+    for (int i = 0; i < children.count ;i++) {
+        NSMutableDictionary *dic = [[children objectAtIndex:i] mutableCopy];
+        [dic setObject:@"0" forKey:@"defaultValue"];
+        [m1 addObject:dic];
+    }
+    [mdic1 setObject:m1 forKey:@"children"];
 
     
-    dataArray = [[NSMutableArray alloc] initWithObjects:dic1,dic2,dic3,dic4,dic5,dic6,dic7,dic8,nil];
+    NSDictionary *dic2 = result[11];
+    NSMutableDictionary *mdic2 =  [dic2 mutableCopy];
+    NSArray *children2 = [mdic1 objectForKey:@"children"];
+    NSMutableArray *m2 =  [NSMutableArray array];
+    for (int i = 0; i < children2.count ;i++) {
+        NSMutableDictionary *dic = [[children2 objectAtIndex:i] mutableCopy];
+        [dic setObject:@"0" forKey:@"defaultValue"];
+        [m2 addObject:dic];
+    }
+    [mdic2 setObject:m2 forKey:@"children"];
+
+ 
+    
+    NSDictionary *dic3 = result[12];
+    NSMutableDictionary *mdic3=  [dic3 mutableCopy];
+    NSArray *children3 = [mdic3 objectForKey:@"children"];
+    NSMutableArray *m3 =  [NSMutableArray array];
+    for (int i = 0; i < children3.count ;i++) {
+        NSMutableDictionary *dic = [[children3 objectAtIndex:i] mutableCopy];
+        [dic setObject:@"0" forKey:@"defaultValue"];
+        [m3 addObject:dic];
+    }
+    [mdic3 setObject:m3 forKey:@"children"];
+    
+    
+    NSDictionary *dic4 = result[13];
+    NSMutableDictionary *mdic4=  [dic4 mutableCopy];
+    NSArray *children4 = [mdic4 objectForKey:@"children"];
+    NSMutableArray *m4 =  [NSMutableArray array];
+    for (int i = 0; i < children4.count ;i++) {
+        NSMutableDictionary *dic = [[children4 objectAtIndex:i] mutableCopy];
+        [dic setObject:@"0" forKey:@"defaultValue"];
+        [m4 addObject:dic];
+    }
+    [mdic4 setObject:m4 forKey:@"children"];
+    
+    
+    NSDictionary *dic5 = result[14];
+    NSMutableDictionary *mdic5=  [dic5 mutableCopy];
+    NSArray *children5 = [mdic5 objectForKey:@"children"];
+    NSMutableArray *m5 =  [NSMutableArray array];
+    for (int i = 0; i < children5.count ;i++) {
+        NSMutableDictionary *dic = [[children5 objectAtIndex:i] mutableCopy];
+        [dic setObject:@"0" forKey:@"defaultValue"];
+        [m5 addObject:dic];
+    }
+    [mdic5 setObject:m5 forKey:@"children"];
+
+    
+    dataArray = [[NSMutableArray alloc] initWithObjects:mdic1,mdic2,mdic3,mdic4,mdic5,nil];
 
     
 }
@@ -119,7 +169,7 @@
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 80)];
     UIButton *buton  = [[UIButton alloc] initWithFrame:CGRectMake(10, 20, kScreenWidth-20, 40)];
-    [buton setTitle:@"提交" forState:UIControlStateNormal];
+    [buton setTitle:@"保存" forState:UIControlStateNormal];
     [buton addTarget:self action:@selector(postInfo:) forControlEvents:UIControlEventTouchUpInside];
     
     [buton setBackgroundColor:[UIColor colorWithHexString:@"FF8698" alpha:1]];
@@ -132,71 +182,6 @@
 
 
 - (void)postInfo:(UIButton *)button {
-    
- /*   NSDictionary *para ;
-    NSMutableDictionary *paraDic = [NSMutableDictionary dictionary];
-    for (NSDictionary *dic in dataArray) {
-       
-        NSArray *chidArr = [dic objectForKey:@"children"];
-        for (NSDictionary *chidDic in chidArr) {
-            NSInteger defaultValue = [[chidDic objectForKey:@"defaultValue"] integerValue];
-            if (defaultValue == 1) {
-                [paraDic setObject:@"1" forKey:[chidDic objectForKey:@"fieldName"]];
-            }
-        }
-    }
-    
-    NSString *tableName = [dataArray[0] objectForKey:@"tableName"];
-    NSDictionary *dic = USERINFO;
-    if (!dic) {
-        [Alert showWithTitle:@"请重新登录"];
-        return;
-    }
-    NSDate *theDate = [NSDate date];
-    
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat =@"YYYY-MM-dd";
-    
-    
-    NSArray *parArr =@[@{@"field":paraDic,@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"inspectionOrder":@"1",@"recordTime":[dateFormatter stringFromDate:theDate],@"sign":@"1",@"tableName":tableName}];
-    para = @{@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"recordTime":[dateFormatter stringFromDate:theDate],@"generalSurveyList":parArr};
-    
-    [RBaseHttpTool postWithUrl:@"data/upload2" parameters:para sucess:^(id json) {
-        
-        
-        NSUserDefaults *defaut = [NSUserDefaults standardUserDefaults];
-        
-        if (_comeType == 1) {
-            
-            [defaut setObject:dataArray forKey:@"user_zhusuSDic"];
-            
-        }else if (_comeType == 2) {
-            
-            [defaut setObject:dataArray forKey:@"user_yingshiSDic"];
-            
-        }if (_comeType == 3) {
-            
-            [defaut setObject:dataArray forKey:@"user_shenghuoSDic"];
-            
-        }
-        
-        [defaut synchronize];
-
-        NSInteger success = [[json objectForKey:@"success"] integerValue];
-        [Alert showWithTitle:[json objectForKey:@"message"]];
-
-        if (success == 1) {
-            [Alert showWithTitle:@"保存成功"];
-            [self.navigationController popViewControllerAnimated:YES];
-        }
-        
-    } failur:^(NSError *error) {
-        
-        [Alert showWithTitle:[NSString stringWithFormat:@"%@",error.userInfo]];
-        
-        
-    }];
-*/
     NSUserDefaults *defaut = [NSUserDefaults standardUserDefaults];
     
     if (_comeType == 1) {
@@ -513,8 +498,8 @@
                 
                 [butt setBackgroundImage:[UIImage imageNamed:@"单选勾选框_ct"] forState:UIControlStateNormal];
             }else{
-                
-                [subDic setObject:@"1" forKey:@"defaultValue"];
+                NSString *inde = [NSString stringWithFormat:@"%ld",index];
+                [subDic setObject:inde forKey:@"defaultValue"];
 
                [butt setBackgroundImage:[UIImage imageNamed:@"单选勾选框_dj@2x"] forState:UIControlStateNormal];
                

@@ -31,11 +31,14 @@
 		F26A76E81E1CDCBC00DE4C75 /* UITouch+MemoryLeak.m in Sources */ = {isa = PBXBuildFile; fileRef = F26A76DB1E1CDCBC00DE4C75 /* UITouch+MemoryLeak.m */; };
 		F26A76E91E1CDCBC00DE4C75 /* UIView+MemoryLeak.m in Sources */ = {isa = PBXBuildFile; fileRef = F26A76DD1E1CDCBC00DE4C75 /* UIView+MemoryLeak.m */; };
 		F26A76EA1E1CDCBC00DE4C75 /* UIViewController+MemoryLeak.m in Sources */ = {isa = PBXBuildFile; fileRef = F26A76DF1E1CDCBC00DE4C75 /* UIViewController+MemoryLeak.m */; };
+		F27489031EB0AEF10099378A /* savIM.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F27489021EB0AEF10099378A /* savIM.jpg */; };
+		F27489061EB189660099378A /* ResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F27489051EB189660099378A /* ResultViewController.m */; };
+		F27489081EB192AA0099378A /* 启动页.png in Resources */ = {isa = PBXBuildFile; fileRef = F27489071EB192AA0099378A /* 启动页.png */; };
+		F274890B1EB195110099378A /* icon120.png in Resources */ = {isa = PBXBuildFile; fileRef = F27489091EB195110099378A /* icon120.png */; };
+		F274890C1EB195110099378A /* icon180.png in Resources */ = {isa = PBXBuildFile; fileRef = F274890A1EB195110099378A /* icon180.png */; };
+		F274890F1EB1E9770099378A /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = F274890E1EB1E9770099378A /* MBProgressHUD.m */; };
 		F29CA37D1E23229000EC46F1 /* MKPAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = F29CA37C1E23229000EC46F1 /* MKPAlertView.m */; };
-		F2A7BC4B1E8B858000545BC7 /* banner1.png in Resources */ = {isa = PBXBuildFile; fileRef = F2A7BC481E8B858000545BC7 /* banner1.png */; };
 		F2A7BC4C1E8B858000545BC7 /* banner2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F2A7BC491E8B858000545BC7 /* banner2.jpg */; };
-		F2AA5AC91E8CA0E10050E766 /* icon120.png in Resources */ = {isa = PBXBuildFile; fileRef = F2AA5AC71E8CA0E10050E766 /* icon120.png */; };
-		F2AA5ACA1E8CA0E10050E766 /* icon144.png in Resources */ = {isa = PBXBuildFile; fileRef = F2AA5AC81E8CA0E10050E766 /* icon144.png */; };
 		F2AC00E31CAE53AE001C20CE /* 上传图片默认图.png in Resources */ = {isa = PBXBuildFile; fileRef = F2ACFFF21CAE53AE001C20CE /* 上传图片默认图.png */; };
 		F2AC00E41CAE53AE001C20CE /* 上传图片默认图@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F2ACFFF31CAE53AE001C20CE /* 上传图片默认图@2x.png */; };
 		F2AC00E51CAE53AE001C20CE /* 上传图片默认图@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F2ACFFF41CAE53AE001C20CE /* 上传图片默认图@3x.png */; };
@@ -364,8 +367,6 @@
 		F2F7F2221CB6385A00A36F3A /* RegistViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2F7F2201CB6385A00A36F3A /* RegistViewController.xib */; };
 		F2F7F2261CB63BD200A36F3A /* RegistTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F7F2241CB63BD200A36F3A /* RegistTableViewCell.m */; };
 		F2F7F2271CB63BD200A36F3A /* RegistTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2F7F2251CB63BD200A36F3A /* RegistTableViewCell.xib */; };
-		F2F7F22B1CB6509B00A36F3A /* SickViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F7F2291CB6509B00A36F3A /* SickViewController.m */; };
-		F2F7F22C1CB6509B00A36F3A /* SickViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2F7F22A1CB6509B00A36F3A /* SickViewController.xib */; };
 		F2F7F2301CB650CD00A36F3A /* OSIickViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F7F22E1CB650CD00A36F3A /* OSIickViewController.m */; };
 		F2F7F2311CB650CD00A36F3A /* OSIickViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2F7F22F1CB650CD00A36F3A /* OSIickViewController.xib */; };
 		F2F7F2351CB6510700A36F3A /* OSlickTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F7F2331CB6510700A36F3A /* OSlickTableViewCell.m */; };
@@ -464,12 +465,17 @@
 		F26A76DD1E1CDCBC00DE4C75 /* UIView+MemoryLeak.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MemoryLeak.m"; sourceTree = "<group>"; };
 		F26A76DE1E1CDCBC00DE4C75 /* UIViewController+MemoryLeak.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MemoryLeak.h"; sourceTree = "<group>"; };
 		F26A76DF1E1CDCBC00DE4C75 /* UIViewController+MemoryLeak.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MemoryLeak.m"; sourceTree = "<group>"; };
+		F27489021EB0AEF10099378A /* savIM.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = savIM.jpg; path = HealthPregnant/savIM.jpg; sourceTree = "<group>"; };
+		F27489041EB189660099378A /* ResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultViewController.h; sourceTree = "<group>"; };
+		F27489051EB189660099378A /* ResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultViewController.m; sourceTree = "<group>"; };
+		F27489071EB192AA0099378A /* 启动页.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "启动页.png"; sourceTree = "<group>"; };
+		F27489091EB195110099378A /* icon120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon120.png; sourceTree = "<group>"; };
+		F274890A1EB195110099378A /* icon180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon180.png; sourceTree = "<group>"; };
+		F274890D1EB1E9770099378A /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		F274890E1EB1E9770099378A /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		F29CA37B1E23229000EC46F1 /* MKPAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKPAlertView.h; sourceTree = "<group>"; };
 		F29CA37C1E23229000EC46F1 /* MKPAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKPAlertView.m; sourceTree = "<group>"; };
-		F2A7BC481E8B858000545BC7 /* banner1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = banner1.png; sourceTree = "<group>"; };
 		F2A7BC491E8B858000545BC7 /* banner2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = banner2.jpg; sourceTree = "<group>"; };
-		F2AA5AC71E8CA0E10050E766 /* icon120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon120.png; sourceTree = "<group>"; };
-		F2AA5AC81E8CA0E10050E766 /* icon144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon144.png; sourceTree = "<group>"; };
 		F2AC00001CAE53AE001C20CE /* 分析_主诉与病症未勾选_ct@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "分析_主诉与病症未勾选_ct@3x.png"; sourceTree = "<group>"; };
 		F2AC00011CAE53AE001C20CE /* 分析_主诉与病症未勾选_dj.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "分析_主诉与病症未勾选_dj.png"; sourceTree = "<group>"; };
 		F2AC00021CAE53AE001C20CE /* 分析_主诉与病症未勾选_dj@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "分析_主诉与病症未勾选_dj@2x.png"; sourceTree = "<group>"; };
@@ -887,9 +893,6 @@
 		F2F7F2231CB63BD200A36F3A /* RegistTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistTableViewCell.h; sourceTree = "<group>"; };
 		F2F7F2241CB63BD200A36F3A /* RegistTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistTableViewCell.m; sourceTree = "<group>"; };
 		F2F7F2251CB63BD200A36F3A /* RegistTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegistTableViewCell.xib; sourceTree = "<group>"; };
-		F2F7F2281CB6509B00A36F3A /* SickViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SickViewController.h; sourceTree = "<group>"; };
-		F2F7F2291CB6509B00A36F3A /* SickViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SickViewController.m; sourceTree = "<group>"; };
-		F2F7F22A1CB6509B00A36F3A /* SickViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SickViewController.xib; sourceTree = "<group>"; };
 		F2F7F22D1CB650CD00A36F3A /* OSIickViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSIickViewController.h; sourceTree = "<group>"; };
 		F2F7F22E1CB650CD00A36F3A /* OSIickViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSIickViewController.m; sourceTree = "<group>"; };
 		F2F7F22F1CB650CD00A36F3A /* OSIickViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OSIickViewController.xib; sourceTree = "<group>"; };
@@ -1044,9 +1047,9 @@
 		F2ACFED91CACD3B1001C20CE = {
 			isa = PBXGroup;
 			children = (
-				F2AA5AC71E8CA0E10050E766 /* icon120.png */,
-				F2AA5AC81E8CA0E10050E766 /* icon144.png */,
-				F2A7BC481E8B858000545BC7 /* banner1.png */,
+				F27489091EB195110099378A /* icon120.png */,
+				F274890A1EB195110099378A /* icon180.png */,
+				F27489021EB0AEF10099378A /* savIM.jpg */,
 				F2A7BC491E8B858000545BC7 /* banner2.jpg */,
 				F2D8B60F1CBC978F00028D71 /* libsqlite3.dylib */,
 				F26A76C81E1CDCBC00DE4C75 /* MLeaksFinder */,
@@ -1070,6 +1073,7 @@
 		F2ACFEE41CACD3B1001C20CE /* HealthPregnant */ = {
 			isa = PBXGroup;
 			children = (
+				F274890E1EB1E9770099378A /* MBProgressHUD.m */,
 				F2ACFFF11CAE53AE001C20CE /* slices */,
 				F2ACFF181CACD472001C20CE /* Tool */,
 				F2ACFEE81CACD3B1001C20CE /* AppDelegate.h */,
@@ -1126,6 +1130,7 @@
 		F2ACFF181CACD472001C20CE /* Tool */ = {
 			isa = PBXGroup;
 			children = (
+				F274890D1EB1E9770099378A /* MBProgressHUD.h */,
 				F2F8E5FB1D0D6BDA00CFDEC2 /* TZImagePickerController */,
 				F2F7F23D1CB6553900A36F3A /* RBaseModel.h */,
 				F2F7F23E1CB6553900A36F3A /* RBaseModel.m */,
@@ -1345,6 +1350,8 @@
 			children = (
 				F2AC01E71CAF69AF001C20CE /* FiveViewController.h */,
 				F2AC01E81CAF69AF001C20CE /* FiveViewController.m */,
+				F27489041EB189660099378A /* ResultViewController.h */,
+				F27489051EB189660099378A /* ResultViewController.m */,
 			);
 			name = Five;
 			sourceTree = "<group>";
@@ -1389,9 +1396,6 @@
 				F2ACFFEC1CAD21EF001C20CE /* OneViewController.h */,
 				F2ACFFED1CAD21EF001C20CE /* OneViewController.m */,
 				F2ACFFEE1CAD21EF001C20CE /* OneViewController.xib */,
-				F2F7F2281CB6509B00A36F3A /* SickViewController.h */,
-				F2F7F2291CB6509B00A36F3A /* SickViewController.m */,
-				F2F7F22A1CB6509B00A36F3A /* SickViewController.xib */,
 				F2F7F22D1CB650CD00A36F3A /* OSIickViewController.h */,
 				F2F7F22E1CB650CD00A36F3A /* OSIickViewController.m */,
 				F2F7F22F1CB650CD00A36F3A /* OSIickViewController.xib */,
@@ -1646,6 +1650,7 @@
 				F2AC00D91CAE53AE001C20CE /* 首页_膳食调查icon_ct@3x.png */,
 				F2AC00DA1CAE53AE001C20CE /* 首页_膳食调查icon_dj.png */,
 				F2AC00DB1CAE53AE001C20CE /* 首页_膳食调查icon_dj@2x.png */,
+				F27489071EB192AA0099378A /* 启动页.png */,
 				F2AC00DC1CAE53AE001C20CE /* 首页_膳食调查icon_dj@3x.png */,
 				F2AC00DD1CAE53AE001C20CE /* 首页_运动调查icon_ct.png */,
 				F2AC00DE1CAE53AE001C20CE /* 首页_运动调查icon_ct@2x.png */,
@@ -1789,7 +1794,7 @@
 				TargetAttributes = {
 					F2ACFEE11CACD3B1001C20CE = {
 						CreatedOnToolsVersion = 7.0.1;
-						DevelopmentTeam = BR5HRAW57V;
+						DevelopmentTeam = W4V34SL687;
 						ProvisioningStyle = Manual;
 					};
 					F2ACFEFA1CACD3B1001C20CE = {
@@ -1840,7 +1845,6 @@
 				F2AC01341CAE53AE001C20CE /* 分析_饮食习惯勾选_dj.png in Resources */,
 				F2AC01181CAE53AE001C20CE /* 分析_生活习惯未勾选_dj@3x.png in Resources */,
 				F2AC00E81CAE53AE001C20CE /* 主页弧形底@3x.png in Resources */,
-				F2A7BC4B1E8B858000545BC7 /* banner1.png in Resources */,
 				F2F7F2451CB6615500A36F3A /* 选择.png in Resources */,
 				F2AC015E1CAE53AE001C20CE /* 常规_实验室检测icon_ct@3x.png in Resources */,
 				F2AC01A01CAE53AF001C20CE /* 运动_睡眠时间调查icon_ct@3x.png in Resources */,
@@ -1893,8 +1897,8 @@
 				F2AC01731CAE53AE001C20CE /* 常规_饮食习惯icon_dj@3x.png in Resources */,
 				F2AC013D1CAE53AE001C20CE /* 动图指示点_ct.png in Resources */,
 				F2AC01B01CAE53AF001C20CE /* 返回按钮_ct.png in Resources */,
-				F2AA5AC91E8CA0E10050E766 /* icon120.png in Resources */,
 				F2AC01021CAE53AE001C20CE /* 分析_既往及现病史勾选_ct@2x.png in Resources */,
+				F274890B1EB195110099378A /* icon120.png in Resources */,
 				F2AC01351CAE53AE001C20CE /* 分析_饮食习惯勾选_dj@2x.png in Resources */,
 				F2AC012D1CAE53AE001C20CE /* 分析_运动调查未勾选_ct@3x.png in Resources */,
 				F2AC014F1CAE53AE001C20CE /* 多选勾选框_ct.png in Resources */,
@@ -1919,7 +1923,6 @@
 				F24785B31CBCD31600E83946 /* JianceContView.xib in Resources */,
 				F2AC01C91CAE53AF001C20CE /* 首页_膳食调查icon_ct@2x.png in Resources */,
 				F2AC01B31CAE53AF001C20CE /* 返回按钮_dj.png in Resources */,
-				F2AA5ACA1E8CA0E10050E766 /* icon144.png in Resources */,
 				F2F8E6261D0D6BDA00CFDEC2 /* photo_original_sel@2x.png in Resources */,
 				F2AC01991CAE53AF001C20CE /* 膳食_晚餐icon_dj@2x.png in Resources */,
 				F2AC00F21CAE53AE001C20CE /* 分析_主诉与病症未勾选_dj.png in Resources */,
@@ -1950,6 +1953,7 @@
 				F2F7F2361CB6510700A36F3A /* OSlickTableViewCell.xib in Resources */,
 				F2AC014B1CAE53AE001C20CE /* 单选勾选框_ct@3x.png in Resources */,
 				F2AC01031CAE53AE001C20CE /* 分析_既往及现病史勾选_ct@3x.png in Resources */,
+				F27489031EB0AEF10099378A /* savIM.jpg in Resources */,
 				F2AC00E31CAE53AE001C20CE /* 上传图片默认图.png in Resources */,
 				F2AC016F1CAE53AE001C20CE /* 常规_饮食习惯icon_ct@2x.png in Resources */,
 				F2AC01091CAE53AE001C20CE /* 分析_既往及现病史未勾选_ct@3x.png in Resources */,
@@ -1962,7 +1966,6 @@
 				F2AC00EE1CAE53AE001C20CE /* 分析_主诉与病症勾选_dj@3x.png in Resources */,
 				F2AC01921CAE53AF001C20CE /* 膳食_早餐icon_dj.png in Resources */,
 				F2AC01831CAE53AE001C20CE /* 膳食_加餐icon_ct.png in Resources */,
-				F2F7F22C1CB6509B00A36F3A /* SickViewController.xib in Resources */,
 				F2AC00FC1CAE53AE001C20CE /* 分析_实验室检测未勾选_ct@2x.png in Resources */,
 				F2AC01901CAE53AF001C20CE /* 膳食_早餐icon_ct@2x.png in Resources */,
 				F2AC012F1CAE53AE001C20CE /* 分析_运动调查未勾选_dj@2x.png in Resources */,
@@ -2001,6 +2004,7 @@
 				F2AC00FA1CAE53AE001C20CE /* 分析_实验室检测勾选_dj@3x.png in Resources */,
 				F2F8E61F1D0D6BDA00CFDEC2 /* MMVideoPreviewPlay@2x.png in Resources */,
 				F2AC013C1CAE53AE001C20CE /* 分析_饮食习惯未勾选_dj@3x.png in Resources */,
+				F27489081EB192AA0099378A /* 启动页.png in Resources */,
 				F2AC00F11CAE53AE001C20CE /* 分析_主诉与病症未勾选_ct@3x.png in Resources */,
 				F2AC01C01CAE53AF001C20CE /* 首页_分析结果icon_dj@2x.png in Resources */,
 				F2AC018D1CAE53AE001C20CE /* 膳食_午餐icon_dj@2x.png in Resources */,
@@ -2040,6 +2044,7 @@
 				F2AC00EF1CAE53AE001C20CE /* 分析_主诉与病症未勾选_ct.png in Resources */,
 				F2AC016E1CAE53AE001C20CE /* 常规_饮食习惯icon_ct.png in Resources */,
 				F2AC01CD1CAE53AF001C20CE /* 首页_膳食调查icon_dj@3x.png in Resources */,
+				F274890C1EB195110099378A /* icon180.png in Resources */,
 				F2AC01B71CAE53AF001C20CE /* 首页_个人信息icon_ct@2x.png in Resources */,
 				F2AC01681CAE53AE001C20CE /* 常规_生活习惯icon_ct.png in Resources */,
 				F2AC01C21CAE53AF001C20CE /* 首页_常规调查icon_ct.png in Resources */,
@@ -2142,6 +2147,7 @@
 				F2F7F2211CB6385A00A36F3A /* RegistViewController.m in Sources */,
 				F2ACFF5E1CACE58A001C20CE /* TAAbstractDotView.m in Sources */,
 				F2F8E6371D0D6BDA00CFDEC2 /* UIView+Layout.m in Sources */,
+				F27489061EB189660099378A /* ResultViewController.m in Sources */,
 				F24785B11CBCD18B00E83946 /* JianceViewController.m in Sources */,
 				F2ACFFDF1CAD1656001C20CE /* FMDatabasePool.m in Sources */,
 				F2ACFFBC1CAD14D7001C20CE /* AFURLConnectionOperation.m in Sources */,
@@ -2168,6 +2174,7 @@
 				F2F8E6311D0D6BDA00CFDEC2 /* TZImageManager.m in Sources */,
 				F2ACFF461CACD9BE001C20CE /* SDImageCache.m in Sources */,
 				F2ACFF4A1CACD9BE001C20CE /* SDWebImageDownloaderOperation.m in Sources */,
+				F274890F1EB1E9770099378A /* MBProgressHUD.m in Sources */,
 				F2ACFFB81CAD14D7001C20CE /* AFHTTPRequestOperationManager.m in Sources */,
 				F2ACFF531CACD9BE001C20CE /* UIView+WebCacheOperation.m in Sources */,
 				F26A76E21E1CDCBC00DE4C75 /* NSObject+MemoryLeak.m in Sources */,
@@ -2179,7 +2186,6 @@
 				F2ACFFA21CAD149A001C20CE /* UIWebView+AFNetworking.m in Sources */,
 				F2ACFF9D1CAD149A001C20CE /* UIAlertView+AFNetworking.m in Sources */,
 				F2ACFF4D1CACD9BE001C20CE /* UIButton+WebCache.m in Sources */,
-				F2F7F22B1CB6509B00A36F3A /* SickViewController.m in Sources */,
 				F26A76E01E1CDCBC00DE4C75 /* MLeakedObjectProxy.m in Sources */,
 				F2F8E6341D0D6BDA00CFDEC2 /* TZPhotoPreviewCell.m in Sources */,
 				F2ACFFD01CAD1507001C20CE /* Rc4.m in Sources */,
@@ -2371,7 +2377,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: xie bo (32MAU9X58J)";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: zhenghong ye (W4V34SL687)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = BR5HRAW57V;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/HealthPregnant/pchfile.pch";
@@ -2379,7 +2386,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.super-in.client";
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.miyang;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "4b7dee05-717f-43b3-89be-f5d735fc2400";
 				PROVISIONING_PROFILE_SPECIFIER = dev_provision;
@@ -2390,18 +2397,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: xie bo (32MAU9X58J)";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: zhenghong ye (W4V34SL687)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: zhenghong ye (W4V34SL687)";
-				DEVELOPMENT_TEAM = BR5HRAW57V;
+				DEVELOPMENT_TEAM = W4V34SL687;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/HealthPregnant/pchfile.pch";
 				INFOPLIST_FILE = HealthPregnant/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.super-in.client";
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.miyang;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d90c23fc-0b38-44d0-b5d6-b49beb2c2206";
-				PROVISIONING_PROFILE_SPECIFIER = dev_provision;
+				PROVISIONING_PROFILE = "8faa8724-d9f2-4269-b2bd-78b1a8786a3c";
+				PROVISIONING_PROFILE_SPECIFIER = Text2;
 			};
 			name = Release;
 		};

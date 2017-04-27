@@ -8,7 +8,6 @@
 
 #import "OneViewController.h"
 #import "RegistTableViewCell.h"
-#import "SickViewController.h"
 #import "OSIickViewController.h"
 #import "JianceViewController.h"
 #import "HabitViewController.h"
@@ -33,7 +32,7 @@
     
     NSArray *yunArray;
 
-
+    NSDictionary *usinfoDic;
 
 
 }
@@ -47,6 +46,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.title = @"常规调查";
+    NSUserDefaults *userDetaults = [NSUserDefaults standardUserDefaults];
+    
+    usinfoDic = [userDetaults objectForKey:@"USERINFO"];
+
     questionSArray = @[@"检测日期",@"孕周",@"孕期"];
     yunzSel = 0;
     yunqSel = 0;
@@ -80,6 +83,41 @@
         
         cell.nameLab.text = questionSArray[indexPath.row];
         cell.wTF.delegate = self;
+        cell.wTF.enabled = NO;
+        if (indexPath.row == 0) {
+         cell.wTF.text = [NSString dateString:[usinfoDic objectForKey:@"birthDate"]];
+        }else{
+            
+            NSString *lastS = [usinfoDic objectForKey:@"lastUpdateTime"];
+            NSString *cretS = [usinfoDic objectForKey:@"createTime"];
+            NSString * timeStampString = [NSString stringWithFormat:@"%@",lastS];
+            NSTimeInterval _interval=[timeStampString doubleValue] /1000;
+            NSDate *date = [NSDate dateWithTimeIntervalSince1970:_interval];
+            
+            NSString * timeStampString2 = [NSString stringWithFormat:@"%@",cretS];
+            NSTimeInterval _interval2=[timeStampString2 doubleValue] /1000;
+            NSDate *date2 = [NSDate dateWithTimeIntervalSince1970:_interval2];
+            NSTimeInterval time = [date timeIntervalSinceDate:date2];
+            
+            //开始时间和结束时间的中间相差的时间
+            int days;
+            days = ((int)time)/(3600*24);  //一天是24小时*3600秒
+            if (indexPath.row == 1){
+            
+            cell.wTF.text = [NSString stringWithFormat:@"%ld周",days/7];
+            }else{
+                NSInteger num = days/7;
+                if (num <14) {
+                    cell.wTF.text = @"孕早期";
+                }else if (num < 28){
+                    cell.wTF.text = @"孕中期";
+
+                }else{
+                    cell.wTF.text = @"孕晚期";
+
+                }
+            }
+        }
         cell.wTF.tag = 1000 + indexPath.row;
          cell.selectionStyle = UITableViewCellSelectionStyleNone;
    
@@ -93,6 +131,10 @@
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIndetifer];
             }
             cell.textLabel.text = @"常规检测";
+            cell.textLabel.font = [UIFont fontWithName:@"PingFangSC" size:16];
+            cell.textLabel.textColor = [UIColor blackColor];
+            cell.textLabel.alpha = 0.7;
+
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         }
@@ -130,7 +172,8 @@
                 
                 UILabel *titleLa = [[UILabel alloc] initWithFrame:CGRectMake(0, imageV.bottom + 10, kScreenWidth/4, 20)];
                 titleLa.textAlignment = NSTextAlignmentCenter;
-                titleLa.font = [UIFont systemFontOfSize:13];
+                titleLa.font = [UIFont fontWithName:@"PingFangSC-Light" size:12];
+                titleLa.textColor = [UIColor colorWithString:@"4A4A4A"];
                 titleLa.text  = titleArray[i];
                 [button addSubview:titleLa];
             }

@@ -33,9 +33,10 @@
     dataArr = [NSMutableArray array];
     _tableV.tableFooterView = [[UIView alloc] init];
     selFInt = 0;
-    selSInt = 0;
+    selSInt = 1;
 
     NSArray *result = [[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] objectForKey:@"result"];
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
     switch (_comeType) {
@@ -135,19 +136,30 @@
 
         for (NSDictionary *chidDic in array) {
             if (_comeType != 2) {
-               
-                if ([[chidDic objectForKey:@"defaultValue"] integerValue] != 0) {
-                    cell.nameLab.text = [chidDic objectForKey:@"caption"];
-                    
+                if (_comeType == 0) {
+                    if ([[chidDic objectForKey:@"defaultValue"] integerValue] != 0) {
+                        cell.nameLab.text = [chidDic objectForKey:@"caption"];
+                        
+                    }
+
+                }else{
+                    if ([[chidDic objectForKey:@"defaultValue"] integerValue] != 0) {
+                        cell.nameLab.text = [NSString stringWithFormat:@"%@小时",[chidDic objectForKey:@"defaultValue"]];
+                        
+                    }
+
                 }
 
             }else{
                 
-                if ([[chidDic objectForKey:@"defaultValue"] integerValue] != 0) {
-                    cell.nameLab.text = [NSString stringWithFormat:@"%@/%@分钟",[chidDic objectForKey:@"caption"],[chidDic objectForKey:@"defaultValue"]];
+                if ([[chidDic objectForKey:@"defaultValue"] floatValue] != 0) {
+                    NSLog(@"xxxx ===  %f",[[chidDic objectForKey:@"defaultValue"] floatValue] );
+                    float T = [[chidDic objectForKey:@"defaultValue"] floatValue] *60;
+                    NSInteger TI = ceilf(T)/10 ;
+                    cell.nameLab.text = [NSString stringWithFormat:@"%@/%d分钟",[chidDic objectForKey:@"caption"],TI*10];
                     
                 }else{
-                    
+                
                     cell.nameLab.text = [NSString stringWithFormat:@"%@/0分钟",[chidDic objectForKey:@"caption"]];
                 }
 
@@ -277,9 +289,13 @@
 //每个组件的行数
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
+    NSArray *result = [[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] objectForKey:@"result"];
+
     switch (_comeType) {
         case 0: {
-            NSArray *array = [dataDic objectForKey:@"children"];
+            
+            NSDictionary *Dic = [[NSMutableDictionary alloc] initWithDictionary:result[16]];
+            NSArray *array = [Dic objectForKey:@"children"];
             return array.count;
             
         }
@@ -295,11 +311,13 @@
         default: {
             
             if (component == 0) {
-                NSArray *array = [dataDic objectForKey:@"children"];
+                NSDictionary *Dic = [[NSMutableDictionary alloc] initWithDictionary:result[18]];
+                NSArray *array = [Dic objectForKey:@"children"];
+
                 return array.count;
 
             }else{
-                return 25;
+                return 24;
             }
         }
             break;
@@ -312,9 +330,12 @@
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     NSString *captionS;
+            NSArray *result = [[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] objectForKey:@"result"];
     if (_comeType == 0) {
-        
-        NSArray *array = [dataDic objectForKey:@"children"];
+
+        NSDictionary *Dic = [[NSMutableDictionary alloc] initWithDictionary:result[16]];
+
+        NSArray *array = [Dic objectForKey:@"children"];
         captionS = [array[row] objectForKey:@"caption"];
 
         
@@ -324,13 +345,14 @@
     }else if (_comeType == 2){
         
         if (component == 0) {
-            
-            NSArray *array = [dataDic objectForKey:@"children"];
+            NSDictionary *Dic = [[NSMutableDictionary alloc] initWithDictionary:result[18]];
+
+            NSArray *array = [Dic objectForKey:@"children"];
             captionS = [array[row] objectForKey:@"caption"];
 
         }else if (component == 1){
             
-            captionS = [NSString stringWithFormat:@"%ld小时",row ];
+            captionS = [NSString stringWithFormat:@"%ld分钟",(row+1)*10 ];
 
         }
     }
@@ -345,7 +367,7 @@
         selFInt = row;
 
     }else{
-        selSInt = row;
+        selSInt = row+1;
     }
  
     
@@ -356,7 +378,7 @@
     
     NSString *captionS;
     
-      NSMutableArray *children =[NSMutableArray arrayWithArray:[dataDic objectForKey:@"children"]];
+//      NSMutableArray *children =[NSMutableArray arrayWithArray:[dataDic objectForKey:@"children"]];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSMutableArray *codeArr = [NSMutableArray array];
     if (_comeType == 0) {
@@ -364,7 +386,9 @@
         if (a.count > 0) {
             codeArr = [a mutableCopy];
         }
-        
+        NSArray *result = [[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] objectForKey:@"result"];
+        NSDictionary *Dic = [[NSMutableDictionary alloc] initWithDictionary:result[16]];
+      NSMutableArray *children =[NSMutableArray arrayWithArray:[Dic objectForKey:@"children"]];
         NSMutableDictionary *subDic = [[NSMutableDictionary alloc]initWithDictionary:[children objectAtIndex:row]];
         [subDic setObject:@"1" forKey:@"defaultValue"];
         [children replaceObjectAtIndex:row withObject:subDic];
@@ -380,8 +404,13 @@
             codeArr = [a mutableCopy];
         }
         captionS = [NSString stringWithFormat:@"%ld小时",row +1];
+        NSArray *result = [[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] objectForKey:@"result"];
+        NSDictionary *Dic = [[NSMutableDictionary alloc] initWithDictionary:result[17]];
+        NSMutableArray *children =[NSMutableArray arrayWithArray:[Dic objectForKey:@"children"]];
+       NSString *cap = [NSString stringWithFormat:@"%ld",row];
+
         NSMutableDictionary *subDic = [[NSMutableDictionary alloc]initWithDictionary:[children objectAtIndex:0]];
-        [subDic setObject:captionS forKey:@"defaultValue"];
+        [subDic setObject:cap forKey:@"defaultValue"];
         [children replaceObjectAtIndex:0 withObject:subDic];
          [dataDic setObject:children forKey:@"children"];
         [dataDic setObject: _dataStr forKey:@"addTime"];
@@ -395,18 +424,20 @@
         if (a.count > 0) {
             codeArr = [a mutableCopy];
         }
-            NSArray *array = [dataDic objectForKey:@"children"];
+        NSArray *result = [[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] objectForKey:@"result"];
+        NSDictionary *Dic = [[NSMutableDictionary alloc] initWithDictionary:result[18]];
+        NSMutableArray *children =[NSMutableArray arrayWithArray:[Dic objectForKey:@"children"]];
+            NSArray *array = [Dic objectForKey:@"children"];
            NSString *caption1 = [array[selFInt] objectForKey:@"caption"];
             
         
             NSString *caption2 = [NSString stringWithFormat:@"%ld小时",selSInt];
             
         captionS = [NSString stringWithFormat:@"%@ / %@",caption1,caption2];
-        NSString *caStr = [NSString stringWithFormat:@"%ld",selSInt];
+        NSString *caStr = [NSString stringWithFormat:@"%0.2lf",(float)selSInt/6];
         NSMutableDictionary *subDic = [[NSMutableDictionary alloc]initWithDictionary:[children objectAtIndex:selFInt]];
-        [subDic setObject:caStr forKey:@"defaultValue"];
-        [children replaceObjectAtIndex:selFInt withObject:subDic];
-         [dataDic setObject:children forKey:@"children"];
+        [subDic setObject:caStr forKey:@"defaultValue"]; 
+        [dataDic setObject:@[subDic] forKey:@"children"];
         [dataDic setObject: _dataStr forKey:@"addTime"];
         [dataDic setObject:@"1" forKey:@"code"];
         [codeArr insertObject:dataDic atIndex:0];

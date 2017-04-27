@@ -130,7 +130,8 @@
             
             UILabel *titleLa = [[UILabel alloc] initWithFrame:CGRectMake(0, imageV.bottom + 10, kScreenWidth/4, 20)];
             titleLa.textAlignment = NSTextAlignmentCenter;
-            titleLa.font = [UIFont systemFontOfSize:13];
+            titleLa.font = [UIFont fontWithName:@"PingFangSC-Light" size:12];
+            titleLa.textColor = [UIColor colorWithString:@"4A4A4A"];
             titleLa.text  = titleArray[i];
             [button addSubview:titleLa];
         }

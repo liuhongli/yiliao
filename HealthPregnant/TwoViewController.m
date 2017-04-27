@@ -107,6 +107,9 @@
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIndetifer];
             }
             cell.textLabel.text = @"调查详细";
+            cell.textLabel.font = [UIFont fontWithName:@"PingFangSC" size:16];
+            cell.textLabel.textColor = [UIColor colorWithString:@"4A4A4A"];
+            cell.textLabel.alpha = 0.7;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         }
@@ -144,7 +147,9 @@
                 
                 UILabel *titleLa = [[UILabel alloc] initWithFrame:CGRectMake(0, imageV.bottom + 10, kScreenWidth/4, 20)];
                 titleLa.textAlignment = NSTextAlignmentCenter;
-                titleLa.font = [UIFont systemFontOfSize:13];
+                titleLa.font = [UIFont fontWithName:@"PingFangSC-Light" size:12];
+                titleLa.textColor = [UIColor colorWithString:@"4A4A4A"];
+
                 titleLa.text  = titleArray[i];
                 [button addSubview:titleLa];
             }
@@ -391,6 +396,7 @@
     [chageArr replaceObjectAtIndex:jobSel withObject:indexDic];
     [changDic setObject:chageArr forKey:@"children"];
     [changDic setObject:dateStr forKey:@"addTime"];
+    [changDic setObject:@"2" forKey:@"code"];
     NSUserDefaults *staD = [NSUserDefaults standardUserDefaults];
     [staD setObject:@[changDic] forKey:@"user_yjobSDic"];
     [staD setObject:captionS forKey:@"MYJOBSTR"];

@@ -21,7 +21,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [self loadData];
-    
+    [self lodInfo];
     ViewController   *vc          = [[ViewController alloc] init];
     
     LandViewController *landVC    = [[LandViewController alloc]init];
@@ -55,6 +55,32 @@
 
 }
 
+- (void)lodInfo{
+    if (USERINFO) {
+        NSDictionary * dic = USERINFO;
+    
+    NSDictionary *para = @{@"mobilePhone":[dic objectForKey:@"mobilePhone"]};
+    [RBaseHttpTool postWithUrl:@"user/login" parameters:para sucess:^(id json) {
+        if ([[json objectForKey:@"success"] floatValue]== 1) {
+            NSUserDefaults *userDetaults = [NSUserDefaults standardUserDefaults];
+            
+            NSDictionary *info = [json objectForKey:@"result"];
+            [userDetaults setObject:info  forKey:@"USERINFO"];
+            
+            [userDetaults synchronize];
+            
+            
+        }else{
+            
+        }
+        
+    } failur:^(NSError *error) {
+        
+        
+    }];
+    }
+
+}
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.

@@ -18,6 +18,7 @@
     
     NSArray *titleArray;
     NSArray *imageSArray;
+    UILabel *textLab;
 }
 
 @end
@@ -27,6 +28,19 @@
 - (void)viewWillAppear:(BOOL)animated {
     
     self.navigationController.navigationBar.hidden = YES;
+    if (USERINFO) {
+        NSDictionary *dic = USERINFO;
+        textLab.hidden = YES;
+
+    if ([dic objectForKey:@"lastUpdateTime"]) {
+        NSString *dataStr = [NSString dateString:[dic objectForKey:@"lastUpdateTime"]];
+        NSString *str = [NSString stringWithFormat:@"检测日期:%@",dataStr];
+        textLab.text = str;
+        textLab.hidden = NO;
+
+    }
+        
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -52,7 +66,7 @@
     [self.view addSubview:scrollView];
     
     
-    NSArray *images = @[[UIImage imageNamed:@"banner1.png"],
+    NSArray *images = @[[UIImage imageNamed:@"启动页.png"],
                         [UIImage imageNamed:@"banner2.jpg"]
                         ];
     SDCycleScrollView *cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:scrollView.frame imagesGroup:images];
@@ -70,7 +84,16 @@
     imageView.image = [UIImage imageNamed:@"主页弧形底"];
     imageView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:imageView];
-    
+    NSString *yuaStr = @"检测日期:2017-04-27";
+    CGSize orsize = [yuaStr sizeWithFont:[UIFont  systemFontOfSize:16] constrainedToSize:CGSizeMake(MAXFLOAT,15)];
+    textLab = [[UILabel alloc] initWithFrame:CGRectMake(kScreenWidth/2-orsize.width/2, 30, orsize.width, 15)];
+    textLab.font = [UIFont  systemFontOfSize:14];
+    textLab.textAlignment = NSTextAlignmentCenter;
+    textLab.textColor = [UIColor colorWithHexString:@"FF8698" alpha:1];
+    [imageView addSubview:textLab];
+    UIImageView *imageS = [[UIImageView alloc] initWithFrame:CGRectMake(textLab.width+3, 0, 15, 15)];
+    imageS.image = [UIImage imageNamed:@"单选勾选框_dj"];
+    [textLab addSubview:imageS];
     //标题
     for (int i = 0; i < titleArray.count; i ++) {
         

@@ -92,7 +92,7 @@ static YTKKeyValueStore *_store;
     [manager POST:url parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         NSLog(@"%@",formData);
 
-            [formData appendPartWithFileData:UIImageJPEGRepresentation(image, 0.5) name:@"file" fileName:@"iOS" mimeType:@"image/jpeg"];
+            [formData appendPartWithFileData:UIImageJPEGRepresentation(image, 0.5) name:@"imgFile" fileName:@"iOS" mimeType:@"image/jpeg"];
         
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSData *doubi = responseObject;
