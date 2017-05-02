@@ -165,13 +165,14 @@ NSString * const ID = @"cycleCell";
 {
     SDCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ID forIndexPath:indexPath];
     long itemIndex = indexPath.item % self.imagesGroup.count;
+    cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
     if (_imageType == 2) {
             [cell.imageView sd_setImageWithURL:[NSURL URLWithString:self.imagesGroup[itemIndex]]];
     }else{
         cell.imageView.image = self.imagesGroup[itemIndex];
 
     }
-
+    cell.backgroundColor = [UIColor whiteColor];
     if (_titlesGroup.count) {
         cell.title = _titlesGroup[itemIndex];
     }

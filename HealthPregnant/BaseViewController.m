@@ -129,81 +129,172 @@
 
             }
             if ([[dataDic objectForKey:@"code"] integerValue] == 3) {
-                NSMutableDictionary *paraAADic = [NSMutableDictionary dictionary];
-
                 NSArray *zaoA = [dataDic objectForKey:@"foodTime0"];
+                NSMutableDictionary *zaoM = [NSMutableDictionary dictionary];
                 for (NSDictionary *chidDic in zaoA) {
-                    NSInteger defaultValue = [[chidDic objectForKey:@"defaultValue"] integerValue];
-                    if (defaultValue != 0) {
-                        NSLog(@"1111");
-                        [paraAADic setObject:[chidDic objectForKey:@"defaultValue"] forKey:[chidDic objectForKey:@"fieldName"]];
-                        
-                    }    }
-                if (paraAADic.allKeys.count > 0) {
-                    
-                    NSLog(@"%@",[dataDic objectForKey:@"addTime"]);
-                    
-                    NSDictionary *parArr = @{@"field":paraAADic,@"foodTime":@"0",@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"inspectionOrder":@"1",@"recordTime":[dataDic objectForKey:@"addTime"],@"sign":@"1",@"tableName":tableName};
-                    [dietrM addObject:parArr];
+                    NSString *mst = [chidDic objectForKey:@"tableName"];
+                    if (![zaoM objectForKey:mst]) {
+                        [zaoM setObject:@[chidDic] forKey:mst];
+                    }else{
+                        NSMutableArray *zaoMUArr = [[zaoM objectForKey:mst] mutableCopy];
+                        [zaoMUArr addObject:chidDic];
+                        [zaoM setObject:zaoMUArr forKey:mst];
+                    }
                 }
+                NSArray *zaoAllkeyArr = [zaoM allKeys];
+                for (int i = 0; i < zaoAllkeyArr.count; i++) {
+                    NSArray *subZarr = [zaoM objectForKey:zaoAllkeyArr[i]];
+                    NSMutableDictionary *paraAADic = [NSMutableDictionary dictionary];
+                    
+
+                    tableName = [zaoAllkeyArr objectAtIndex:i];
+                    for (NSDictionary *chidDic in subZarr) {
+                        
+                        NSInteger defaultValue = [[chidDic objectForKey:@"defaultValue"] integerValue];
+                        if (defaultValue != 0) {
+                            NSLog(@"1111");
+                            [paraAADic setObject:[chidDic objectForKey:@"defaultValue"] forKey:[chidDic objectForKey:@"fieldName"]];
+                            
+                        }
+                       
+                        if (paraAADic.allKeys.count > 0) {
+                            
+                            NSLog(@"%@",[dataDic objectForKey:@"addTime"]);
+                            
+                            NSDictionary *parArr = @{@"field":paraAADic,@"foodTime":@"0",@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"inspectionOrder":@"1",@"recordTime":[dataDic objectForKey:@"addTime"],@"sign":@"1",@"tableName":tableName};
+                            [dietrM addObject:parArr];
+                        }
+                        
+                    }
+                    
+
+                    }
+                
 //中餐
                 NSArray *zhonA = [dataDic objectForKey:@"foodTime1"];
-                NSMutableDictionary *paraBBDic = [NSMutableDictionary dictionary];
-              
+                
+                NSMutableDictionary *zhonM = [NSMutableDictionary dictionary];
                 for (NSDictionary *chidDic in zhonA) {
-                    NSInteger defaultValue = [[chidDic objectForKey:@"defaultValue"] integerValue];
-                    if (defaultValue != 0) {
-                        NSLog(@"1111");
-                        [paraBBDic setObject:[chidDic objectForKey:@"defaultValue"] forKey:[chidDic objectForKey:@"fieldName"]];
-                        
-                    }    }
-                if (paraBBDic.allKeys.count > 0) {
-                    
-                    NSLog(@"%@",[dataDic objectForKey:@"addTime"]);
-                    
-                    NSDictionary *parArr = @{@"field":paraBBDic,@"foodTime":@"1",@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"inspectionOrder":@"1",@"recordTime":[dataDic objectForKey:@"addTime"],@"sign":@"1",@"tableName":tableName};
-                    [dietrM addObject:parArr];
+                    NSString *mst = [chidDic objectForKey:@"tableName"];
+                    if (![zhonM objectForKey:mst]) {
+                        [zhonM setObject:@[chidDic] forKey:mst];
+                    }else{
+                        NSMutableArray *zaoMUArr = [[zhonM objectForKey:mst] mutableCopy];
+                        [zaoMUArr addObject:chidDic];
+                        [zhonM setObject:zaoMUArr forKey:mst];
+                    }
                 }
+                NSArray *zhonAllkeyArr = [zhonM allKeys];
+                for (int i = 0; i < zhonAllkeyArr.count; i++) {
+                    NSArray *subZarr = [zhonM objectForKey:zhonAllkeyArr[i]];
+                    NSMutableDictionary *paraBBDic = [NSMutableDictionary dictionary];
 
+                    tableName = [zhonAllkeyArr objectAtIndex:i];
+                    for (NSDictionary *chidDic in subZarr) {
+                        
+                        NSInteger defaultValue = [[chidDic objectForKey:@"defaultValue"] integerValue];
+                        if (defaultValue != 0) {
+                            NSLog(@"1111");
+                            [paraBBDic setObject:[chidDic objectForKey:@"defaultValue"] forKey:[chidDic objectForKey:@"fieldName"]];
+                            
+                        }
+                        
+                        if (paraBBDic.allKeys.count > 0) {
+                            
+                            
+                            NSDictionary *parArr = @{@"field":paraBBDic,@"foodTime":@"1",@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"inspectionOrder":@"1",@"recordTime":[dataDic objectForKey:@"addTime"],@"sign":@"1",@"tableName":tableName};
+                            [dietrM addObject:parArr];
+                        }
+                        
+                    }
+                    
+                    
+                }
                 
                 
                 //晚餐
                 NSArray *wanA = [dataDic objectForKey:@"foodTime2"];
-                NSMutableDictionary *paraCCDic = [NSMutableDictionary dictionary];
                 
+                NSMutableDictionary *wanM = [NSMutableDictionary dictionary];
                 for (NSDictionary *chidDic in wanA) {
-                    NSInteger defaultValue = [[chidDic objectForKey:@"defaultValue"] integerValue];
-                    if (defaultValue != 0) {
-                        NSLog(@"1111");
-                        [paraCCDic setObject:[chidDic objectForKey:@"defaultValue"] forKey:[chidDic objectForKey:@"fieldName"]];
-                        
-                    }    }
-                if (paraCCDic.allKeys.count > 0) {
-                    
-                    NSLog(@"%@",[dataDic objectForKey:@"addTime"]);
-                    
-                    NSDictionary *parArr = @{@"field":paraCCDic,@"foodTime":@"2",@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"inspectionOrder":@"1",@"recordTime":[dataDic objectForKey:@"addTime"],@"sign":@"1",@"tableName":tableName};
-                    [dietrM addObject:parArr];
+                    NSString *mst = [chidDic objectForKey:@"tableName"];
+                    if (![wanM objectForKey:mst]) {
+                        [wanM setObject:@[chidDic] forKey:mst];
+                    }else{
+                        NSMutableArray *zaoMUArr = [[wanM objectForKey:mst] mutableCopy];
+                        [zaoMUArr addObject:chidDic];
+                        [wanM setObject:zaoMUArr forKey:mst];
+                    }
                 }
+                NSArray *wanAllkeyArr = [wanM allKeys];
+                for (int i = 0; i < wanAllkeyArr.count; i++) {
+                    NSArray *subZarr = [wanM objectForKey:wanAllkeyArr[i]];
+                    tableName = [wanAllkeyArr objectAtIndex:i];
+                    NSMutableDictionary *paraCCDic = [NSMutableDictionary dictionary];
+
+                    for (NSDictionary *chidDic in subZarr) {
+                        
+                        NSInteger defaultValue = [[chidDic objectForKey:@"defaultValue"] integerValue];
+                        if (defaultValue != 0) {
+                            NSLog(@"1111");
+                            [paraCCDic setObject:[chidDic objectForKey:@"defaultValue"] forKey:[chidDic objectForKey:@"fieldName"]];
+                            
+                        }
+                        
+                        if (paraCCDic.allKeys.count > 0) {
+                            
+                            NSDictionary *parArr = @{@"field":paraCCDic,@"foodTime":@"2",@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"inspectionOrder":@"1",@"recordTime":[dataDic objectForKey:@"addTime"],@"sign":@"1",@"tableName":tableName};
+                            [dietrM addObject:parArr];
+                        }
+                        
+                    }
+                    
+                    
+                }
+                
+
+                
                 
                 //加餐
                 NSArray *jiaA = [dataDic objectForKey:@"foodTime3"];
-                NSMutableDictionary *paraDDDic = [NSMutableDictionary dictionary];
                 
+                NSMutableDictionary *jiaM = [NSMutableDictionary dictionary];
                 for (NSDictionary *chidDic in jiaA) {
-                    NSInteger defaultValue = [[chidDic objectForKey:@"defaultValue"] integerValue];
-                    if (defaultValue != 0) {
-                        NSLog(@"1111");
-                        [paraDDDic setObject:[chidDic objectForKey:@"defaultValue"] forKey:[chidDic objectForKey:@"fieldName"]];
-                        
-                    }    }
-                if (paraDDDic.allKeys.count > 0) {
-                    
-                    NSLog(@"%@",[dataDic objectForKey:@"addTime"]);
-                    
-                    NSDictionary *parArr = @{@"field":paraDDDic,@"foodTime":@"3",@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"inspectionOrder":@"1",@"recordTime":[dataDic objectForKey:@"addTime"],@"sign":@"1",@"tableName":tableName};
-                    [dietrM addObject:parArr];
+                    NSString *mst = [chidDic objectForKey:@"tableName"];
+                    if (![jiaM objectForKey:mst]) {
+                        [jiaM setObject:@[chidDic] forKey:mst];
+                    }else{
+                        NSMutableArray *zaoMUArr = [[jiaM objectForKey:mst] mutableCopy];
+                        [zaoMUArr addObject:chidDic];
+                        [jiaM setObject:zaoMUArr forKey:mst];
+                    }
                 }
+                NSArray *jiaAllkeyArr = [jiaM allKeys];
+                for (int i = 0; i < jiaAllkeyArr.count; i++) {
+                    NSArray *subZarr = [jiaM objectForKey:jiaAllkeyArr[i]];
+                    tableName = [jiaAllkeyArr objectAtIndex:i];
+                    NSMutableDictionary *paraDDDic = [NSMutableDictionary dictionary];
+
+                    for (NSDictionary *chidDic in subZarr) {
+                        
+                        NSInteger defaultValue = [[chidDic objectForKey:@"defaultValue"] integerValue];
+                        if (defaultValue != 0) {
+                            NSLog(@"1111");
+                            [paraDDDic setObject:[chidDic objectForKey:@"defaultValue"] forKey:[chidDic objectForKey:@"fieldName"]];
+                            
+                        }
+                        
+                        if (paraDDDic.allKeys.count > 0) {
+                            
+                            NSDictionary *parArr = @{@"field":paraDDDic,@"foodTime":@"3",@"globalRecordNr":[dic objectForKey:@"mobilePhone"],@"inspectionOrder":@"1",@"recordTime":[dataDic objectForKey:@"addTime"],@"sign":@"1",@"tableName":tableName};
+                            [dietrM addObject:parArr];
+                        }
+                        
+                    }
+                    
+                    
+                }
+
 
             
             }

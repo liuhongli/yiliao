@@ -48,8 +48,20 @@
     imageDic = [NSMutableDictionary dictionary];
     xueSel = 0;
     seleImage = 1000;
+    if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] isKindOfClass:[NSDictionary class]]) {
+        [Alert showWithTitle:@"尚未获取数据，请稍后重试..."];
+        [self.navigationController popViewControllerAnimated:YES];
+        return;
+    }
+
     NSArray *result = [[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] objectForKey:@"result"];
-    dataDic = [[NSMutableDictionary alloc] initWithDictionary:result[6]];
+    dataDic = [NSMutableDictionary dictionary];
+
+    for (NSDictionary *dic in result) {
+        if ([[dic objectForKey:@"tableName"] isEqualToString:@"PhysiqueCheckRecord"]) {
+            dataDic = [dic mutableCopy];
+        }
+    }
 
     UIImage *image0 = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:@"seleImage0"];
     if (image0) {

@@ -877,8 +877,6 @@
         
         // 设置当前显示时间
         [datePicker setDate:[NSDate date] animated:YES];
-        // 设置显示最大时间（此处为当前时间）
-        [datePicker setMaximumDate:[NSDate date]];
         // 设置UIDatePicker的显示模式
         [datePicker setDatePickerMode:UIDatePickerModeDate];
         // 当值发生改变的时候调用的方法

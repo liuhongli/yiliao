@@ -22,10 +22,38 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.title = @"既往及现病史";
+    if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] isKindOfClass:[NSDictionary class]]) {
+        [Alert showWithTitle:@"尚未获取数据，请稍后重试..."];
+        [self.navigationController popViewControllerAnimated:YES];
+        return;
+    }
+    
+    UIView *rightview = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 80, 40)];
+    
+    UIButton *savebtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    savebtn.frame = CGRectMake(40, 0, 40, 40);
+    [savebtn setTitle:@"重置" forState:UIControlStateNormal];
+    [savebtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [savebtn addTarget:self action:@selector(reSave) forControlEvents:UIControlEventTouchUpInside];
+    [rightview addSubview:savebtn];
+    
+    UIBarButtonItem *buttonItem  = [[UIBarButtonItem alloc] initWithCustomView:rightview];
+    self.navigationItem.rightBarButtonItem  = buttonItem;
+    
+    
+
+
     NSArray *result = [[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] objectForKey:@"result"];
 
-    NSDictionary *dic1 = result[5];
     
+    
+    NSDictionary *dic1;
+    for (NSDictionary *dic in result) {
+        if ([[dic objectForKey:@"tableName"] isEqualToString:@"DiseaseHistoryRecord"]) {
+            dic1 = dic;
+        }
+    }
+
     NSArray  *arr =  jiwangSDic;
     if (arr.count > 0) {
         dataDic = [[NSMutableDictionary alloc] initWithDictionary:arr[0]];
@@ -35,10 +63,26 @@
     }
     [_tableView reloadData];
     [self initFootView];
-
 }
 
+- (void)reSave{
+    NSArray *result = [[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] objectForKey:@"result"];
+    
+    NSDictionary *dic1;
+    for (NSDictionary *dic in result) {
+        if ([[dic objectForKey:@"tableName"] isEqualToString:@"DiseaseHistoryRecord"]) {
+            dic1 = dic;
+        }
+    }
 
+    
+    dataDic = [[NSMutableDictionary alloc] initWithDictionary:dic1];
+    [_tableView reloadData];
+    NSUserDefaults *stand = [NSUserDefaults standardUserDefaults];
+    [stand setObject:@[dataDic] forKey:@"user_jiwangSDic"];
+    [stand synchronize];
+
+}
 - (void)initFootView {
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 80)];
@@ -58,6 +102,7 @@
     
     NSUserDefaults *stand = [NSUserDefaults standardUserDefaults];
     [stand setObject:@[dataDic] forKey:@"user_jiwangSDic"];
+    [stand synchronize];
     [self.navigationController popViewControllerAnimated:YES];
     
 }

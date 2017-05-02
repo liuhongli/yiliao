@@ -37,20 +37,49 @@
     
     self.title = @"膳食调查";
     
+    if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] isKindOfClass:[NSDictionary class]]) {
+        [Alert showWithTitle:@"尚未获取数据，请稍后重试..."];
+        [self.navigationController popViewControllerAnimated:YES];
+        return;
+    }
     NSArray *result = [[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] objectForKey:@"result"];
     leftSelected = 0;
-    NSDictionary *dic0 = result[19];
-    NSDictionary *dic1 = result[20];
-    NSDictionary *dic2 = result[21];
-    NSDictionary *dic3 = result[22];
-    NSDictionary *dic4 = result[23];
-    NSDictionary *dic5 = result[24];
-    NSDictionary *dic6 = result[25];
-    NSDictionary *dic7 = result[26];
-    NSDictionary *dic8 = result[27];
-    NSDictionary *dic9 = result[28];
+    dataArray = [NSMutableArray array];
+    for (NSDictionary *dic in result) {
+        if ([[dic objectForKey:@"tableName"] isEqualToString:@"StapleFoodInspectionO"]) {
+            [dataArray addObject:dic];
+        }
+        
+        if ([[dic objectForKey:@"tableName"] isEqualToString:@"BeanFoodInspectionO"]) {
+            [dataArray addObject:dic];
+        }
+        if ([[dic objectForKey:@"tableName"] isEqualToString:@"VegetableFoodInspectionO"]) {
+            [dataArray addObject:dic];
+        }
+        if ([[dic objectForKey:@"tableName"] isEqualToString:@"LivestockFoodInspectionO"]) {
+            [dataArray addObject:dic];
+        }
+        if ([[dic objectForKey:@"tableName"] isEqualToString:@"SeaFoodInspectionO"]) {
+            [dataArray addObject:dic];
+        }
+        if ([[dic objectForKey:@"tableName"] isEqualToString:@"FruitInspectionO"]) {
+            [dataArray addObject:dic];
+        }
+        if ([[dic objectForKey:@"tableName"] isEqualToString:@"EggMilkInspectionO"]) {
+            [dataArray addObject:dic];
+        }
+        if ([[dic objectForKey:@"tableName"] isEqualToString:@"DrinkOilFoodInspectionO"]) {
+            [dataArray addObject:dic];
+        }
+        if ([[dic objectForKey:@"tableName"] isEqualToString:@"NutInspectionO"]) {
+            [dataArray addObject:dic];
+        }
+        if ([[dic objectForKey:@"tableName"] isEqualToString:@"NurtureInspectionO"]) {
+            [dataArray addObject:dic];
+        }
+
+    }
     
-    dataArray  = [NSMutableArray arrayWithObjects:dic0,dic1,dic2,dic3,dic4,dic5,dic6,dic7,dic8,dic9 ,nil];
     [self.view addSubview:self.leftTableView];
     [self.view addSubview:self.rightTableView];
 
@@ -106,7 +135,8 @@
         NSDictionary *dic = dataArray[indexPath.row];
         NSString *Remark = [dic objectForKey:@"name"];
         cell.textLabel.text = [NSString stringWithFormat:@"%@",Remark];
-        cell.textLabel.font = [UIFont systemFontOfSize:FontApp];
+        cell.textLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:16];
+        cell.textLabel.textColor = [UIColor colorWithHexString:@"4A4A4A" alpha:1];
         cell.textLabel.numberOfLines = 0;
         cell.textLabel.lineBreakMode = NSLineBreakByCharWrapping;
         UIView *sepV = [[UIView alloc]initWithFrame:CGRectMake(cell.width-0.5, 0, 0.5, cell.height)];
@@ -135,11 +165,12 @@
         NSArray *childArr = [dic objectForKey:@"children"];
         NSDictionary *childDic = childArr[indexPath.row];
         cell.titleLabel.text = [NSString stringWithFormat:@"%@",[childDic objectForKey:@"caption"]];
-        cell.textLabel.numberOfLines = 0;
-        
-        cell.textLabel.lineBreakMode = NSLineBreakByCharWrapping;
-        cell.tintColor = [UIColor colorWithHexString:@"FF8698" alpha:1];
+        cell.titleLabel.numberOfLines = 0;
+        cell.titleLabel.font = [UIFont fontWithName:@"PingFangSC-Light" size:16];
 
+        cell.titleLabel.lineBreakMode = NSLineBreakByCharWrapping;
+        cell.tintColor = [UIColor colorWithHexString:@"FF8698" alpha:1];
+        cell.titleLabel.textColor = [UIColor colorWithHexString:@"4A4A4A" alpha:1];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
 

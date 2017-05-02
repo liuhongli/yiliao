@@ -99,7 +99,9 @@
         self.inputtF.borderStyle = UITextBorderStyleRoundedRect;
        
         leftflab.text = @"重量";
+        leftflab.font =[UIFont fontWithName:@"PingFangSC-Regular" size:16];
         rightlab.text = @"克";
+        rightlab.font  = [UIFont fontWithName:@"PingFangSC-Regular" size:16];
 
        
         }

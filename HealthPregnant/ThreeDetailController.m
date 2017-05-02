@@ -34,6 +34,11 @@
     _tableV.tableFooterView = [[UIView alloc] init];
     selFInt = 0;
     selSInt = 1;
+    if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] isKindOfClass:[NSDictionary class]]) {
+        [Alert showWithTitle:@"尚未获取数据，请稍后重试..."];
+        [self.navigationController popViewControllerAnimated:YES];
+        return;
+    }
 
     NSArray *result = [[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] objectForKey:@"result"];
     
@@ -43,7 +48,13 @@
         case 0: {
             self.title = @"睡眠时间调查";
 
-            dataDic = [[NSMutableDictionary alloc] initWithDictionary:result[16]];
+            dataDic = [NSMutableDictionary dictionary] ;
+
+            for (NSDictionary *dic in result) {
+                if ([[dic objectForKey:@"code"] isEqualToString:@"Sleep"]) {
+                    dataDic = [dic mutableCopy];
+                }
+            }
 
             dataArr = [NSMutableArray arrayWithArray:[defaults objectForKey:KSleepRecordArr]];
             NSLog(@"%@",[defaults objectForKey:KSleepRecordArr]);
@@ -54,8 +65,13 @@
             
             self.title = @"职业调查";
             dataArr =[NSMutableArray arrayWithArray:[defaults objectForKey:KJobRecordArr]];
-            dataDic = [[NSMutableDictionary alloc] initWithDictionary:result[17]];
+            dataDic = [NSMutableDictionary dictionary] ;
 
+            for (NSDictionary *dic in result) {
+                if ([[dic objectForKey:@"code"] isEqualToString:@"ProfessionTime"]) {
+                    dataDic = [dic mutableCopy];
+                }
+            }
 
         }
             break;
@@ -64,7 +80,13 @@
         default: {
             
             self.title = @"运动调查";
-            dataDic = [[NSMutableDictionary alloc] initWithDictionary:result[18]];
+            dataDic = [NSMutableDictionary dictionary];
+            for (NSDictionary *dic in result) {
+                if ([[dic objectForKey:@"code"] isEqualToString:@"StepCount"]) {
+                    dataDic = [dic mutableCopy];
+                }
+            }
+            
 
             dataArr = [NSMutableArray arrayWithArray:[defaults objectForKey:KSportRecordArr]];
 
@@ -294,7 +316,13 @@
     switch (_comeType) {
         case 0: {
             
-            NSDictionary *Dic = [[NSMutableDictionary alloc] initWithDictionary:result[16]];
+            NSDictionary *Dic = [NSMutableDictionary dictionary];
+            for (NSDictionary *dic in result) {
+                if ([[dic objectForKey:@"code"] isEqualToString:@"Sleep"]) {
+                    Dic = [dic mutableCopy];
+                }
+            }
+
             NSArray *array = [Dic objectForKey:@"children"];
             return array.count;
             
@@ -311,7 +339,13 @@
         default: {
             
             if (component == 0) {
-                NSDictionary *Dic = [[NSMutableDictionary alloc] initWithDictionary:result[18]];
+                NSDictionary *Dic = [NSMutableDictionary dictionary];
+                for (NSDictionary *dic in result) {
+                    if ([[dic objectForKey:@"code"] isEqualToString:@"StepCount"]) {
+                        Dic = [dic mutableCopy];
+                    }
+                }
+
                 NSArray *array = [Dic objectForKey:@"children"];
 
                 return array.count;
@@ -333,7 +367,12 @@
             NSArray *result = [[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] objectForKey:@"result"];
     if (_comeType == 0) {
 
-        NSDictionary *Dic = [[NSMutableDictionary alloc] initWithDictionary:result[16]];
+        NSDictionary *Dic = [NSMutableDictionary dictionary];
+        for (NSDictionary *dic in result) {
+            if ([[dic objectForKey:@"code"] isEqualToString:@"Sleep"]) {
+                Dic = [dic mutableCopy];
+            }
+        }
 
         NSArray *array = [Dic objectForKey:@"children"];
         captionS = [array[row] objectForKey:@"caption"];
@@ -345,8 +384,14 @@
     }else if (_comeType == 2){
         
         if (component == 0) {
-            NSDictionary *Dic = [[NSMutableDictionary alloc] initWithDictionary:result[18]];
-
+          
+            NSDictionary *Dic = [NSMutableDictionary dictionary];
+            for (NSDictionary *dic in result) {
+                if ([[dic objectForKey:@"code"] isEqualToString:@"StepCount"]) {
+                    Dic = [dic mutableCopy];
+                }
+            }
+            
             NSArray *array = [Dic objectForKey:@"children"];
             captionS = [array[row] objectForKey:@"caption"];
 
@@ -387,7 +432,13 @@
             codeArr = [a mutableCopy];
         }
         NSArray *result = [[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] objectForKey:@"result"];
-        NSDictionary *Dic = [[NSMutableDictionary alloc] initWithDictionary:result[16]];
+        NSDictionary *Dic = [NSMutableDictionary dictionary];
+        for (NSDictionary *dic in result) {
+            if ([[dic objectForKey:@"code"] isEqualToString:@"Sleep"]) {
+                Dic = [dic mutableCopy];
+            }
+        }
+
       NSMutableArray *children =[NSMutableArray arrayWithArray:[Dic objectForKey:@"children"]];
         NSMutableDictionary *subDic = [[NSMutableDictionary alloc]initWithDictionary:[children objectAtIndex:row]];
         [subDic setObject:@"1" forKey:@"defaultValue"];
@@ -405,7 +456,13 @@
         }
         captionS = [NSString stringWithFormat:@"%ld小时",row +1];
         NSArray *result = [[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] objectForKey:@"result"];
-        NSDictionary *Dic = [[NSMutableDictionary alloc] initWithDictionary:result[17]];
+        NSDictionary *Dic = [NSMutableDictionary dictionary];
+        for (NSDictionary *dic in result) {
+            if ([[dic objectForKey:@"code"] isEqualToString:@"ProfessionTime"]) {
+                Dic = [dic mutableCopy];
+            }
+        }
+
         NSMutableArray *children =[NSMutableArray arrayWithArray:[Dic objectForKey:@"children"]];
        NSString *cap = [NSString stringWithFormat:@"%ld",row];
 
@@ -425,7 +482,14 @@
             codeArr = [a mutableCopy];
         }
         NSArray *result = [[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] objectForKey:@"result"];
-        NSDictionary *Dic = [[NSMutableDictionary alloc] initWithDictionary:result[18]];
+        NSDictionary *Dic = [NSMutableDictionary dictionary];
+        for (NSDictionary *dic in result) {
+            if ([[dic objectForKey:@"code"] isEqualToString:@"StepCount"]) {
+                Dic = [dic mutableCopy];
+            }
+        }
+        
+
         NSMutableArray *children =[NSMutableArray arrayWithArray:[Dic objectForKey:@"children"]];
             NSArray *array = [Dic objectForKey:@"children"];
            NSString *caption1 = [array[selFInt] objectForKey:@"caption"];
@@ -436,7 +500,7 @@
         captionS = [NSString stringWithFormat:@"%@ / %@",caption1,caption2];
         NSString *caStr = [NSString stringWithFormat:@"%0.2lf",(float)selSInt/6];
         NSMutableDictionary *subDic = [[NSMutableDictionary alloc]initWithDictionary:[children objectAtIndex:selFInt]];
-        [subDic setObject:caStr forKey:@"defaultValue"]; 
+        [subDic setObject:@"1" forKey:@"defaultValue"];
         [dataDic setObject:@[subDic] forKey:@"children"];
         [dataDic setObject: _dataStr forKey:@"addTime"];
         [dataDic setObject:@"1" forKey:@"code"];

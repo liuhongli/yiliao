@@ -19,7 +19,7 @@
     // Do any additional setup after loading the view.
     NSDictionary *dic = USERINFO;
         UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
-    NSString *urlStr = [NSString stringWithFormat:@"http://test.kpjkgl.com:8083/chart.aspx?basicid=%@&order=%@",[dic objectForKey:@"mobilePhone"],_orderId];
+    NSString *urlStr = [NSString stringWithFormat:@"http://114.115.206.180:8083/chart.aspx?basicid=%@&order=%@",[dic objectForKey:@"mobilePhone"],_orderId];
     [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]]];
     [self.view addSubview:webView];
 }

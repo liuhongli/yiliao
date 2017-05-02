@@ -28,6 +28,18 @@
     
     self.interestArray = [NSMutableArray new];
     
+    UIView *rightview = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 80, 40)];
+    
+    UIButton *savebtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    savebtn.frame = CGRectMake(40, 0, 40, 40);
+    [savebtn setTitle:@"重置" forState:UIControlStateNormal];
+    [savebtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [savebtn addTarget:self action:@selector(reSave) forControlEvents:UIControlEventTouchUpInside];
+    [rightview addSubview:savebtn];
+    
+    UIBarButtonItem *buttonItem  = [[UIBarButtonItem alloc] initWithCustomView:rightview];
+    self.navigationItem.rightBarButtonItem  = buttonItem;
+
     
     NSUserDefaults *defaut = [NSUserDefaults standardUserDefaults];
     
@@ -54,8 +66,37 @@
     [self initTableView];
     [self initFootView];
 }
-- (void)initData{
+
+- (void)reSave{
+    [self initData];
+    [_myTabV reloadData];
+    NSUserDefaults *defaut = [NSUserDefaults standardUserDefaults];
     
+    if (_comeType == 1) {
+        
+        [defaut setObject:dataArray forKey:@"user_zhusuSDic"];
+        
+    }else if (_comeType == 2) {
+        
+        [defaut setObject:dataArray forKey:@"user_yingshiSDic"];
+        
+    }if (_comeType == 3) {
+        
+        [defaut setObject:dataArray forKey:@"user_shenghuoSDic"];
+        
+    }
+    
+    [defaut synchronize];
+
+    
+}
+- (void)initData{
+    if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] isKindOfClass:[NSDictionary class]]) {
+        [Alert showWithTitle:@"尚未获取数据，请稍后重试..."];
+        [self.navigationController popViewControllerAnimated:YES];
+        return;
+    }
+
     NSArray *result = [[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] objectForKey:@"result"];
     switch (_comeType) {
         case 1:
@@ -77,90 +118,45 @@
 }
 - (void)dataZhu:(NSArray *)result{
     
+    for (NSDictionary *dic in result) {
+        if ([[dic objectForKey:@"tableName"] isEqualToString:@"StatementSymptomRecord"]) {
+            [dataArray addObject:dic];
+        }
+    }
     
-    NSDictionary *dic1 = result[0];
-    NSDictionary *dic2 = result[1];
-    NSDictionary *dic3 = result[2];
-    NSDictionary *dic4 = result[3];
-    NSDictionary *dic5 = result[4];
-    
-    dataArray = [[NSMutableArray alloc] initWithObjects:dic1,dic2,dic3,dic4,dic5,nil];
     
 }
 
 
 - (void)dataYin:(NSArray *)result{
     
-    NSDictionary *dic1 = result[7];
-    NSDictionary *dic2 = result[8];
-    NSDictionary *dic3 = result[9];
-    dataArray = [[NSMutableArray alloc] initWithObjects:dic1,dic2,dic3,nil];
+    for (NSDictionary *dic in result) {
+        if ([[dic objectForKey:@"tableName"] isEqualToString:@"PhysiqueCheckRecord"]) {
+            [dataArray addObject:dic];
+        }
+    }
 
 }
 - (void)dataShen:(NSArray *)result{
     
-    NSDictionary *dic1 = result[10];
-    NSMutableDictionary *mdic1 =  [dic1 mutableCopy];
-    NSArray *children = [mdic1 objectForKey:@"children"];
-    NSMutableArray *m1 = [NSMutableArray array];
-    for (int i = 0; i < children.count ;i++) {
-        NSMutableDictionary *dic = [[children objectAtIndex:i] mutableCopy];
-        [dic setObject:@"0" forKey:@"defaultValue"];
-        [m1 addObject:dic];
-    }
-    [mdic1 setObject:m1 forKey:@"children"];
+    for (NSDictionary *dic in result) {
+        if ([[dic objectForKey:@"tableName"] isEqualToString:@"StatementSymptomRecord"]) {
+            
+            NSMutableDictionary *mdic1 =  [dic mutableCopy];
+            NSArray *children = [mdic1 objectForKey:@"children"];
+            NSMutableArray *m1 = [NSMutableArray array];
+            for (int i = 0; i < children.count ;i++) {
+                NSMutableDictionary *dic = [[children objectAtIndex:i] mutableCopy];
+                [dic setObject:@"0" forKey:@"defaultValue"];
+                [m1 addObject:dic];
+            }
+            [mdic1 setObject:m1 forKey:@"children"];
 
-    
-    NSDictionary *dic2 = result[11];
-    NSMutableDictionary *mdic2 =  [dic2 mutableCopy];
-    NSArray *children2 = [mdic1 objectForKey:@"children"];
-    NSMutableArray *m2 =  [NSMutableArray array];
-    for (int i = 0; i < children2.count ;i++) {
-        NSMutableDictionary *dic = [[children2 objectAtIndex:i] mutableCopy];
-        [dic setObject:@"0" forKey:@"defaultValue"];
-        [m2 addObject:dic];
+            [dataArray addObject:mdic1];
+        }
     }
-    [mdic2 setObject:m2 forKey:@"children"];
+    
 
- 
-    
-    NSDictionary *dic3 = result[12];
-    NSMutableDictionary *mdic3=  [dic3 mutableCopy];
-    NSArray *children3 = [mdic3 objectForKey:@"children"];
-    NSMutableArray *m3 =  [NSMutableArray array];
-    for (int i = 0; i < children3.count ;i++) {
-        NSMutableDictionary *dic = [[children3 objectAtIndex:i] mutableCopy];
-        [dic setObject:@"0" forKey:@"defaultValue"];
-        [m3 addObject:dic];
-    }
-    [mdic3 setObject:m3 forKey:@"children"];
-    
-    
-    NSDictionary *dic4 = result[13];
-    NSMutableDictionary *mdic4=  [dic4 mutableCopy];
-    NSArray *children4 = [mdic4 objectForKey:@"children"];
-    NSMutableArray *m4 =  [NSMutableArray array];
-    for (int i = 0; i < children4.count ;i++) {
-        NSMutableDictionary *dic = [[children4 objectAtIndex:i] mutableCopy];
-        [dic setObject:@"0" forKey:@"defaultValue"];
-        [m4 addObject:dic];
-    }
-    [mdic4 setObject:m4 forKey:@"children"];
-    
-    
-    NSDictionary *dic5 = result[14];
-    NSMutableDictionary *mdic5=  [dic5 mutableCopy];
-    NSArray *children5 = [mdic5 objectForKey:@"children"];
-    NSMutableArray *m5 =  [NSMutableArray array];
-    for (int i = 0; i < children5.count ;i++) {
-        NSMutableDictionary *dic = [[children5 objectAtIndex:i] mutableCopy];
-        [dic setObject:@"0" forKey:@"defaultValue"];
-        [m5 addObject:dic];
-    }
-    [mdic5 setObject:m5 forKey:@"children"];
-
-    
-    dataArray = [[NSMutableArray alloc] initWithObjects:mdic1,mdic2,mdic3,mdic4,mdic5,nil];
 
     
 }

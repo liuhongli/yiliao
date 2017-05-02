@@ -83,13 +83,16 @@
         
         cell.nameLab.text = questionSArray[indexPath.row];
         cell.wTF.delegate = self;
-        cell.wTF.enabled = NO;
         if (indexPath.row == 0) {
-         cell.wTF.text = [NSString dateString:[usinfoDic objectForKey:@"birthDate"]];
+            cell.wTF.enabled = YES;
+
+         cell.wTF.text = [NSString dateString:[usinfoDic objectForKey:@"lastUpdateTime"]];
         }else{
+            cell.wTF.enabled = NO;
+
             
             NSString *lastS = [usinfoDic objectForKey:@"lastUpdateTime"];
-            NSString *cretS = [usinfoDic objectForKey:@"createTime"];
+            NSString *cretS = [usinfoDic objectForKey:@"lastMenses"];
             NSString * timeStampString = [NSString stringWithFormat:@"%@",lastS];
             NSTimeInterval _interval=[timeStampString doubleValue] /1000;
             NSDate *date = [NSDate dateWithTimeIntervalSince1970:_interval];
@@ -333,8 +336,7 @@
         
         // 设置当前显示时间
         [datePicker setDate:[NSDate date] animated:YES];
-        // 设置显示最大时间（此处为当前时间）
-        [datePicker setMaximumDate:[NSDate date]];
+        [datePicker setMinimumDate:[NSDate date]];
         // 设置UIDatePicker的显示模式
         [datePicker setDatePickerMode:UIDatePickerModeDate];
         // 当值发生改变的时候调用的方法
@@ -358,20 +360,34 @@
     m_actionV.hidden = YES;
     
     NSDate *theDate = datePicker.date;
+    
     NSLog(@"%@",[theDate descriptionWithLocale:[NSLocale currentLocale]]);
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat =@"YYYY-MM-dd";
-    NSLog(@"%@",[dateFormatter stringFromDate:theDate]);
-    
     
     
     UITextField *textF = [self.view viewWithTag:1000];
     textF.text = [dateFormatter stringFromDate:theDate];
+    NSDate *date = [NSDate date];
+    NSTimeInterval time = [theDate timeIntervalSinceDate:date];
+    int days;
+    days = ((int)time)/(3600*24);
+    if (days < 0) {
+        [Alert showWithTitle:@"检测日期不能为过去时间"];
+        return;
+    }
+    NSMutableDictionary *muDic = [usinfoDic mutableCopy];
+    NSUserDefaults *userDetaults = [NSUserDefaults standardUserDefaults];
+    NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[theDate timeIntervalSince1970]*1000];
+
+    [muDic setObject:timeSp forKey:@"lastUpdateTime"];
     
-    dateStr = [dateFormatter stringFromDate:theDate];
+    [userDetaults setObject:muDic forKey:@"USERINFO"];
     
-    
+    [userDetaults synchronize];
+    usinfoDic = muDic;
+    [_myTabV reloadData];
 }
 
 - (void)datePickerValueChanged:(UIDatePicker *)datePickers {
