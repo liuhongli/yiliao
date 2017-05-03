@@ -200,13 +200,13 @@
         return;
     }
     
-    if (!ysleepSDic||!yjsleepSDic||!yesleepSDic||!yjobSDic) {
+    if (!ysleepSDic||!yjsleepSDic||!yesleepSDic||!yjobSDic||!ytsleepSDic) {
         [Alert showWithTitle:@"请填写运动调查数据"];
         return;
     }
+    NSLog(@"%@",ytsleepSDic);
 
-
-    NSArray *yuArray = @[ysleepSDic,yjsleepSDic,yesleepSDic,yjobSDic];
+    NSArray *yuArray = @[ysleepSDic,yjsleepSDic,yesleepSDic,yjobSDic,ytsleepSDic];
     NSMutableArray *yuM = [NSMutableArray array];
     NSMutableDictionary *yuDIc = [NSMutableDictionary dictionary];
     for (NSArray *arr in yuArray) {

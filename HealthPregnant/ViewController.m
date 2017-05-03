@@ -86,19 +86,24 @@
     [self.view addSubview:imageView];
     NSString *yuaStr = @"检测日期:2017-04-27";
     CGSize orsize = [yuaStr sizeWithFont:[UIFont  systemFontOfSize:16] constrainedToSize:CGSizeMake(MAXFLOAT,15)];
-    textLab = [[UILabel alloc] initWithFrame:CGRectMake(kScreenWidth/2-orsize.width/2, 30, orsize.width, 15)];
+    textLab = [[UILabel alloc] initWithFrame:CGRectMake(kScreenWidth/2-orsize.width/2, 30, orsize.width, 30)];
     textLab.font = [UIFont  systemFontOfSize:14];
     textLab.textAlignment = NSTextAlignmentCenter;
     textLab.textColor = [UIColor colorWithHexString:@"FF8698" alpha:1];
     [imageView addSubview:textLab];
-    UIImageView *imageS = [[UIImageView alloc] initWithFrame:CGRectMake(textLab.width+3, 0, 15, 15)];
+    
+    UITapGestureRecognizer  *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapData)];
+
+    textLab.userInteractionEnabled = YES;
+    [textLab addGestureRecognizer:tap];
+    UIImageView *imageS = [[UIImageView alloc] initWithFrame:CGRectMake(textLab.width+3, 8, 15, 15)];
     imageS.image = [UIImage imageNamed:@"单选勾选框_dj"];
     [textLab addSubview:imageS];
     //标题
     for (int i = 0; i < titleArray.count; i ++) {
         
         //创建按钮
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth/5*i, 20, kScreenWidth/5, 150)];
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth/5*i, 70, kScreenWidth/5, 100)];
         
         [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
         
@@ -109,7 +114,7 @@
         button.tag = 10+i;
         [imageView addSubview:button];
         
-        UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake((kScreenWidth/5-50)/2, 50, 50, 50)];
+        UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake((kScreenWidth/5-50)/2, 10, 50, 50)];
         imageV.layer.cornerRadius = 25;
         imageV.clipsToBounds = YES;
         imageV.image = [UIImage imageNamed:imageSArray[i]];
@@ -123,6 +128,11 @@
         [button addSubview:titleLa];
     }
 }
+
+-(void)tapData{
+    NSLog(@"what");
+}
+
 
 - (void)didcliK:(UIButton *)button {
 

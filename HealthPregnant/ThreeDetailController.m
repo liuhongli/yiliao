@@ -17,6 +17,11 @@
     UIView *j_actionV;
     NSMutableDictionary *dataDic;
     NSMutableArray *dataArr;
+    
+    NSMutableDictionary *dataTDic;
+
+    NSMutableArray *dataTArr;
+
     NSInteger selFInt;
     NSInteger selSInt;
 }
@@ -31,6 +36,8 @@
     // Do any additional setup after loading the view from its nib.
     
     dataArr = [NSMutableArray array];
+    dataTArr = [NSMutableArray array];
+
     _tableV.tableFooterView = [[UIView alloc] init];
     selFInt = 0;
     selSInt = 1;
@@ -89,6 +96,19 @@
             
 
             dataArr = [NSMutableArray arrayWithArray:[defaults objectForKey:KSportRecordArr]];
+            
+            dataTDic = [NSMutableDictionary dictionary];
+            for (NSDictionary *dic in result) {
+                if ([[dic objectForKey:@"code"] isEqualToString:@"ActivityTime"]) {
+                    dataTDic = [dic mutableCopy];
+                }
+            }
+            
+            
+            dataTArr = [NSMutableArray arrayWithArray:[defaults objectForKey:@"KTimeRecordArr"]];
+
+            
+            
 
         }
             break;
@@ -155,6 +175,11 @@
         }
         NSDictionary *dic = dataArr[indexPath.row -1];
         NSArray *array = [dic objectForKey:@"children"];
+        NSString *timeStr;
+        if (dataTArr.count > indexPath.row) {
+            NSDictionary *tdic = dataTArr[indexPath.row-1];
+            timeStr = [[[tdic  objectForKey:@"children"] objectAtIndex:0] objectForKey:@"defaultValue"];
+        }
 
         for (NSDictionary *chidDic in array) {
             if (_comeType != 2) {
@@ -175,8 +200,7 @@
             }else{
                 
                 if ([[chidDic objectForKey:@"defaultValue"] floatValue] != 0) {
-                    NSLog(@"xxxx ===  %f",[[chidDic objectForKey:@"defaultValue"] floatValue] );
-                    float T = [[chidDic objectForKey:@"defaultValue"] floatValue] *60;
+                    float T = [timeStr floatValue] *60;
                     NSInteger TI = ceilf(T)/10 ;
                     cell.nameLab.text = [NSString stringWithFormat:@"%@/%d分钟",[chidDic objectForKey:@"caption"],TI*10];
                     
@@ -229,8 +253,11 @@
         
         
     }else if (_comeType == 2){
+        [dataTArr removeObjectAtIndex:button.tag];
 
         [defaults setObject:dataArr forKey:KSportRecordArr];
+        
+        [defaults setObject:dataTArr forKey:@"KTimeRecordArr"];
         
     }
     [_tableV reloadData];
@@ -351,7 +378,7 @@
                 return array.count;
 
             }else{
-                return 24;
+                return 25;
             }
         }
             break;
@@ -397,7 +424,7 @@
 
         }else if (component == 1){
             
-            captionS = [NSString stringWithFormat:@"%ld分钟",(row+1)*10 ];
+            captionS = [NSString stringWithFormat:@"%ld分钟",row*10 ];
 
         }
     }
@@ -412,7 +439,7 @@
         selFInt = row;
 
     }else{
-        selSInt = row+1;
+        selSInt = row;
     }
  
     
@@ -446,7 +473,17 @@
          [dataDic setObject:children forKey:@"children"];
         [dataDic setObject: _dataStr forKey:@"addTime"];
         [dataDic setObject:@"1" forKey:@"code"];
-        [codeArr insertObject:dataDic atIndex:0];
+        if (codeArr.count > 0) {
+            NSDictionary *fDic = codeArr[0];
+            if ([[fDic objectForKey:@"addTime"] isEqualToString:_dataStr]) {
+                [codeArr replaceObjectAtIndex:0 withObject:dataDic];
+            }else{
+                [codeArr insertObject:dataDic atIndex:0];
+            }
+
+        }else{
+            [codeArr addObject:dataDic];
+        }
         [defaults setObject:codeArr forKey:KSleepRecordArr];
         
     }else if (_comeType == 1){
@@ -472,7 +509,17 @@
          [dataDic setObject:children forKey:@"children"];
         [dataDic setObject: _dataStr forKey:@"addTime"];
         [dataDic setObject:@"1" forKey:@"code"];
-        [codeArr insertObject:dataDic atIndex:0];
+        if (codeArr.count > 0) {
+            NSDictionary *fDic = codeArr[0];
+            if ([[fDic objectForKey:@"addTime"] isEqualToString:_dataStr]) {
+                [codeArr replaceObjectAtIndex:0 withObject:dataDic];
+            }else{
+                [codeArr insertObject:dataDic atIndex:0];
+            }
+            
+        }else{
+            [codeArr addObject:dataDic];
+        }
         [defaults setObject:codeArr forKey:KJobRecordArr];
         
         
@@ -488,7 +535,7 @@
                 Dic = [dic mutableCopy];
             }
         }
-        
+        //运动步数
 
         NSMutableArray *children =[NSMutableArray arrayWithArray:[Dic objectForKey:@"children"]];
             NSArray *array = [Dic objectForKey:@"children"];
@@ -497,14 +544,59 @@
         
             NSString *caption2 = [NSString stringWithFormat:@"%ld小时",selSInt];
             
-        captionS = [NSString stringWithFormat:@"%@ / %@",caption1,caption2];
+        captionS = [NSString stringWithFormat:@"%@/%@",caption1,caption2];
         NSString *caStr = [NSString stringWithFormat:@"%0.2lf",(float)selSInt/6];
         NSMutableDictionary *subDic = [[NSMutableDictionary alloc]initWithDictionary:[children objectAtIndex:selFInt]];
         [subDic setObject:@"1" forKey:@"defaultValue"];
         [dataDic setObject:@[subDic] forKey:@"children"];
         [dataDic setObject: _dataStr forKey:@"addTime"];
         [dataDic setObject:@"1" forKey:@"code"];
-        [codeArr insertObject:dataDic atIndex:0];
+        if (codeArr.count > 0) {
+            NSDictionary *fDic = codeArr[0];
+            if ([[fDic objectForKey:@"addTime"] isEqualToString:_dataStr]) {
+                [codeArr replaceObjectAtIndex:0 withObject:dataDic];
+            }else{
+                [codeArr insertObject:dataDic atIndex:0];
+            }
+            
+        }else{
+            [codeArr addObject:dataDic];
+        }
+       
+        //运动时间
+        NSMutableArray *codeTArr = [NSMutableArray array];
+
+        NSArray *aTime = [defaults objectForKey:@"KTimeRecordArr"];
+        
+        if (aTime.count > 0) {
+            codeTArr = [aTime mutableCopy];
+        }
+
+        NSMutableArray *childrenT =[NSMutableArray arrayWithArray:[dataTDic objectForKey:@"children"]];
+
+        NSMutableDictionary *subTDic = [[NSMutableDictionary alloc]initWithDictionary:[childrenT objectAtIndex:0]];
+
+        [subTDic setObject:caStr forKey:@"defaultValue"];
+        [subTDic setObject: _dataStr forKey:@"addTime"];
+
+        [dataTDic setObject:@[subTDic] forKey:@"children"];
+        [dataTDic setObject: _dataStr forKey:@"addTime"];
+        [dataTDic setObject:@"1" forKey:@"code"];
+        if (codeTArr.count > 0) {
+         
+            if ([[subTDic objectForKey:@"addTime"] isEqualToString:_dataStr]) {
+                [codeTArr replaceObjectAtIndex:0 withObject:dataTDic];
+            }else{
+                [codeTArr insertObject:dataTDic atIndex:0];
+            }
+            
+        }else{
+            [codeTArr addObject:dataTDic];
+        }
+        
+        [defaults setObject:codeTArr forKey:@"KTimeRecordArr"];
+
+        dataTArr = codeTArr;
 
         [defaults setObject:codeArr forKey:KSportRecordArr];
         

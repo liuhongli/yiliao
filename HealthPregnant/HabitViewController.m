@@ -27,7 +27,7 @@
     
     
     self.interestArray = [NSMutableArray new];
-    
+    dataArray = [NSMutableArray array];
     UIView *rightview = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 80, 40)];
     
     UIButton *savebtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -44,19 +44,26 @@
     NSUserDefaults *defaut = [NSUserDefaults standardUserDefaults];
     
     if (_comeType == 1) {
-        
-        dataArray = [[defaut objectForKey:@"user_zhusuSDic"] mutableCopy];
+        NSArray *arr = [defaut objectForKey:@"user_zhusuSDic"];
+        if (arr.count > 0) {
+            dataArray = [arr mutableCopy];
+        }
         
     }else if (_comeType == 2) {
         
-        dataArray = [[defaut objectForKey:@"user_yingshiSDic"] mutableCopy];
+        NSArray *arr = [defaut objectForKey:@"user_yingshiSDic"];
+        if (arr.count > 0) {
+            dataArray = [arr mutableCopy];
+        }
 
         
     }if (_comeType == 3) {
         
-        dataArray = [[defaut objectForKey:@"user_shenghuoSDic"] mutableCopy];
+        NSArray *arr = [defaut objectForKey:@"user_shenghuoSDic"];
+        if (arr.count > 0) {
+            dataArray = [arr mutableCopy];
+        }
 
-        
     }
     if (dataArray.count <  1) {
       
@@ -91,6 +98,7 @@
     
 }
 - (void)initData{
+    [dataArray removeAllObjects];
     if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"ALLData"] isKindOfClass:[NSDictionary class]]) {
         [Alert showWithTitle:@"尚未获取数据，请稍后重试..."];
         [self.navigationController popViewControllerAnimated:YES];
@@ -131,7 +139,7 @@
 - (void)dataYin:(NSArray *)result{
     
     for (NSDictionary *dic in result) {
-        if ([[dic objectForKey:@"tableName"] isEqualToString:@"PhysiqueCheckRecord"]) {
+        if ([[dic objectForKey:@"tableName"] isEqualToString:@"DietHabitInspection"]) {
             [dataArray addObject:dic];
         }
     }
@@ -140,7 +148,7 @@
 - (void)dataShen:(NSArray *)result{
     
     for (NSDictionary *dic in result) {
-        if ([[dic objectForKey:@"tableName"] isEqualToString:@"StatementSymptomRecord"]) {
+        if ([[dic objectForKey:@"tableName"] isEqualToString:@"LifeHabbitInspection"]) {
             
             NSMutableDictionary *mdic1 =  [dic mutableCopy];
             NSArray *children = [mdic1 objectForKey:@"children"];

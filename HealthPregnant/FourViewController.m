@@ -10,7 +10,7 @@
 #import "ToLunchTableViewCell.h"
 #import "AppDelegate.h"
 
-@interface FourViewController ()<UITableViewDelegate,UITableViewDataSource>{
+@interface FourViewController ()<UITableViewDelegate,UITableViewDataSource,UIPickerViewDelegate,UIPickerViewDataSource>{
     
     UITableView *tableV;
     NSArray *titleArray;
@@ -25,7 +25,13 @@
     
     NSInteger youheight;
 
-
+ UIView *j_actionV;
+    
+    NSArray *xueArray;
+    NSArray *edArray;
+    
+    NSInteger rowNameSele;
+    NSInteger rowIndeSele;
 
 }
 
@@ -37,6 +43,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"个人信息";
+    rowIndeSele = 0;
+    xueArray  = @[@"A",@"B",@"o",@"AB"];
+    edArray = @[@"小学",@"初中",@"高中",@"专科",@"本科",@"硕士",@"博士"];
     NSUserDefaults *userDetaults = [NSUserDefaults standardUserDefaults];
     
     NSDictionary *userdic = [userDetaults objectForKey:@"USERINFO"];
@@ -151,7 +160,7 @@
                 if ([NSString stringWithFormat:@"%@",[mymess objectForKey:@"height"]].length < 1) {
                     cell.subLab.text = @"未填写";
                 }else {
-                    cell.subLab.text = [NSString stringWithFormat:@"%@",[mymess objectForKey:@"height"]] ;
+                    cell.subLab.text = [NSString stringWithFormat:@"%@cm",[mymess objectForKey:@"height"]] ;
                     cell.subLab.textColor =[UIColor colorWithHexString:@"FF8698" alpha:1];
                 }
 
@@ -186,7 +195,26 @@
                 if ([NSString stringWithFormat:@"%@",[mymess objectForKey:@"bloodType"]].length <1) {
                     cell.subLab.text = @"未填写";
                 }else {
-                    cell.subLab.text = [NSString stringWithFormat:@"%@",[mymess objectForKey:@"bloodType"]] ;
+                    if ([[mymess objectForKey:@"bloodType"] integerValue] == 1) {
+                        
+                        cell.subLab.text = @"A型";
+                    }
+                    
+                    if ([[mymess objectForKey:@"bloodType"] integerValue] == 2) {
+                        
+                        cell.subLab.text = @"B型";
+                    }
+
+                    if ([[mymess objectForKey:@"bloodType"] integerValue] == 3) {
+                        
+                        cell.subLab.text = @"o型";
+                    }
+
+                    if ([[mymess objectForKey:@"bloodType"] integerValue] == 4) {
+                        
+                        cell.subLab.text = @"AB型";
+                    }
+
                     cell.subLab.textColor =[UIColor colorWithHexString:@"FF8698" alpha:1];
                 }
                 
@@ -334,6 +362,9 @@
                 
             }
         
+        }else if(indexPath.row == 3) {
+            
+            [self seleDataSource:1];
         }else {
             
             
@@ -343,11 +374,24 @@
             [alertView show];}
         
     }else {
+        
+     if(indexPath.row == 0 ) {
+         [self seleDataSource:2];
+
+        
+     }else  if(indexPath.row == 4) {
+       
+         [self seleDataSource:3];
+         
+         
+     }else{
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"编辑" message:@"请输入信息" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确认", @"取消", nil];
         alertView.tag = 500+indexPath.section*10+indexPath.row;
         alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
         [alertView show];
 
+     }
+    
     }
     
     
@@ -510,6 +554,168 @@
         // [self.view removeFromSuperview];
     }];
 }
+
+
+#pragma mark -------------------选择数据-------------------
+- (void)seleDataSource:(NSInteger)indexTag {
+    UIPickerView *pickerView;
+    if (j_actionV == nil) {
+        
+        j_actionV = [[UIView alloc]initWithFrame:CGRectMake(0,kScreenHeight-260,kScreenWidth, 260)];
+        UIToolbar   *pickerDateToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 44)];
+        
+        [pickerDateToolbar setBackgroundImage:[self createImageWithColor:BaseColor] forToolbarPosition:0 barMetrics:0];
+        pickerDateToolbar.tintColor = BaseColor;
+        [pickerDateToolbar sizeToFit];
+        
+        NSMutableArray *barItems = [[NSMutableArray alloc] init];
+        
+        //
+        UIBarButtonItem *cancelBtn = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(toolBarCanelClick)];
+        
+        [cancelBtn setTintColor:[UIColor whiteColor]];
+        [barItems addObject:cancelBtn];
+        //
+        UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+        [barItems addObject:flexSpace];
+        
+        //
+        UIBarButtonItem *doneBtn = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(toolBarDoneClick)];
+        
+        [doneBtn setTintColor:[UIColor whiteColor]];
+        [barItems addObject:doneBtn];
+        
+        [pickerDateToolbar setItems:barItems animated:YES];
+        [j_actionV addSubview:pickerDateToolbar];
+        
+        
+        
+        [self.view addSubview:j_actionV];
+    }
+    pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 44, kScreenWidth, 216)];
+    pickerView.showsSelectionIndicator = YES;
+    pickerView.dataSource = self;
+    pickerView.delegate = self;
+    pickerView.backgroundColor = [UIColor whiteColor];
+    [pickerView selectRow:0 inComponent:0 animated:YES];
+    
+    [j_actionV addSubview:pickerView];
+
+    pickerView.tag = indexTag;
+    [pickerView reloadAllComponents];
+    j_actionV.hidden = NO;
+    
+}
+
+-(void)toolBarCanelClick{
+    
+    j_actionV.hidden = YES;
+    
+}
+-(void)toolBarDoneClick{
+    //待修改
+    j_actionV.hidden = YES;
+    
+    [self seleRow:rowIndeSele component:0];
+}
+
+
+//组件数
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+//每个组件的行数
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    
+    if (pickerView.tag == 1) {
+        return 120;
+    }
+    
+    if (pickerView.tag == 2) {
+        return xueArray.count;
+    }
+
+    if (pickerView.tag == 3) {
+        return edArray.count;
+    }
+
+    return 0;
+}
+
+//初始化每个组件每一行数据
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    NSString *captionS;
+    if (pickerView.tag == 1) {
+        
+        captionS = [NSString stringWithFormat:@"%ld",150+row];
+    }
+    
+    if (pickerView.tag == 2) {
+        captionS = [NSString stringWithFormat:@"%@",xueArray[row]];
+    }
+    
+    if (pickerView.tag == 3) {
+        captionS = [NSString stringWithFormat:@"%@",edArray[row]];
+    }
+
+    return captionS;
+}
+
+//选中picker cell,save ArrayIndex
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    rowIndeSele = row;
+    rowNameSele = pickerView.tag;
+
+
+}
+
+
+- (void)seleRow:(NSInteger)row component:(NSInteger)component{
+    
+    NSString *str;
+    if (rowNameSele == 1) {
+        str = [NSString stringWithFormat:@"%ld",150+rowIndeSele];
+        [mymess setObject:str forKey:@"height"];
+
+    }
+    
+    if (rowNameSele == 2) {
+        str = [NSString stringWithFormat:@"%ld",rowIndeSele];
+
+        [mymess setObject:str forKey:@"bloodType"];
+
+    }
+
+    if (rowNameSele == 3) {
+        str = [NSString stringWithFormat:@"%@",edArray[rowIndeSele]];
+
+        [mymess setObject:str forKey:@"education"];
+    }
+    [tableV reloadData];
+    
+}
+
+//替换text居中
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
+    
+    UILabel* pickerLabel = (UILabel*)view;
+    if (!pickerLabel){
+        pickerLabel = [[UILabel alloc] init];
+        pickerLabel.adjustsFontSizeToFitWidth = YES;
+        [pickerLabel setTextAlignment:NSTextAlignmentCenter];
+        [pickerLabel setBackgroundColor:[UIColor clearColor]];
+        [pickerLabel setFont:[UIFont boldSystemFontOfSize:15]];
+    }
+    
+    pickerLabel.text=[self pickerView:pickerView titleForRow:row forComponent:component];
+    return pickerLabel;
+}
+
 
 
 - (void)didReceiveMemoryWarning {

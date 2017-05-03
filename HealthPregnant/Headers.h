@@ -49,6 +49,9 @@
 
 #define yesleepSDic  [[NSUserDefaults standardUserDefaults] objectForKey:@"KSportRecordArr"]
 
+#define ytsleepSDic  [[NSUserDefaults standardUserDefaults] objectForKey:@"KTimeRecordArr"]
+
+
 
 
 
